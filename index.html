@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gudjal Dictionary</title>
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Cormorant+SC:wght@300;400;500;600;700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&family=Rock+Salt&display=swap');
+
+        * {
+            margin: 0;
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+        }
+
+        table {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        tr {
+            width: 100%;
+            display: flex;
+        }
+
+        td {
+            width: 50%;
+        }
+
+        .second-row {
+            width: 100%;
+            margin-bottom: 2em;
+        }
+
+        .dictionary-container {
+            width: 100%;
+            max-width: 800px;
+            background: #F3F3F3;
+            padding: 2em;
+        }
+
+        .word-lookup {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            padding: 1em;
+        }
+
+        .word-lookup > * {
+            margin: 0.5em;
+        }
+
+        .results-display-section {
+            margin-top: 2em;
+            padding: 1em;
+        }
+
+        h1 {
+            font-family: 'Cormorant SC', serif;
+            width: 100%;
+            text-align: center;
+            font-size: 3em;
+        }
+
+        .background-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        #searchbar {
+            height: 2em;
+            width: 50%;
+            padding: 4px;
+        }
+
+        .gudjal-word {
+            color: maroon;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .speaker-name-box {
+            font-weight: 300;
+            color: #282828;
+        }
+
+        #speaker-selection {
+            padding: 4px;
+            font-size: 1em;
+        }
+
+        #speaker-selection-form {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            padding: 4px;
+        }
+
+        #speaker-selection-form > * {
+            margin: 4px;
+        }
+
+        
+
+    </style>
+</head>
+<body>
+
+    <div class="dictionary-container">
+
+        <img class="background-image" src="bush-image.png" alt="An stylised image of the Australian bush.">
+        
+        <h1>Gudjal Dictionary</h1>
+
+        <div class="word-lookup">
+
+            <label for="searchbar">Look up a word in English or Gudjal</label>
+            <input type="text" id="searchbar">
+
+            <form id="speaker-selection-form">
+
+            <label for="speaker-selection" class="speaker-selection-label">Filter by source</label>
+
+            <select id="speaker-selection">
+                <option value="">All sources</option>
+                <option value="BD">Bluff Downs</option>
+                <option value="CR">Clarke River</option>
+                <option value="FT">Freddie Toomba</option>
+                <option value="GR">George Reid</option>
+                <option value="HB">Harry Bunn</option>
+                <option value="HS">Homestead</option>
+                <option value="RP">Ranji Pope</option>
+                <option value="WS">William Santo</option>
+            </select>
+
+            </form>
+
+        </div>
+        
+        <div class="results-display-section">
+
+            <table id="dictionary-display-table">
+                <tbody></tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+
+    <script>
+
+        const speakerSelection = document.querySelector("#speaker-selection");
+
+        const dictionaryDisplay = document.querySelector("#dictionary-display-table tbody");
+        const searchbar = document.querySelector("#searchbar");
+        let dictionary;
+
+        Papa.parse("dictionary-copy.csv", {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: results => {
+                console.log(results.data);
+                displayResults(results.data);
+                dictionary = results.data;
+            }
+        })
+
+        function displayResults (entries, query = "") {
+            dictionaryDisplay.innerHTML = entries
+                .map(entry => `
+                    <tr>
+                        <td class="gudjal-word">${highlightMatch(entry.gudjalEntry, query)}</td>
+                        <td class="speaker-name-box">${entry.speaker}</td>
+                    </tr>
+                    <tr>
+                        <td class="second-row"><i>${highlightMatch(entry.englishTranslation, query)}</i></td>
+                    </tr>
+                    `)
+                .join("");
+        }
+
+        function highlightMatch (wordToDisplay, whatTheUserSearched) {
+            if (!whatTheUserSearched) return wordToDisplay;
+
+            const regex = new RegExp(`(${whatTheUserSearched})`, "gi");
+            return wordToDisplay.replace(regex, "<strong>$1</strong>");
+        }
+
+        function filter () {
+            const selectedSpeaker = speakerSelection.value;
+            const query = searchbar.value.toLowerCase();
+
+            // 'entry' refers to one entry in the dictionary object.
+            // .fiter() goes through and checks every entry and keeps the ones that return true.
+            // So the return at the bottom is saying: keep this entry if both the text and the speaker match the input.
+            const matches = dictionary.filter(entry => {
+
+                const matchesText = 
+                entry.gudjalEntry.toLowerCase().includes(query) || 
+                entry.englishTranslation.toLowerCase().includes(query);
+
+                const matchesSpeaker = 
+                !selectedSpeaker || entry.speaker.includes(selectedSpeaker);
+
+                return matchesText && matchesSpeaker;
+            })
+
+            displayResults(matches, query);
+        }
+
+        searchbar.addEventListener ("keyup", filter)
+        speakerSelection.addEventListener ("change", filter);
+
+        
+
+    </script>
+</body>
+</html>
