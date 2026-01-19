@@ -4,108 +4,81 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gudjal Dictionary</title>
+    <title>Wumaybigu</title>
     <style>
 
         @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Cormorant+SC:wght@300;400;500;600;700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&family=Rock+Salt&display=swap');
 
         * {
-            margin: 0;
             font-family: 'Noto Sans', sans-serif;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-        }
-
-        table {
-            width: 100%;
-            max-width: 500px;
-        }
-
-        tr {
-            width: 100%;
-            display: flex;
-        }
-
-        td {
-            width: 50%;
-        }
-
-        .second-row {
-            width: 100%;
-            margin-bottom: 2em;
-        }
-
-        .dictionary-container {
-            width: 100%;
-            max-width: 800px;
-            background: #F3F3F3;
-            padding: 2em;
-        }
-
-        .word-lookup {
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-            padding: 1em;
-        } 
-
-        .word-lookup > * {
-            margin: 0.5em;
-        }
-
-        .results-display-section {
-            margin-top: 2em;
-            padding: 1em;
-        }
-
-        h1 {
-            font-family: 'Cormorant SC', serif;
-            width: 100%;
-            text-align: center;
-            font-size: 3em;
-        }
-
-        .background-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        #searchbar {
-            height: 2em;
-            width: 50%;
-            padding: 4px;
-        }
-
-        .gudjal-word {
-            color: maroon;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .speaker-name-box {
-            font-weight: 300;
+            margin: 12px;
             color: #282828;
         }
 
-        #speaker-selection {
-            padding: 4px;
-            font-size: 1em;
+        body {
+            background: #FBFAF5;
+            margin: 0;
         }
 
-        #speaker-selection-form {
+        .container {
+            margin: 0 auto;
+            width: 600px;
             display: flex;
             flex-flow: column;
             align-items: center;
-            padding: 4px;
         }
 
-        #speaker-selection-form > * {
-            margin: 4px;
+        table {
+            border-spacing: 32px 8px;
+        }
+
+        tbody * {
+            font-weight: 100;
+        }
+
+        i {
+            color: #616161;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        h2 {
+            font-weight: 300;
+            font-size: 24px;
+            width: 100%;
+            text-align: left;
+        }
+
+        p {
+            font-weight: 200;
+            width: 100%;
+            padding: 0;
+        }
+
+        h3 {
+            font-weight: 300;
+        }
+
+        .project-squares {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-flow: row wrap;
+        }
+
+        .project-squares a {
+            height: 80px;
+            width: 100%;
+            background: #282828;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 16px;
         }
 
         
@@ -114,116 +87,42 @@
 </head>
 <body>
 
-    <div class="dictionary-container">
+    <div class="container">
 
-        <img class="background-image" src="bush-image.png" alt="An stylised image of the Australian bush.">
-        
-        <h1>Gudjal Dictionary</h1>
+    <h1>
+        <table>
+            <thead>
+                <tr>
+                    <td>Wumay</td>
+                    <td>-bi</td>
+                    <td>-gu.</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>good</td>
+                    <td style="font-variant-caps: small-caps">intr.v</td>
+                    <td style="font-variant-caps: small-caps">fut</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><i>It'll be good!</i></td>
+                </tr>
+            </tbody>
+        </table>
+    </h1>
 
-        <div class="word-lookup">
+    <h2>Ganimundu yandjana yinda. Welcome!</h2>
 
-            <label for="searchbar">Look up a word in English or Gudjal</label>
-            <input type="text" id="searchbar">
+    <p>Yaru! Hello! This is a site where I will upload resources in their very early stages. They are works in progress. Please take a look and let Alex know about any feedback or suggestions that you would like to see implemented. Cheers!</p>
+    <p></p>
 
-            <form id="speaker-selection-form">
-
-            <label for="speaker-selection" class="speaker-selection-label">Filter by source</label>
-
-            <select id="speaker-selection">
-                <option value="">All sources</option>
-                <option value="BD">Bluff Downs</option>
-                <option value="CR">Clarke River</option>
-                <option value="FT">Freddie Toomba</option>
-                <option value="GR">George Reid</option>
-                <option value="HB">Harry Bunn</option>
-                <option value="HS">Homestead</option>
-                <option value="RP">Ranji Pope</option>
-                <option value="WS">William Santo</option>
-            </select>
-
-            </form>
-
+    <div class="project-squares-container"></div>
+        <h2>Current projects:</h2>
+        <div class="project-squares">
+            <a href="/lesson/">Gudjal Online Platform: Lesson Example Page</a>
+            <a href="/dictionary/">Gudjal Online Dictionary</a>
         </div>
-        
-        <div class="results-display-section">
-
-            <table id="dictionary-display-table">
-                <tbody></tbody>
-            </table>
-
-        </div>
-
     </div>
-
-    <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
-
-    <script>
-
-        const speakerSelection = document.querySelector("#speaker-selection");
-
-        const dictionaryDisplay = document.querySelector("#dictionary-display-table tbody");
-        const searchbar = document.querySelector("#searchbar");
-        let dictionary;
-
-        Papa.parse("dictionary-copy.csv", {
-            download: true,
-            header: true,
-            skipEmptyLines: true,
-            complete: results => {
-                console.log(results.data);
-                displayResults(results.data);
-                dictionary = results.data;
-            }
-        })
-
-        function displayResults (entries, query = "") {
-            dictionaryDisplay.innerHTML = entries
-                .map(entry => `
-                    <tr>
-                        <td class="gudjal-word">${highlightMatch(entry.gudjalEntry, query)}</td>
-                        <td class="speaker-name-box">${entry.speaker}</td>
-                    </tr>
-                    <tr>
-                        <td class="second-row"><i>${highlightMatch(entry.englishTranslation, query)}</i></td>
-                    </tr>
-                    `)
-                .join("");
-        }
-
-        function highlightMatch (wordToDisplay, whatTheUserSearched) {
-            if (!whatTheUserSearched) return wordToDisplay;
-
-            const regex = new RegExp(`(${whatTheUserSearched})`, "gi");
-            return wordToDisplay.replace(regex, "<strong>$1</strong>");
-        }
-
-        function filter () {
-            const selectedSpeaker = speakerSelection.value;
-            const query = searchbar.value.toLowerCase();
-
-            // 'entry' refers to one entry in the dictionary object.
-            // .fiter() goes through and checks every entry and keeps the ones that return true.
-            // So the return at the bottom is saying: keep this entry if both the text and the speaker match the input.
-            const matches = dictionary.filter(entry => {
-
-                const matchesText = 
-                entry.gudjalEntry.toLowerCase().includes(query) || 
-                entry.englishTranslation.toLowerCase().includes(query);
-
-                const matchesSpeaker = 
-                !selectedSpeaker || entry.speaker.includes(selectedSpeaker);
-
-                return matchesText && matchesSpeaker;
-            })
-
-            displayResults(matches, query);
-        }
-
-        searchbar.addEventListener ("keyup", filter)
-        speakerSelection.addEventListener ("change", filter);
-
-        
-
-    </script>
+    
 </body>
 </html>
