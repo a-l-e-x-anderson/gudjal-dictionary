@@ -835,7 +835,7 @@
     function rightAnswer () {
         theseQuestionHaveBeenAskedAlready.push(theQuestion);
         theAnswerIsCorrect = true;
-        gameCompletionRate += 50;
+        gameCompletionRate += 10;
         progressBar.style.width = `${gameCompletionRate}%`;
         checkForWin();
     }
