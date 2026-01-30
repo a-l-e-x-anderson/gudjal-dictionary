@@ -8,6 +8,15 @@
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Cormorant+SC:wght@300;400;500;600;700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&family=Rock+Salt&display=swap');
 
+    @media (max-width: 600px) {
+        .top-button-container * {
+            font-size: 12px;
+        }
+        p, td {
+            font-size: 12px;
+        }
+    }
+
     * {
         font-family: 'Noto Sans', sans-serif;
         font-weight: 200;
@@ -20,19 +29,35 @@
 
     body {
         background: #FBFAF5;
-        padding: 12px;
+        padding: 0;
+    }
+
+    .button {
+        /* Shape, colour, size */
+        background: #282828;
+        border-radius: 16px;
+        font-weight: 400;
+        padding: 0 16px 0 16px;
+
+        /* Text */
+        color: white;
+        text-decoration: none;
+        text-align: center;
+
+        /* Flex */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .button:hover {
+        cursor: pointer;
     }
 
     .lesson-container {
         width: 100%;
         max-width: 600px;
         margin: 20px auto;
-    }
-
-    @media (max-width: 600px) {
-        .top-button-container * {
-            font-size: 12px;
-        }
     }
 
     .top-button-container {
@@ -44,20 +69,7 @@
 
     .top-button {
         height: 100%;
-        background: #282828;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 16px;
-        font-weight: 400;
-        padding: 0 16px 0 16px;
         margin: 0 8px 0 8px;
-        text-decoration: none;
-    }
-
-    .top-button:hover {
-        cursor: pointer;
     }
 
     h1, h2 {
@@ -83,10 +95,14 @@
         font-weight: 400;
     }
 
-    #ct-image {
+    .ct-image {
         width: 100%;
         border-radius: 8px;
         margin: 16px 0px;
+    }
+
+    #ct-image-night {
+        display: none;
     }
 
     .wordlist {
@@ -110,26 +126,10 @@
         height: 100px;
         width: 300px;
         margin: 60px auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 16px;
-        background: #282828;
-        font-size: 24px;
-        color: white;
-        font-weight: 350;
+        font-size: 20px;
     }
 
-    .practice-button:hover {
-        cursor: pointer;
-    }
 
-    #ct-image-night {
-        display: none;
-        width: 100%;
-        border-radius: 8px;
-        margin: 16px 0px;
-    }
 
     .playing {
         font-weight: bold;
@@ -148,16 +148,7 @@
     #play-dialogue {
         height: 50px;
         font-size: 16px;
-        font-weight: 400;
-        border-radius: 16px;
         border: none;
-        background: #282828;
-        padding: 0px 16px 0px 16px;
-        color: white;
-    }
-
-    #play-dialogue:hover {
-        cursor: pointer;
     }
 
     h3 {
@@ -170,6 +161,8 @@
         color: brown;
         cursor: pointer;
     }
+
+    /* Modal stuff. */
 
     .backdrop {
         background: #282828;
@@ -369,8 +362,8 @@
         <p>Yaru! Hello! Gudjal birraya ngali. Let's talk Gudjal together. In this lesson, we'll learn how to say where we come from. We'll also get our first taste of word endings in Gudjal. </p>
         
         <h2>Dialogue</h2>
-        <img id="ct-image" src="charters-towers-stylised.png" alt="An illustration of Charters Towers.">
-        <img id="ct-image-night" src="charters-towers-stylised-night.png" alt="An illustration of Charters Towers at night.">
+        <img id="ct-image-day" class="ct-image" src="charters-towers-stylised.png" alt="An illustration of Charters Towers.">
+        <img id="ct-image-night" class="ct-image" src="charters-towers-stylised-night.png" alt="An illustration of Charters Towers at night.">
         <h3>Gudjal</h3>
         <button id="play-dialogue" class="button">► Play full dialogue.</button>
         <p><i>(Or click on any line of dialogue to hear just that line.)</i></p>
@@ -485,7 +478,7 @@
 
     const buttons = document.querySelectorAll(".button");
 
-    const dayImage = document.querySelector("#ct-image");
+    const dayImage = document.querySelector("#ct-image-day");
     const nightImage = document.querySelector("#ct-image-night");
 
     const audioJane1 = new Audio("dialogue-audio/Jane1.m4a");

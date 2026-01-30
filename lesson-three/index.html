@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birraya | Learn Gudjal</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Cormorant+SC:wght@300;400;500;600;700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&family=Rock+Salt&display=swap');
+
+    @media (max-width: 600px) {
+        .top-button-container * {
+            font-size: 12px;
+        }
+        p, td {
+            font-size: 12px;
+        }
+    }
+
+    * {
+        font-family: 'Noto Sans', sans-serif;
+        font-weight: 200;
+        box-sizing: border-box;
+    }
+    
+    p {
+        line-height: 28px;
+    }
+
+    body {
+        background: #FBFAF5;
+        padding: 12px;
+    }
+
+    .button {
+        /* Shape, colour, size */
+        background: #282828;
+        border-radius: 16px;
+        font-weight: 400;
+        padding: 0 16px 0 16px;
+
+        /* Text */
+        color: white;
+        text-decoration: none;
+        text-align: center;
+
+        /* Flex */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .button:hover {
+        cursor: pointer;
+    }
+
+    .lesson-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+    }
+
+    .top-button-container {
+        height: 50px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .top-button {
+        height: 100%;
+        margin: 0 8px 0 8px;
+    }
+
+    h1, h2 {
+        margin-top: 40px;
+        width: 100%;
+        text-align: center;
+    }
+
+    h1, h2, h3, h4 {
+        font-weight: 500;
+    }
+
+    table {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    .table tr td:first-child {
+        width: 15%;
+    }
+
+    tr td:first-child {
+        font-weight: 400;
+    }
+
+    .ct-image {
+        width: 100%;
+        border-radius: 8px;
+        margin: 16px 0px;
+    }
+
+    #ct-image-night {
+        display: none;
+    }
+
+    .wordlist {
+        border-collapse: collapse;
+    }
+
+    .wordlist,
+    .wordlist tbody,
+    .wordlist tbody tr {
+        width: 100%;
+    }
+
+    .wordlist tbody tr td {
+        border: 1px solid black;
+        padding: 4px;
+        width: 50%;
+        text-align: center;
+    }
+
+    .practice-button {
+        height: 100px;
+        width: 300px;
+        margin: 60px auto;
+        font-size: 20px;
+    }
+
+
+
+    .playing {
+        font-weight: bold;
+        color: brown;
+    }
+
+    .clickable-audio {
+        cursor: pointer;
+    }
+
+    .clickable-audio:hover {
+        font-weight: bold;
+        color: brown;
+    }
+
+    #play-dialogue {
+        height: 50px;
+        font-size: 16px;
+        border: none;
+    }
+
+    h3 {
+        display: flex;
+        align-items: center;
+    }
+
+    .play-audio:hover {
+        font-weight: bold;
+        color: brown;
+        cursor: pointer;
+    }
+
+    /* Modal stuff. */
+
+    .backdrop {
+        background: #282828;
+        opacity: 70%;
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        display: none;
+    }
+
+    .modal {
+        width: 90%;
+        max-width: 800px;
+        height: 80vh;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: #FBFAF5;
+        border: 2px solid #282828;
+        z-index: 2;
+        border-radius: 16px;
+
+        display: none;
+        flex-flow: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+    }
+
+    .exit-modal-button {
+        margin: 0;
+        padding: 0;
+        width: 56px;
+        height: 56px;
+        border-radius: 0 12px 0 16px;
+        color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+        z-index: 5;
+    }
+
+    .exit-modal-button:hover {
+        cursor: pointer;
+    }
+
+    .exit-modal-button-container {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #question-box {
+        width: 80%;
+        height: 100px;
+
+        display: flex;
+        flex-flow: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    #question-box > * {
+        width: 90%;
+        height: 40%;
+    }
+
+    #answers-box {
+        width: 80%;
+        height: 50%;
+
+        display: flex;
+        flex-flow: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .answer-button {
+        width: 90%;
+        height: 25%;
+        border-radius: 16px;
+        border: 2px solid #282828;
+        background: white;
+    }
+
+    .submit-button {
+        height: 40px;
+        width: 200px;
+        margin-bottom: 32px;
+        border-radius: 16px;
+        background: #282828;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: 400;
+    }
+
+    .submit-button:hover {
+        cursor: pointer;
+    }
+
+    .prompting-div, #where-the-question-goes {
+        font-size: 20px;
+        text-align: center;
+        font-weight: 400;
+    }
+
+    .answer-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 200;
+    }
+
+    .answer-button:hover {
+        cursor: pointer;
+    }
+
+    .extra-test-buttons-container {
+        width: 70%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .restart-button {
+        height: 40px;
+        width: 100px;
+        margin-bottom: 32px;
+        border-radius: 16px;
+        background: #B3B3B3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: 400;
+    }
+
+    .restart-button:hover {
+        cursor: pointer;
+    }
+
+    .no-scroll {
+        overflow: hidden;
+    }
+
+    .progress-bar-outline {
+        height: 16px;
+        border-radius: 16px;
+        border: 2px solid black;
+        width: 70%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .progress-bar-inside {
+        height: 100%;
+        width: 0%;
+        max-width: 100%;
+        border-radius: 16px;
+        background: #A0C57F;
+        transition: width 0.4s ease;
+    }
+
+    #victory-screen {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        z-index: 4;
+        background: #FBFAF5;
+        border-radius: 14px;
+
+        display: none;
+        justify-content: space-around;
+        align-items: center;
+        flex-flow: column;
+    }
+
+    </style>
+</head>
+<body>
+
+    <div class="lesson-container">
+        <div class="top-button-container">
+            <div id="nightmode-button" class="button top-button">Night Mode</div>
+            <div id="top-practice-button" class="button review-button top-button">Review this lesson</div>
+            <a href="/" id="back-to-lessons" class="button top-button">Back to lessons</a>
+        </div>
+        
+        <h1>Chapter 3: Yaru ngani?</h1>
+        <p>Yaru! Hello! Gudjal birraya ngali. Let's talk Gudjal together. In this lesson, we'll learn how to talk about other people. </p>
+        
+        <h2>Dialogue</h2>
+        <img id="ct-image-day" class="ct-image" src="conversation.png" alt="An illustration of Charters Towers.">
+        <img id="ct-image-night" class="ct-image" src="conversation-night.png" alt="An illustration of Charters Towers at night.">
+        <h3>Gudjal</h3>
+        <button id="play-dialogue" class="button">► Play full dialogue.</button>
+        <p><i>(Or click on any line of dialogue to hear just that line.)</i></p>
+        <table class="table">
+            <tbody>
+                <tr><td>William:</td> 		<td class="clickable-audio" data-audio="William1">Yaru, Jane. Wandhamundu yandjana yinda?</td></tr>
+                <tr><td>Jane:</td> 	        <td class="clickable-audio" data-audio="Jane1">Yaru, William. Gunggarimundu yandjana ngaya.</td></tr>
+                <tr><td>William:</td> 		<td class="clickable-audio" data-audio="William2">Ah, dharibara. Yaru ngani?</td></tr>
+                <tr><td>Jane:</td> 	        <td class="clickable-audio" data-audio="Jane2">Nhula ngaygu mugina. Nhungu riyala Max.</td></tr>
+                <tr><td>Max:</td> 		    <td class="clickable-audio" data-audio="Max1">Yaru, William.</td></tr>
+                <tr><td>William:</td> 	    <td class="clickable-audio" data-audio="William3">Yaru, Max. Wandhamundu yandjana yinda?</td></tr>
+                <tr><td>Max:</td> 		    <td class="clickable-audio" data-audio="Max2">Cairnsmundu! Gunggarrimundu yandjana ngaya.</td></tr>
+                <tr><td>William:</td> 	    <td class="clickable-audio" data-audio="William4">Ah, Jane! Ganimundu yandjana nhula.</td></tr>
+                <tr><td>Jane:</td> 		    <td class="clickable-audio" data-audio="Jane3">Yuway! Gani.</td></tr>
+            </tbody>
+        </table>
+        <h3>English</h3>
+        <table class="table">
+            <tbody>
+                <tr><td>William:</td> 		<td>Hello, Jane. Where are you coming from right now?</td></tr>
+                <tr><td>Jane:</td>      	<td>Hi, William. I'm coming from the north.</td></tr>
+                <tr><td>William:</td> 		<td>Ah, good. Who's this?</td></tr>
+                <tr><td>Jane:</td> 	        <td>He is my brother. His name is Max.</td></tr>
+                <tr><td>Max:</td> 		    <td>Hi, William. Nice to meet you.</td></tr>
+                <tr><td>William:</td> 	    <td>Hi, Max. Where do you come from?</td></tr>
+                <tr><td>Max:</td> 		    <td>From Cairns. I just came from the north.</td></tr>
+                <tr><td>William:</td> 	    <td>Ah, Jane! He's come far.</td></tr>
+                <tr><td>Jane:</td> 		    <td>Yes! It's far.</td></tr>
+            </tbody>
+        </table>
+        <h2>Word List</h2>
+        <p style="text-align: center;">Click on a vocabulary item to hear how it's pronounced.</p>
+        <table class="wordlist">
+            <tbody>
+                <tr><td class="play-audio" data-audio="audio/mugina.m4a">Mugina</td>	                <td>Brother</td></tr>
+                <tr><td class="play-audio" data-audio="audio/gudjina.m4a">Gudjina</td>	                <td>Sister</td></tr>
+                <tr><td class="play-audio" data-audio="audio/yanga.m4a">Yanga</td>	                <td>Mother</td></tr>
+                <tr><td class="play-audio" data-audio="audio/gayala.m4a">Gayala</td>	                <td>Father</td></tr>
+                <tr><td class="play-audio" data-audio="audio/bimu.m4a">Bimu</td>	        <td>Auntie</td></tr>
+                <tr><td class="play-audio" data-audio="audio/bulu.m4a">Bulu</td>	                <td>Uncle</td></tr>
+                <tr><td class="play-audio" data-audio="audio/nhula2.m4a">Nhula</td>	            <td>He / she</td></tr>
+                <tr><td class="play-audio" data-audio="audio/nhungu.m4a">Nhungu</td>	                <td>His / her</td></tr>
+                <tr><td class="play-audio" data-audio="audio/dharibara.m4a">Dharibara</td>	        <td>Good</td></tr>
+                <tr><td class="play-audio" data-audio="audio/gani.m4a">Gani</td>	                    <td>Far</td></tr>
+            </tbody>
+        </table>
+        <h2>Grammar</h2>
+        <h3>Ngaya, yinda and nhula</h3>
+        <p>These words are known as subject pronouns. Subject pronouns tell you who is doing the action, or who is doing the <i>'being'</i>. In English, they almost always come at the beginning of a sentence. I am... You eat... He listens...</p>
+        <p>Here is a summary of the subject pronouns that we've learnt so far in Gudjal:</p>
+        <table>
+            <tbody>
+                <tr><td>I</td>	        <td class="play-audio" data-audio="audio/ngaya.m4a">Ngaya</td></tr>
+                <tr><td>You</td>	    <td class="play-audio" data-audio="audio/yinda.m4a">Yinda</td></tr>
+                <tr><td>He / she</td>   <td class="play-audio" data-audio="audio/nhula1.m4a">Nhula</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Vocabulary</h2>
+        <h3>Nhungu</h3>
+        <p>In Gudjal, when we say "he" or "she", we don't have to say if someone is a man or a woman. We use the same word for both: nhula. The same goes for "his" and "her". We just use the word nhungu.</p>
+        <h3>Bimu and bulu</h3>
+        <p>In Gudjal, and lots of other languages, you don't need to be related to someone to call them auntie or uncle. You can call someone that is older than you your auntie or uncle and it is taken as a sign of respect.</p>
+        <h2>Practice Activities</h2>
+        <h3>Classroom Activity</h3>
+        <p>1. Write a short text about a family member, or someone you know. Remember, you can use the words bimu and bulu for someone older than you, even if you are not related to them. Write about their name and where they come from.</p>
+        <p>2. Get into groups of three. The first person talks about themself. They say their name, and where they come from: "My name is..." and "I come from..." The second person then tells this same information to the third person: "His name is..." and "He comes from...". Rotate between the roles so that everyone has a chance to speak.</p>
+        <div class="review-button button practice-button">Review Lesson</div>
+    </div>
+
+    <div class="backdrop"></div>
+
+    <div class="modal">
+        <div class="exit-modal-button-container"><div class="exit-modal-button button">✕</div></div>
+            <div class="progress-bar-outline"><div class="progress-bar-inside"></div></div>
+            <div id="question-box">
+                <div class="prompting-div">Translate the following into Gudjal:</div>
+                <div id="where-the-question-goes">[testing]</div>
+            </div>
+            <div id="answers-box">
+                <div class="answer-button" id="answer-one">[example]</div>
+                <div class="answer-button" id="answer-two">[example]</div>
+                <div class="answer-button" id="answer-three">[example]</div>
+            </div>
+            <div class="extra-test-buttons-container">
+                <div class="restart-button">Restart</div>
+                <div class="submit-button">Submit</div>
+            </div>
+            <div id="victory-screen"><img src="congration.png" alt="An image of a cake which has the following words written on it: 'Congration! You done it!'">
+                <div class="restart-button">Restart</div>
+            </div>
+        
+    </div>
+
+<script>
+
+    // Non-game stuff
+
+    const nightModeButton = document.querySelector("#nightmode-button");
+    const body = document.querySelector("body");
+    let nightModeToggled = false;
+
+    const readables = document.querySelectorAll("h1, h2, h3, h4, p, td");
+
+    const clickables = document.querySelectorAll(".clickable-audio");
+
+    const buttons = document.querySelectorAll(".button");
+
+    const dayImage = document.querySelector("#ct-image-day");
+    const nightImage = document.querySelector("#ct-image-night");
+
+    const audioJane1 = new Audio("audio/Jane1.m4a");
+    const audioJane2 = new Audio("audio/Jane2.m4a");
+    const audioJane3 = new Audio("audio/Jane3.m4a");
+
+    const audioWilliam1 = new Audio("audio/William1.m4a");
+    const audioWilliam2 = new Audio("audio/William2.m4a");
+    const audioWilliam3 = new Audio("audio/William3.m4a");
+    const audioWilliam4 = new Audio("audio/William4.m4a");
+
+    const audioMax1 = new Audio("audio/Max1.m4a");
+    const audioMax2 = new Audio("audio/Max2.m4a");
+
+    const playDialogueButton = document.querySelector("#play-dialogue");
+
+    const restartButtons = document.querySelectorAll(".restart-button");
+
+    let currentlyPlayingAudio = null;
+    let currentlyPlayingElement = null;
+
+    const dialogueOrder = [audioWilliam1, audioJane1, audioWilliam2, audioJane2, audioMax1, audioWilliam3, audioMax2, audioWilliam4, audioJane3];
+
+    const audioDirectory = {
+        Jane1: audioJane1,
+        Jane2: audioJane2,
+        Jane3: audioJane3,
+        William1: audioWilliam1,
+        William2: audioWilliam2,
+        William3: audioWilliam3,
+        William4: audioWilliam4,
+        Max1: audioMax1,
+        Max2: audioMax2
+    }
+
+    const allAudio = Object.values(audioDirectory);
+
+    function stopAllAudio () {
+        allAudio.forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        })
+    }
+
+    function toggleNightMode () {
+        if (nightModeToggled === false) {
+            nightModeToggled = true;
+        } else if (nightModeToggled === true) {
+            nightModeToggled = false;
+        }
+
+        if (nightModeToggled === true) {
+            body.style.backgroundColor = "#282828";
+            nightImage.style.display = "block";
+            buttons.forEach(button => {
+                button.style.backgroundColor = "#FBFAF5";
+                button.style.color = "#282828";
+            });
+            dayImage.style.display = "none";
+            readables.forEach(readable => {
+                readable.style.color = "#FBFAF5";
+            });
+        } else if (nightModeToggled === false) {
+            body.style.backgroundColor = "#FBFAF5";
+            nightImage.style.display = "none";
+            dayImage.style.display = "block";
+            buttons.forEach(button => {
+                button.style.backgroundColor = "#282828";
+                button.style.color = "#FBFAF5";
+            });
+            readables.forEach(readable => {
+                readable.style.color = "#282828";
+            });
+        }
+    }
+
+    nightModeButton.addEventListener ("click", () => {
+        toggleNightMode();
+    })
+
+    function playAudio(audioClip) {
+        Object.values(audioDirectory).forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+
+        audioClip.play();
+    }
+
+    clickables.forEach(element => {
+        element.addEventListener("click", () => {
+
+            stopAllAudio();
+
+            const key = element.dataset.audio;
+            const audio = audioDirectory[key];
+
+            if (currentlyPlayingAudio) {
+                currentlyPlayingAudio.pause();
+                currentlyPlayingAudio.currentTime = 0;
+            }
+
+            if (currentlyPlayingElement) {
+                currentlyPlayingElement.classList.remove("playing");
+            }
+
+            currentlyPlayingAudio = audio;
+            currentlyPlayingElement = element;
+
+            audio.play();
+            element.classList.add("playing");
+
+            audio.addEventListener("ended", () => {
+                element.classList.remove("playing");
+                currentlyPlayingAudio = null;
+                currentlyPlayingElement = null;
+            }, { once: true })
+        })
+    })
+
+    function playDialogueAt (index) {
+        if (index >= dialogueOrder.length) {
+            return;
+        }
+
+        const currentAudio = dialogueOrder[index];
+
+        currentAudio.currentTime = 0;
+        currentAudio.play();
+
+        currentAudio.addEventListener("ended", () => {
+            playDialogueAt(index + 1);
+        }, { once: true});
+    }
+
+    playDialogueButton.addEventListener("click", () => {
+        stopAllAudio();
+        playDialogueAt(0);
+    })
+
+    document.addEventListener("click", (e) => {
+        const target = e.target.closest(".play-audio");
+        if (!target) {
+            return;
+        }
+
+        const file = target.dataset.audio;
+        const audio = new Audio(`${file}`);
+        audio.play();
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Game stuff
+
+    const backdrop = document.querySelector(".backdrop");
+    const exitModalButton = document.querySelector(".exit-modal-button");
+    const modal = document.querySelector(".modal");
+
+    const thingsThatExitModalScreen = [backdrop, exitModalButton];
+
+    const thingsThatEnterModalScreen = document.querySelectorAll(".review-button");
+
+    const answerOne = document.querySelector("#answer-one");
+    const answerTwo = document.querySelector("#answer-two");
+    const answerThree = document.querySelector("#answer-three");
+
+    const answerButtons = [answerOne, answerTwo, answerThree];
+
+    const whereTheQuestionGoes = document.querySelector("#where-the-question-goes");
+
+    const victoryScreen = document.querySelector("#victory-screen");
+
+    let gameCompletionRate = 0;
+
+    let theQuestion;
+    let theAnswer;
+
+    let selectedAnswer = null;
+
+    let correctAnswerButton;
+
+    let theAnswerIsCorrect = false;
+    let theAnswerHasBeenChecked = false;
+
+    const progressBar = document.querySelector(".progress-bar-inside");
+
+    const submitButton = document.querySelector(".submit-button");
+
+    let theseQuestionHaveBeenAskedAlready = [];
+
+    function exitModalScreen () {
+        backdrop.style.display = "none";
+        modal.style.display = "none";
+        body.classList.remove("no-scroll");
+    }
+
+    function enterModalScreen () {
+        backdrop.style.display = "block";
+        modal.style.display = "flex";
+        body.classList.add("no-scroll");
+    }
+
+    thingsThatExitModalScreen.forEach((element) => {
+        element.addEventListener("click", () => {
+            exitModalScreen();
+        })
+    })
+
+    thingsThatEnterModalScreen.forEach((element) => {
+        element.addEventListener("click", () => {
+            enterModalScreen();
+        })
+    })
+
+    const questionsAndAnswers = {
+        "mugina": "brother",
+        "gudjina": "sister",
+        "yanga": "mother",
+        "gayala": "father",
+        "bimu": "auntie",
+        "bulu": "uncle",
+        "nhula": "he / she",
+        "nhungu": "his / her",
+        "dharibara": "good",
+        "gani": "far",
+        "Who's this?": "Yaru ngani?",
+        "He came far.": "Ganimundu yandjana nhula.",
+        "Her name is...": "Ngungu riyala...",
+        "He is my brother": "Nhula ngaygu mugina.",
+        "She is my sister.": "Nhula ngaygu gudjina.",
+        "She came from Cairns.": "Cairnsmundu yandjana nhula.",
+        "He is from Charters Towers.": "Muralmundu yandjana nhula."
+    }
+
+
+    function startGame () {
+        victoryScreen.style.display = "none";
+        theseQuestionHaveBeenAskedAlready = [];
+        gameCompletionRate = 0;
+        progressBar.style.width = `${gameCompletionRate}%`;
+        theAnswerHasBeenChecked = false;
+        theAnswerIsCorrect = false;
+        newQuestion();
+    }
+
+    function selectRandomKey (object) {
+        const listOfKeys = Object.keys(object);
+        return listOfKeys[Math.floor(Math.random() * listOfKeys.length)];
+    }
+
+    function newQuestion () {
+
+        theAnswerHasBeenChecked = false;
+
+        answerButtons.forEach(element => element.style.background = "white");
+
+        theQuestion = getUnaskedQuestion();
+        theAnswer = questionsAndAnswers[theQuestion];
+
+        let incorrectAnswer1 = getIncorrectAnswer(theAnswer);
+        let incorrectAnswer2 = getIncorrectAnswer(theAnswer, incorrectAnswer1);
+
+        const answers = [theAnswer, incorrectAnswer1, incorrectAnswer2];
+
+        answers.sort(() => Math.random() - 0.5);
+
+        loadAnswers(theQuestion, answers);
+    }
+
+    function getUnaskedQuestion () {
+        let question;
+
+        do {
+            question = selectRandomKey(questionsAndAnswers);
+        } while (theseQuestionHaveBeenAskedAlready.includes(question));
+
+        return question
+    }
+
+    function getIncorrectAnswer (theRealAnswer, firstIncorrectAnswer = null) {
+        let possibleIncorrectAnswer
+
+        do {
+            possibleIncorrectAnswer = questionsAndAnswers[selectRandomKey(questionsAndAnswers)];
+        } while (possibleIncorrectAnswer === theRealAnswer || possibleIncorrectAnswer === firstIncorrectAnswer);
+
+        return possibleIncorrectAnswer;
+    }
+
+    function loadAnswers(question, answerSelection) {
+
+        whereTheQuestionGoes.textContent = question;
+
+        answerOne.textContent = answerSelection[0];
+        answerTwo.textContent = answerSelection[1];
+        answerThree.textContent = answerSelection[2];
+
+        for (const button of answerButtons) {
+            if (button.textContent === theAnswer) {
+                correctAnswerButton = button;
+                break;
+            }
+        }
+    }
+
+    startGame();
+
+    function checkQuestion () {
+        theAnswerHasBeenChecked = true;
+        if (selectedAnswer.textContent === theAnswer) {
+            rightAnswer();
+        } else if (selectedAnswer != theAnswer) {
+            wrongAnswer();
+        }
+    }
+
+    function rightAnswer () {
+        theseQuestionHaveBeenAskedAlready.push(theQuestion);
+        theAnswerIsCorrect = true;
+        gameCompletionRate += 10;
+        progressBar.style.width = `${gameCompletionRate}%`;
+        checkForWin();
+    }
+
+    function checkForWin () {
+        if (gameCompletionRate >= 100) {
+            showVictoryScreen();
+        } else {
+            newQuestion();
+        }
+    }
+
+    function wrongAnswer() {
+        theAnswerIsCorrect = false;
+        selectedAnswer.style.background = "red";
+        correctAnswerButton.style.background = "#A0C57F";
+    }
+
+    function showVictoryScreen () {
+        victoryScreen.style.display = "flex";
+    }
+
+
+    answerButtons.forEach(element => {
+        element.addEventListener("click", () => {
+            answerButtons.forEach(element => element.style.background = "white");
+            selectedAnswer = element;
+            element.style.background = "#A0C57F";
+        })
+    })
+
+    submitButton.addEventListener("click", () => {
+        if (!theAnswerHasBeenChecked) {
+            checkQuestion();
+        } else if (!theAnswerIsCorrect) {
+            newQuestion();
+        }
+    })
+
+    restartButtons.forEach(element => {
+        element.addEventListener("click", () => {
+            startGame();
+        })
+    })
+
+
+</script>
+</body>
+</html>
