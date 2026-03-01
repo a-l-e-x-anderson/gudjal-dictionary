@@ -4,162 +4,1001 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/letter-b.png">
     <title>Birraya | Learn Gudjal</title>
     <style>
 
-        @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Cormorant+SC:wght@300;400;500;600;700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&family=Rock+Salt&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Cormorant+SC:wght@300;400;500;600;700&family=Coustard:wght@400;900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Patua+One&family=Raleway:ital,wght@0,100..900;1,100..900&family=Rock+Salt&display=swap');
 
         * {
+            margin: 0;
+            padding: 0;
             font-family: 'Noto Sans', sans-serif;
-            color: #282828;
             box-sizing: border-box;
         }
 
+        html, body {
+            background: #fff7e0;
+            height: 100%;
+        }
+
         body {
-            background: #FBFAF5;
+            padding-left: 280px;
+            padding-right: 280px;
+        }
+
+        #currently-selected-nav-item {
+            border: 2px solid #282828;
+            background: #e3e3e3;
+        }
+
+        nav {
+            width: 280px;
+            height: 100%;
+            left: 0;
+            background: white;
+            border-right: 3px solid #282828;
+            padding: 16px;
+
             display: flex;
+            flex-flow: column;
+            align-items: center;
+            position: fixed;
+        }
+
+        nav ul {
+            margin-top: 20px;
+        }
+
+        nav ul,
+        nav ul li,
+        nav ul li a {
+            width: 100%;
+            color: #282828;
+        }
+
+        nav ul li,
+        nav ul li a {
+            text-decoration: none;
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav ul li a {
+            height: 60px;
+            margin: 4px;
+            border-radius: 40px;
+            border: 2px solid transparent;
+
+            font-size: 22px;
+
+            font-family: 'Patua One', serif;
+            justify-content: flex-start;
+            padding: 4px;
+            padding-left: 16px;
+        }
+
+        nav ul li a:hover {
+            border: 2px solid #282828;
+            background: #e3e3e3;
+        }
+
+        #logo {
+            width: 70%;
+            height: 50px;
+
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            font-family: 'Patua One', serif;
+            color: #282828;
+            font-size: 36px;
+        }
+
+        #logo:hover {
+            cursor: pointer;
+        }
+
+        .svg-icons {
+            margin: 8px;
+        }
+
+        #lesson-container {
+            min-height: 100vh;
+        }
+
+        #right-bar {
+            width: 280px;
+            height: 100vh;      
+            background: #fff7e0;   
+            right: 0;
+            top: 0;
+            position: fixed;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            border-left: 2px solid #282828;
+            overflow: scroll;
+        }
+
+        #close-right-bar-button {
+            width: 52px;
+            height: 52px;
+            background: #e3e3e3;
+            border: 2px solid #282828;
+            border-radius: 52px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            padding: 16px;
+            margin: 16px;
+            display: none;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        #search-area {
+            width: 100%;
+            padding: 16px;
+
+            display: flex;
+            justify-content: center;
             align-items: center;
             flex-flow: column;
+            gap: 16px;
         }
 
-        h1 {
-            text-align: center;
+        #lesson-search {
+            height: 50px;
+            width: 80%;
+            border-radius: 50px;
+            border: none;
+            border: 2px solid #282828;
+            padding: 16px;
+            font-size: 18px;
+            box-shadow: 3px 3px 0px #000; 
+            padding-left: 24px;
+            padding-right: 24px;
         }
 
-        h3 {
-            margin-bottom: 40px;
+        #lesson-search:focus {
+            outline: none;
         }
 
-        .learning-container {
+        #lesson-search-button-container {
+            width: 80%;
+            height: 52px;
             display: flex;
-            width: 100%;
-            flex-flow: row wrap-reverse;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .search-button {
+            height: 100%;
+            width: 20%;
+            border-radius: 50px;
+            background: white;
+            border: 2px solid #282828;
+            font-size: 18px;
+
+            box-shadow: 3px 3px 0px #000; 
+            display: flex;
             justify-content: center;
+            align-items: center;
         }
 
-        .lesson-container, .tool-container {
-            width: 50%;
-            padding: 12px;
-            min-width: 320px;
+        .search-button img {
+            display: none;
         }
 
-        .tool-container {
-            border-left: 1px solid #282828;
+        #refresh-button {
+            width: 52px;
+            height: 52px;
+            background: #e3e3e3;
+        }
+
+        .search-button:hover {
+            cursor: pointer;
+        }
+
+        #dialogue-button, .d-icon {
+            background: #B77466;
+        }
+
+        .lesson-type-button {
+            padding: 8px 12px 8px 12px;
+            border-radius: 32px;
+            border: 2px solid #282828;
+            align-self: flex-start;
+            margin-left: 32px;
+            font-size: 12px;
+        }
+
+        #music-button, .m-icon {
+            background: #FFE1AF;
+        }
+
+        #story-button, .s-icon {
+            background: #E2B59A;
+        }
+
+        #video-button, .v-icon {
+            background: #957C62;
+        }
+
+        #lesson-selection-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            padding: 16px;
         }
 
         .lesson {
-            height: 150px;
-            border-radius: 8px;
+            height: 200px;
+            background: white;
+            border: 2px solid #282828;
+            border-radius: 16px;
+            display: flex;
+            align-items: flex-end;
+            background: lightblue;
+
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .raiserupper {
+            transition: 0.4s ease;
+        }
+
+        .raiserupper:hover {
+            cursor: pointer;
+            transform: translateY(-8px);
+        }
+
+        .raiserupperabit {
+            transition: 0.4s ease;
+        }
+
+        .raiserupperabit:hover {
+            transform: translateY(-4px);
+        }
+
+        .lesson-summary {
+            border-top: 2px solid #282828;
+            height: 60px;
             width: 100%;
+            background: white;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            display: flex;
         }
 
-        h3 {
-            width: 100%;
-            text-align: center;
-        }
+        .little-lesson-icon {
+            height: 32px;
+            width: 32px;
+            border-radius: 32px;
+            border: 2px solid #282828;
 
-        .lesson-grid {
-            display: grid;
-            gap: 12px;
-            width: 100%;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            grid-template-rows: auto;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: auto;
-            gap: 12px;
-        }
-
-        @media (max-width: 700px) {
-
-            .tool-container {
-            border: none;
-            }
-
-        }
-
-        a {
-            width: 100%;
-            height: 100%;
-            font-size: 16px;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-decoration: none;
-            opacity: 0.7;
-            z-index: 3;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 8px;
+        }
+        
+        .top-area {
+            display: flex;
+            flex-flow: column;
         }
 
-        span {
-            background-color: #282828;
-            padding: 4px;
-            color: white;
+        .lesson-information {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
-        .lesson, .tool {
+        .lesson-information-button-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column;
+            gap: 16px;
+            padding: 16px;
+            margin-top: auto;
+            z-index: 2;
+        }
+
+        .lesson-information-button-container > a {
+            width: 90%;
+            background: #e3e3e3;
+            height: 52x;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            border-radius: 16px;
+            font-size: 22px;
+            font-weight: 400;
+            border: 2px solid #282828;
+            font-family: 'Patua One', serif;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .lesson-information-button-container > a:hover {
+            cursor: pointer;
+        }
+
+        h3 {
+            font-size: 24px;
+            padding: 16px 32px 16px 32px;
+            font-family: 'Patua One', serif;
+            margin-top: 16px;
+        }
+
+        .grammar-and-vocab-box {
+            width: 100%;
+            padding: 16px 32px 16px 32px;
+        }
+
+        .grammar-and-vocab-box > ul > li {
+            margin: 4px;
+            margin-left: 32px;
+        }
+
+        .lesson-information p {
+            padding: 16px 32px 16px 32px;
+        }
+
+        .lesson {
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-size: cover;
-            border: 1px solid #282828;
-            height: 150px;
-            border-radius: 8px;
         }
 
-        #lesson-one {
-            background-image: url("/homepage-images/lesson-one.png");
+        .lesson-one {
+            background-image: url(images/lesson-one.png);
         }
 
-        #lesson-two {
-            background-image: url("/homepage-images/lesson-two.png");
+        .lesson-two {
+            background-image: url(images/lesson-two.png);
         }
 
-        #lesson-three {
-            background-image: url("/homepage-images/lesson-three.png");
+        .lesson-three {
+            background-image: url(images/lesson-three.png);
         }
 
-        #dictionary-link {
-            background-image: url("/homepage-images/dictionary-image.png");
+        .lesson-four {
+            background-image: url(images/lesson-four.png);
         }
 
-        .tool a {
-            font-size: 24px;
+        .lesson-five {
+            background-image: url(images/lesson-five.png);
+        }
+
+        .lesson-six {
+            background-image: url(images/lesson-six.png);
+        }
+
+        .lesson-seven {
+            background-image: url(images/lesson-seven.png);
+        }
+
+        .lesson-eight {
+            background-image: url(images/lesson-eight.png);
+        }
+
+        .lesson-nine {
+            background-image: url(images/lesson-nine.png);
+        }
+
+        .lesson-ten {
+            background-image: url(images/lesson-ten.png);
+        }
+
+        .lesson-name {
+            font-size: 20px;
+            padding: 8px;
+            
+        }
+
+        .lesson-name-container {
+            height: 100%;
+            width: 75%;
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lesson-name-container p {
+            font-size: 14px;
+        }
+
+        .icon-container {
+            height: 100%;
+            width: 25%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .specific-lesson-container {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: scroll;
+            background: white;
+        }
+
+        .button {
+            text-decoration: none;
+            color: black;
+        }
+
+        @media (max-width: 800px) {
+            .lesson-name-container p {
+                font-size: 16px;
+            }
+
+            #lesson-search-button-container {
+                justify-content: center;
+                width: 90%;
+            }
+
+            #lesson-search-button-container img {
+                width: 28px;
+                height: 28px;
+            }
+
+            #lesson-search-button-container .search-button {
+                font-size: 0px;
+                padding: 8px;
+                width: 60px;
+                height: 60px;
+                margin: 4px;
+                font-weight: bold;
+            }
+
+            .search-button img {
+                display: block;
+            }
+
+            #refresh-button {
+                font-size: 16px !important;
+            }
+        }
+
+        @media (max-width: 1300px) {
+            .search-button {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+
+            nav {
+                width: 80px;
+            }
+
+            nav, 
+            nav ul,
+            nav ul li,
+            nav ul li a {
+                padding: 0;
+            }
+
+            #logo {
+                font-size: 16px;
+            }
+
+            nav ul li a {
+                font-size: 10px;
+                width: 60px;
+                height: 60px;
+                border-radius: 8px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-flow: column;
+            }
+
+            #right-bar {
+                background: white;
+                display: none;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                border-left: none;
+            }
+
+            #close-right-bar-button {
+                display: flex;
+            }
+
+            body {
+                padding: 0px;
+                padding-left: 80px;
+            }
+
+            #lesson-search-button-container > * {
+                height: 48px;
+                font-size: 16px;
+                padding-left: 16px;
+                padding-right: 16px;
+                margin: 0px;
+            }
+
+            #lesson-search-button-container {
+                align-items: center;
+                flex-flow: row wrap;
+                height: auto;
+            }
+
+            #refresh-button {
+                padding: 0;
+                width: 48px;
+                min-width: 0;
+            }
         }
 
     </style>
 </head>
 <body>
 
-    <h1>
-        Gudjal Birraya Ngali!
-        <br>
-        <i>Let's talk Gudjal!</i>
-    </h1>
+    <nav>
+        <div id="logo">Birraya.</div>
+        <ul>
+            <li><a href="/" id="currently-selected-nav-item"><img src="/icons/lessons.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Lessons</a></li>
+            <li><a href="/dictionary/"><img src="/icons/dictionary.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Dictionary</a></li>
+            <li><a href="#"><img src="/icons/grammar.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Grammar</a></li>
+            <li><a href="#"><img src="/icons/phrases.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Phrase Bank</a></li>
+        </ul>
+    </nav>
 
-    <div class="learning-container">
-        <div class="lesson-container">
-            <h3>Gudjal Lessons</h3>
-            <div class="lesson-grid">
-                <div class="lesson" id="lesson-one"><a href="/lesson-one/"><span class="lesson-label">Chapter One: Ngaygu riyala...</span></a></div>
-                <div class="lesson" id="lesson-two"><a href="/lesson-two/"><span class="lesson-label">Chapter Two: Wandhamundu yinda?</span></a></div>
-                <div class="lesson" id="lesson-three"><a href="/lesson-three/"><span class="lesson-label">Chapter Three: Yaru ngani?</span></a></div>
-                <div class="lesson"></div>
-                <div class="lesson"></div>
-                <div class="lesson"></div>
-                <div class="lesson"></div>
-                <div class="lesson"></div>
+    <div id="lesson-container">
+        <div id="search-area">
+            
+                <input id="lesson-search" type="text">
+            
+            <div id="lesson-search-button-container">
+                <div class="search-button raiserupperabit" id="dialogue-button">Dialogues<img src="/icons/dialogue.svg" alt="Lessons icon" width="24" height="24" class="svg-icons"></div>
+                <div class="search-button raiserupperabit" id="music-button">Music<img src="/icons/music.svg" alt="Lessons icon" width="24" height="24" class="svg-icons"></div>
+                <div class="search-button raiserupperabit" id="story-button">Stories<img src="/icons/story.svg" alt="Lessons icon" width="24" height="24" class="svg-icons"></div>
+                <div class="search-button raiserupperabit" id="video-button">Videos<img src="/icons/video.svg" alt="Lessons icon" width="24" height="24" class="svg-icons"></div>
+                <div class="search-button raiserupperabit" id="refresh-button">⨉</div>
             </div>
         </div>
-        <div class="tool-container">
-            <h3>Gudjal Tools</h3>
-            <div class="tools-grid">
-                <div id="dictionary-link" class="tool"><a href="/dictionary/"><span class="lesson-label">Gudjal Dictionary</span></a></div>
-                <div class="tool"></div>
+
+        <div id="lesson-selection-grid">
+            <div class="lesson lesson-one raiserupper dialogue-lesson" id="lesson-one-button"><div class="lesson-summary"><div class="lesson-name-container"><p>Chapter 1: Ngaygu riyala...</p></div><div class="icon-container"><div class="little-lesson-icon d-icon">D</div></div></div></div>
+            <div class="lesson lesson-two raiserupper dialogue-lesson" id="lesson-two-button"><div class="lesson-summary"><div class="lesson-name-container"><p>Chapter 2: Wandhamundu yinda?</p></div><div class="icon-container"><div class="little-lesson-icon d-icon">D</div></div></div></div>
+            <div class="lesson lesson-three raiserupper dialogue-lesson" id="lesson-three-button"><div class="lesson-summary"><div class="lesson-name-container"><p>Chapter 3: Yaru ngani?</p></div><div class="icon-container"><div class="little-lesson-icon d-icon">D</div></div></div></div>
+            <div class="lesson lesson-four raiserupper music-lesson" id="lesson-four-button"><div class="lesson-summary"><div class="lesson-name-container"><p>Chapter 4: Wandha yinda yaniya?</p></div><div class="icon-container"><div class="little-lesson-icon m-icon">M</div></div></div></div>
+            <div class="lesson lesson-five raiserupper video-lesson" id="lesson-five-button"><div class="lesson-summary"><div class="lesson-name-container"><p>Chapter 5: Yaniya ngana!</p></div><div class="icon-container"><div class="little-lesson-icon v-icon">V</div></div></div></div>
+            <div class="lesson lesson-six raiserupper dialogue-lesson" id="lesson-six-button"><div class="lesson-summary"><div class="lesson-name-container"><p>Chapter 6: Yinda balgana nhunha!</p></div><div class="icon-container"><div class="little-lesson-icon d-icon">D</div></div></div></div>
+            <div class="lesson lesson-seven raiserupper music-lesson" id="lesson-seven-button"><div class="lesson-summary"><div class="lesson-name-container"><p>Chapter 7: Nhagaya! Birrbirr dhulangga!</p></div><div class="icon-container"><div class="little-lesson-icon m-icon">M</div></div></div></div>
+            <div class="lesson lesson-eight raiserupper story-lesson" id="lesson-eight-button"><div class="lesson-summary"><div class="lesson-name-container"><p>Chapter 8: Bundjigu ngaya. </p></div><div class="icon-container"><div class="little-lesson-icon s-icon">S</div></div></div></div>
+            <div class="lesson lesson-nine raiserupper video-lesson" id="lesson-nine-button"><div class="lesson-summary"><div class="lesson-name-container"><p>Chapter 9: Nhula dhandayngga!</p></div><div class="icon-container"><div class="little-lesson-icon v-icon">V</div></div></div></div>
+            <div class="lesson lesson-ten raiserupper story-lesson" id="lesson-ten-button"><div class="lesson-summary"><div class="lesson-name-container"><p>Chapter 10: Wandi ngayngarra.</p></div><div class="icon-container"><div class="little-lesson-icon s-icon">S</div></div></div></div>
+        </div>
+        
+    </div>
+
+    <div id="right-bar">
+        <div id="close-right-bar-button">⨉</div>
+        <div class="lesson-information">
+            <div id="lesson-one-info" class="specific-lesson-container">
+
+                <div class="top-area">
+
+                    <h3>Chapter 1: Ngaygu riyala...</h3>
+
+                    <div class="lesson-type-button d-icon">Dialogue</div>
+
+                    <p>In this lesson, we learn how to introduce ourselves. We talk about our names and our skin.</p>
+
+                    <div class="grammar-and-vocab-box">
+
+                        <h4>Grammar:</h4>
+                        <ul>
+                            <li>Saying "is"</li>
+                        </ul>
+                        <br>
+                        <h4>Vocabulary:</h4>
+                        <ul>
+                            <li>Yaru</li>
+                            <li>Riyala</li>
+                            <li>Yaguy</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <div class="lesson-information-button-container">
+                    <a href="/lessons/chapter-one/index.html" class="enter-lesson button raiserupperabit">Enter Lesson</a>
+                    <a href="#" class="practise-lesson button raiserupperabit">Practise</a>
+                </div>
+            </div>
+            <div id="lesson-two-info" class="specific-lesson-container">
+
+                <div class="top-area">
+
+                    <h3>Chapter 2: Wandhamundu yinda?</h3>
+
+                    <div class="lesson-type-button d-icon">Dialogue</div>
+
+                    <p>In this lesson, we talk about where we come from. How can we say: "I'm from Charters Towers"?</p>
+
+                    <div class="grammar-and-vocab-box">
+
+                        <h4>Grammar:</h4>
+                        <ul>
+                            <li>Word endings</li>
+                            <li>The -mundu ending</li>
+                        </ul>
+                        <br>
+                        <h4>Vocabulary:</h4>
+                        <ul>
+                            <li>Mural</li>
+                            <li>The cardinal directions</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <div class="lesson-information-button-container">
+                    <a href="#" class="enter-lesson button raiserupperabit">Enter Lesson</a>
+                    <a href="#" class="practise-lesson button raiserupperabit">Practise</a>
+                </div>
+            </div>
+            <div id="lesson-three-info" class="specific-lesson-container">
+
+                <div class="top-area">
+
+                    <h3>Chapter 3: Yaru ngani?</h3>
+
+                    <div class="lesson-type-button d-icon">Dialogue</div>
+
+                    <p>In this lesson, we start to talk about other people. We also talk about what a subject pronoun is.</p>
+
+                    <div class="grammar-and-vocab-box">
+
+                        <h4>Grammar:</h4>
+                        <ul>
+                            <li>Subject pronouns</li>
+                        </ul>
+                        <br>
+                        <h4>Vocabulary:</h4>
+                        <ul>
+                            <li>He and she</li>
+                            <li>Bimu and bulu</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <div class="lesson-information-button-container">
+                    <a href="#" class="enter-lesson button raiserupperabit">Enter Lesson</a>
+                    <a href="#" class="practise-lesson button raiserupperabit">Practise</a>
+                </div>
+            </div>
+            <div id="lesson-four-info" class="specific-lesson-container">
+
+                <div class="top-area">
+
+                    <h3>Chapter 4: Wandha yinda yaniya?</h3>
+
+                    <div class="lesson-type-button m-icon">Music</div>
+
+                    <p>In this lesson, we talk about how to say we're going somewhere. We also learn about the present tense.</p>
+
+                    <div class="grammar-and-vocab-box">
+
+                        <h4>Grammar:</h4>
+                        <ul>
+                            <li>The dative -wu ending</li>
+                            <li>The present -ya ending</li>
+                            <li>"The" and "a"</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <div class="lesson-information-button-container">
+                    <a href="#" class="enter-lesson button raiserupperabit">Enter Lesson</a>
+                    <a href="#" class="practise-lesson button raiserupperabit">Practise</a>
+                </div>
+            </div>
+            <div id="lesson-five-info" class="specific-lesson-container">
+
+                <div class="top-area">
+
+                    <h3>Chapter 5: Yaniya ngana!</h3>
+
+                    <div class="lesson-type-button v-icon">Video</div>
+
+                    <p>In this lesson, we learn how to tell people to do something with the -ya verb ending.</p>
+
+                    <div class="grammar-and-vocab-box">
+
+                        <h4>Grammar:</h4>
+                        <ul>
+                            <li>The command -ya ending</li>
+                        </ul>
+                        <h4>Vocabulary:</h4>
+                        <ul>
+                            <li>Singular, dual and plural pronouns</li>
+                            <li>Malbanani: dancing grounds</li>
+                            <li>Minggala: firesticks</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="lesson-information-button-container">
+                    <a href="#" class="enter-lesson button raiserupperabit">Enter Lesson</a>
+                    <a href="#" class="practise-lesson button raiserupperabit">Practise</a>
+                </div>
+            </div>
+            <div id="lesson-six-info" class="specific-lesson-container">
+
+                <div class="top-area">
+
+                    <h3>Chapter 6: Yinda balgana nhunha!</h3>
+
+                    <div class="lesson-type-button d-icon">Dialogue</div>
+
+                    <p>In this lesson, we start talking about past events. We also look more deeply at a new kind of pronoun: object pronouns.</p>
+
+                    <div class="grammar-and-vocab-box">
+
+                        <h4>Grammar:</h4>
+                        <ul>
+                            <li>The past -na ending</li>
+                            <li>Object pronouns</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="lesson-information-button-container">
+                    <a href="#" class="enter-lesson button raiserupperabit">Enter Lesson</a>
+                    <a href="#" class="practise-lesson button raiserupperabit">Practise</a>
+                </div>
+            </div>
+            <div id="lesson-seven-info" class="specific-lesson-container">
+
+                <div class="top-area">
+
+                    <h3>Chapter 7: Nhagaya! Birrbirr dhulangga!</h3>
+
+                    <div class="lesson-type-button m-icon">Music</div>
+
+                    <p>In this lesson, we learn about all the animals that live in Gudjal Country. We also learn how to say something is "at", "on", or "in" some place.</p>
+
+                    <div class="grammar-and-vocab-box">
+
+                        <h4>Grammar:</h4>
+                        <ul>
+                            <li>The location -nnga ending</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="lesson-information-button-container">
+                    <a href="#" class="enter-lesson button raiserupperabit">Enter Lesson</a>
+                    <a href="#" class="practise-lesson button raiserupperabit">Practise</a>
+                </div>
+            </div>
+            <div id="lesson-eight-info" class="specific-lesson-container">
+
+                <div class="top-area">
+
+                    <h3>Chapter 8: Bundjigu ngaya.</h3>
+
+                    <div class="lesson-type-button s-icon">Story</div>
+
+                    <p>In this lesson, we start talking about things we'll do tomorrow, next week, or any time in the future We also talk about how counting works in Gudjal.</p>
+
+                    <div class="grammar-and-vocab-box">
+
+                        <h4>Grammar:</h4>
+                        <ul>
+                            <li>The future -gu ending</li>
+                        </ul>
+                        <h4>Vocabulary:</h4>
+                        <ul>
+                            <li>Numerals</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="lesson-information-button-container">
+                    <a href="#" class="enter-lesson button raiserupperabit">Enter Lesson</a>
+                    <a href="#" class="practise-lesson button raiserupperabit">Practise</a>
+                </div>
+            </div>
+            <div id="lesson-nine-info" class="specific-lesson-container">
+
+                <div class="top-area">
+
+                    <h3>Chapter 9: Nhula dhandayngga!</h3>
+
+                    <div class="lesson-type-button v-icon">Video</div>
+
+                    <p>In this lesson, we start talking about things that might or could happen. We compare it to future events which <i>will</i> happen.</p>
+
+                    <div class="grammar-and-vocab-box">
+
+                        <h4>Grammar:</h4>
+                        <ul>
+                            <li>The potential -yngga ending</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="lesson-information-button-container">
+                    <a href="#" class="enter-lesson button raiserupperabit">Enter Lesson</a>
+                    <a href="#" class="practise-lesson button raiserupperabit">Practise</a>
+                </div>
+            </div>
+            <div id="lesson-ten-info" class="specific-lesson-container">
+
+                <div class="top-area">
+
+                    <h3>Chapter 10: Wandi ngayngarra.</h3>
+
+                    <div class="lesson-type-button s-icon">Story</div>
+
+                    <p>In this lesson, we meet a very cheeky dingo. We also learn about doers and receivers in Gudjal.</p>
+
+                    <div class="grammar-and-vocab-box">
+
+                        <h4>Grammar:</h4>
+                        <ul>
+                            <li>Doers and receivers: the -nggu ending</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="lesson-information-button-container">
+                    <a href="#" class="enter-lesson button raiserupperabit">Enter Lesson</a>
+                    <a href="#" class="practise-lesson button raiserupperabit">Practise</a>
+                </div>
             </div>
         </div>
     </div>
+
+
+<script>
+
+const listOfLessonButtons = [...document.querySelectorAll(".lesson")];
+const listOfSideBarInfoSheets = [...document.querySelectorAll(".specific-lesson-container")];
+
+const listOfDialogueLessons = [...document.querySelectorAll(".dialogue-lesson")];
+const listOfMusicLessons = [...document.querySelectorAll(".music-lesson")];
+const listOfStoryLessons = [...document.querySelectorAll(".story-lesson")];
+const listOfVideoLessons = [...document.querySelectorAll(".video-lesson")];
+
+const lessonSearchBar = document.querySelector("#lesson-search");
+
+const listOfSearchButtons = [...document.querySelectorAll(".search-button")];
+
+const rightBar = document.querySelector("#right-bar");
+const closeRightBarButton = document.querySelector("#close-right-bar-button");
+
+
+function filterBySearchBar () {
+
+    makeLessonButtonsDisappear();
+
+    const searchedTerm = lessonSearchBar.value.toLowerCase();
+
+    listOfLessonButtons.forEach((lessonButton) => {
+        const lessonTitle = lessonButton.querySelector("p").innerText.toLowerCase();
+
+        if (lessonTitle.includes(searchedTerm)) {
+            lessonButton.style.display = "flex";
+        }
+    })
     
+}
+
+function filterByLessonType (lessonType) {
+    makeLessonButtonsDisappear();
+
+    switch (lessonType) {
+
+        case "dialogue-button":
+            listOfDialogueLessons.forEach(button => {
+                button.style.display = "flex";
+            })
+            break;
+        
+        case "music-button":
+            listOfMusicLessons.forEach(button => {
+                button.style.display = "flex";
+            })
+            break;
+
+        case "story-button":
+            listOfStoryLessons.forEach(button => {
+                button.style.display = "flex";
+            })
+            break;
+
+        case "video-button":
+            listOfVideoLessons.forEach(button => {
+                button.style.display = "flex";
+            })
+            break;
+
+        case "refresh-button":
+            lessonSearchBar.value = "";
+            makeSideBarInfoDisappear();
+            listOfLessonButtons.forEach(button => {
+                button.style.display = "flex";
+            })
+            break;
+    }
+}
+
+function makeSideBarInfoDisappear () {
+    listOfSideBarInfoSheets.forEach(infoSheet => {
+        infoSheet.style.display = "none";
+    })
+}
+
+function makeLessonButtonsDisappear () {
+    listOfLessonButtons.forEach(lessonButton => {
+        lessonButton.style.display = "none";
+    })
+}
+
+function makeThisInfoBarAppear (thisInfoBar) {
+    rightBar.style.display = "flex";
+    thisInfoBar.style.display = "flex";
+}
+
+listOfLessonButtons.forEach(button => {
+    button.addEventListener("click", (event) => {
+        makeSideBarInfoDisappear();
+
+        const buttonId = event.currentTarget.id;
+        const infoSheetId = buttonId.replace("button", "info");
+
+        const infoSheet = document.getElementById(infoSheetId);
+        makeThisInfoBarAppear(infoSheet);
+    })
+})
+
+listOfSearchButtons.forEach(button => {
+    button.addEventListener("click", (event) => {
+        filterByLessonType(event.currentTarget.id);
+    })
+})
+
+closeRightBarButton.addEventListener("click", () => {
+    rightBar.style.display = "none";
+})
+
+lessonSearchBar.addEventListener("input", filterBySearchBar);
+
+</script>
 </body>
 </html>
