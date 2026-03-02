@@ -108,6 +108,18 @@
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
         #right-bar {
             width: 280px;
             height: 100vh;      
@@ -121,6 +133,21 @@
             border-left: 2px solid #282828;
             overflow: scroll;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         #search-area {
@@ -151,9 +178,27 @@
             outline: none;
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         #refresh-button {
-            width: 52px;
-            height: 52px;
+            width: 44px;
+            height: 44px;
             background: #e3e3e3;
         }
 
@@ -174,6 +219,23 @@
         .raiserupperabit:hover {
             transform: translateY(-4px);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -205,72 +267,113 @@
 
 
 
+        .ochre {
+            background: #B77466;
+        }
+
+        .yellow {
+            background: #FFE1AF;
+        }
+
+        .tan {
+            background: #E2B59A;
+        }
+
+        .brown {
+            background: #957C62;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         #search-results-area {
-            margin: 32px;
-            margin-top: 40px;
-            background: white;
-            border-radius: 16px;
-            border: 2px solid black;
-            width: 90%;
-            box-shadow: 3px 3px 0px #000;
-            padding: 16px;
+            width: 80%;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-        #dictionary-results-table thead tr td {
-            font-family: 'Patua One', serif;
-            font-size: 24px;
-            padding: 28px;
-        }
-
-        #dictionary-results-table,
-        #dictionary-results-table thead,
-        #dictionary-results-table thead tr {
+        table {
             width: 100%;
+            background: white;
+            margin-top: 20px;
+            border: 2px solid black;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 3px 3px 0px #000;
         }
 
-        #dictionary-results-table tbody tr td {
-            padding: 12px;
-            padding-left: 32px;
+        table tr td {
             width: 50%;
-            
         }
 
         .gudjal-column {
-            font-size: 22px;
+            font-size: 24px;
+            font-weight: 500;
         }
 
-        .gudjal-column, 
         .english-column {
-            border-top: 12px solid white;
-        }
-
-        .english-column,
-        .speaker-column {
-            font-size: 18px;
+            font-weight: 300;
         }
 
         .speaker-column {
             font-weight: 200;
-            border-bottom: 1px solid #282828;
         }
 
-        .entry-divider {
-            height: 1px;
+
+
+
+
+
+
+
+
+
+
+        
+        
+
+
+        #speaker-button-container {
             width: 80%;
-            background: black;
+            display: flex;
+            flex-flow: wrap;
+            gap: 16px;
+            justify-content: center;
         }
+
+        #speaker-button-container > * {
+            height: 44px;
+            border-radius: 52px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #282828;
+            padding: 16px;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .speaker-button:hover,
+        #refresh-button:hover {
+            cursor: pointer;
+        }
+
+        .speaker-initials {
+            display: none;
+        }
+
 
 
 
@@ -279,10 +382,24 @@
 
         h3 {
             font-size: 24px;
-            padding: 16px 32px 16px 32px;
             font-family: 'Patua One', serif;
-            margin-top: 16px;
+            font-weight: 100;
+            margin-top: 8px;
+            width: 80%;
+            text-align: center;
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         @media (max-width: 800px) {
@@ -302,6 +419,28 @@
             }
         }
 
+        @media (max-width: 900px) {
+
+            .speaker-name {
+                display: none;
+            }
+            
+            .speaker-button > .speaker-initials {
+                display: flex;
+            }
+
+            #speaker-button-container > .speaker-button,
+            #refresh-button {
+                height: 52px;
+                width: 52px;
+                border-radius: 52px;
+            }
+
+            #speaker-button-container {
+                gap: 12px;
+            }
+        }
+
         @media (max-width: 550px) {
 
             #dictionary-results-table tbody tr td,
@@ -309,6 +448,19 @@
                 font-size: 12px;
                 padding: 0;
                 padding-bottom: 8px;
+            }
+
+            #speaker-button-container {
+                gap: 6px;
+            }
+
+
+            #speaker-button-container > .speaker-button,
+            #refresh-button {
+                height: 32px;
+                width: 32px;
+                border-radius: 32px;
+                font-size: 12px;
             }
 
 
@@ -380,14 +532,29 @@
                 
                     <label id="dictionary-instructions" for="lesson-search">Look up a word in Gudjal or English:</label>
                     <input id="lesson-search" type="text">
+
+                    <h3>Filter results by source:</h3>
+
+                    <div id="speaker-button-container">
+                        
+                        <div class="speaker-button raiserupperabit ochre"><span class="speaker-name">Freddie Toomba</span><span class="speaker-initials">FT</span></div>
+                        <div class="speaker-button raiserupperabit yellow"><span class="speaker-name">Harry Bunn</span><span class="speaker-initials">HB</span></div>
+                        <div class="speaker-button raiserupperabit tan"><span class="speaker-name">George Reid</span><span class="speaker-initials">GR</span></div>
+                        <div class="speaker-button raiserupperabit brown"><span class="speaker-name">Ranji Pope</span><span class="speaker-initials">RP</span></div>
+                        <div class="speaker-button raiserupperabit tan"><span class="speaker-name">William Santo</span><span class="speaker-initials">WS</span></div>
+                        <div class="speaker-button raiserupperabit brown"><span class="speaker-name">Bluff Downs</span><span class="speaker-initials">BD</span></div>
+                        <div class="speaker-button raiserupperabit ochre"><span class="speaker-name">Homestead</span><span class="speaker-initials">HS</span></div>
+                        <div class="speaker-button raiserupperabit yellow"><span class="speaker-name">Clarke River</span><span class="speaker-initials">CR</span></div>
+                        
+                        <div class="raiserupperabit" id="refresh-button">⨉</div>
+                    </div>
+
                 
             </div>
 
             <div id="search-results-area">
 
                 <table id="dictionary-results-table">
-                    <thead><tr><td>Gudjal</td><td>English</td></tr></thead>
-                    <tbody></tbody>
                 </table>
 
             </div>
@@ -416,34 +583,82 @@
 
 
     const searchbar = document.querySelector("#lesson-search");
-    const dictionaryResultsTbody = document.querySelector("#dictionary-results-table tbody");
+    const dictionaryResultsArea = document.querySelector("#search-results-area");
+
+    const listOfSpeakerButtons = document.querySelectorAll(".speaker-button");
+    const refreshButton = document.querySelector("#refresh-button");
+
+    let selectedSpeaker = "";
 
     function displayResults (matchingEntries) {
 
-        dictionaryResultsTbody.innerHTML = matchingEntries
+        dictionaryResultsArea.innerHTML = matchingEntries
             .map(entry => `
-                <tr><td class="gudjal-column">${entry.gudjalEntry}</td><td class="english-column"><i>${entry.englishTranslation}</i></td></tr>
-                <tr><td class="speaker-column" colspan=2>${entry.speaker}</td></tr>
+                <table class="raiserupper">
+                    <tbody>
+                        <tr><td class="gudjal-column">${entry.gudjalEntry}</td><td class="speaker-column">${entry.speaker}</td></tr>
+                        <tr><td class="english-column" colspan=2><i>${entry.englishTranslation}</i></td></tr>
+                    </tbody>
+                </table>
                 `)
             .join("");
 
+    }
+
+    function disappearSpeakerButtons () {
+        listOfSpeakerButtons.forEach(button => {
+            button.style.display = "none";
+        })
+    }
+
+    function showThisSpeakerButton (button) {
+        button.style.display = "flex";
     }
 
     function filterDictionary () {
 
         const query = searchbar.value.toLowerCase();
 
-        const matches = gudjalDictionary.filter(dictionaryEntry => (
+        const matches = gudjalDictionary.filter(dictionaryEntry => {
 
+            const matchesText = 
             dictionaryEntry.gudjalEntry.toLowerCase().includes(query) || 
             dictionaryEntry.englishTranslation.toLowerCase().includes(query)
 
-            ))
+            const matchesSpeaker = dictionaryEntry.speaker.includes(selectedSpeaker);
+
+            return matchesText && matchesSpeaker;
+        })
 
         displayResults(matches);
     }
 
+    function changeSpeaker (thingThatWasJustClicked) {
+        selectedSpeaker = thingThatWasJustClicked;
+    }
+
+    listOfSpeakerButtons.forEach(button => {
+        button.addEventListener("click", () => {
+
+            changeSpeaker(button.querySelector(".speaker-initials").innerText)
+            filterDictionary();
+
+            disappearSpeakerButtons();
+            showThisSpeakerButton(button);
+
+        })
+    })
+
     searchbar.addEventListener("keyup", filterDictionary);
+
+    refreshButton.addEventListener("click", () => {
+        selectedSpeaker = "";
+        searchbar.value = "";
+        filterDictionary();
+        listOfSpeakerButtons.forEach(button => {
+            showThisSpeakerButton(button);
+        })
+    })
 
 </script>
 </body>
