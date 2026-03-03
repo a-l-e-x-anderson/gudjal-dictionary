@@ -243,11 +243,15 @@
 
 
 
-        #grammar-container {
+        #grammar-container,
+        #grammar-area {
             display: flex;
             flex-flow: column;
             align-items: center;
+            padding-bottom: 40px;
         }
+
+
 
 
 
@@ -296,10 +300,6 @@
 
 
 
-        table {
-            width: 100%;
-        }
-
 
 
 
@@ -337,15 +337,28 @@
 
 
 
-        h3 {
+        h3,
+        h3 > span {
             font-size: 24px;
             font-family: 'Patua One', serif;
             font-weight: 100;
         }
 
         table tbody tr td {
-            width: min-content;
+            padding-right: 16px;
         }
+
+        .ling-title,
+        .ling-explanation {
+            display: none;
+        }
+
+
+
+
+
+
+
 
 
         .smallcaps {
@@ -436,19 +449,9 @@
 
             </div>
 
-            <div class="grammar-lookup"></div>
+            <div id="grammar-area">
 
-            <div class="grammar-articles grammar-explanation">
-                <h3>Articles</h3>
-                <p class="layperson-explanation">There are no words like ‘the’, ‘a’ or ‘an’ in Gudjal. If you want to say ‘the kangaroo’ or ‘a kangaroo’, you just say ‘kangaroo’.</p>
-                <p class="linguist-explanation">Gudjal lacks articles.</p>
-                <table>
-                    <tbody>
-                        <tr class="gudjal-row"><td>Wuni-na</td><td>gaygara.</td></tr>
-                        <tr class="english-gloss-row"><td>die<span class="smallcaps">-past</span></td><td>kangaroo</td></tr>
-                        <tr class="english-translation-row"><td colspan="2"><i>The kangaroo died.</i></td></tr>
-                    </tbody>
-                </table>
+
             </div>
 
     </div>
@@ -460,6 +463,57 @@
 
 <script>
 
+    let grammarCollection;
+
+    Papa.parse("grammar-section.csv", {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: results => {
+                displayGrammarPoints(results.data);
+                grammarCollection = results.data;
+            }
+    })
+
+    const grammarArea = document.querySelector("#grammar-area");
+
+    function prepareSentenceForTable (sentence) {
+
+        const splitSentence = sentence.split(" ");
+        let preparedTableString = "";
+
+        for (const word of splitSentence) {
+            preparedTableString += `<td>${word}</td>`;
+        }
+
+        return preparedTableString;
+
+    }
+
+    function displayGrammarPoints (grammar) {
+
+        grammarArea.innerHTML = grammar 
+            .map (grammarPoint => {
+
+                const gudjalRow = prepareSentenceForTable(grammarPoint.gudjal);
+                const glossRow = prepareSentenceForTable(grammarPoint.gloss);
+                const wordCount = grammarPoint.gudjal.split(" ").length;
+                    
+                return `
+                <div class="grammar-explanation">
+                    <h3><span class="ling-title">${grammarPoint.lingTitle}</span><span class="lay-title">${grammarPoint.layTitle}</span></h3>
+                    <p><span class="ling-explanation">${grammarPoint.lingExplanation}</span><span class="lay-title">${grammarPoint.layExplanation}</span></p>
+                    <table>
+                        <tbody>
+                            <tr class="gudjal-row">${gudjalRow}</tr>
+                            <tr class="gloss-row">${glossRow}</tr>
+                            <tr class="english-translation-row colspan=${wordCount}"><td>${grammarPoint.translation}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            `})
+            .join("");
+    }
 
 
 </script>
