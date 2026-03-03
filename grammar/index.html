@@ -355,7 +355,9 @@
 
 
 
-
+        p {
+            line-height: 28px;
+        }
 
 
 
@@ -372,6 +374,10 @@
         .english-gloss-row,
         .english-translation-row {
             font-weight: 300;
+        }
+
+        .english-translation-row {
+            font-style: italic;
         }
 
 
@@ -435,7 +441,7 @@
             <li><a href="/"><img src="/icons/lessons.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Lessons</a></li>
             <li><a href="/dictionary/"><img src="/icons/dictionary.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Dictionary</a></li>
             <li><a href="/grammar/" id="currently-selected-nav-item"><img src="/icons/grammar.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Grammar</a></li>
-            <li><a href="#"><img src="/icons/phrases.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Phrase Bank</a></li>
+            <li><a href="#"><img src="/icons/about.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">About</a></li>
         </ul>
     </nav>
 
@@ -507,7 +513,7 @@
                         <tbody>
                             <tr class="gudjal-row">${gudjalRow}</tr>
                             <tr class="gloss-row">${glossRow}</tr>
-                            <tr class="english-translation-row colspan=${wordCount}"><td>${grammarPoint.translation}</td></tr>
+                            <tr class="english-translation-row"><td colspan=${wordCount}>${grammarPoint.translation}</td></tr>
                         </tbody>
                     </table>
                 </div>
