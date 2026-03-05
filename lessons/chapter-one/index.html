@@ -248,8 +248,14 @@
 
 
 
+
+
         #yaru-explanation {
             margin-top: 24px;
+        }
+
+        #yaru-explanation:hover {
+            font-weight: 500;
         }
 
         .raiserupper {
@@ -375,7 +381,7 @@
             <li><a href="/" id="currently-selected-nav-item"><img src="/icons/lessons.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Lessons</a></li>
             <li><a href="/dictionary/"><img src="/icons/dictionary.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Dictionary</a></li>
             <li><a href="/grammar/"><img src="/icons/grammar.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Grammar</a></li>
-            <li><a href="#"><img src="/icons/about.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">About</a></li>
+            <li><a href="/about/"><img src="/icons/about.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">About</a></li>
         </ul>
     </nav>
 
@@ -469,6 +475,10 @@
     const audioMap = new Map();
     const playDialogueButton = document.querySelector("#play-dialogue");
 
+
+
+
+    
     clickableAudios.forEach(clickable => {
         const file = clickable.dataset.audio;
         audioMap.set(clickable, new Audio(file));

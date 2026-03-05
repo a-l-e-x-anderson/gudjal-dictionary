@@ -151,36 +151,6 @@
 
 
 
-        #search-area {
-            width: 100%;
-            padding: 16px;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-flow: column;
-            gap: 16px;
-        }
-
-        #lesson-search {
-            height: 50px;
-            width: 80%;
-            border-radius: 50px;
-            border: none;
-            border: 2px solid #282828;
-            padding: 16px;
-            font-size: 18px;
-            box-shadow: 3px 3px 0px #000; 
-            padding-left: 24px;
-            padding-right: 24px;
-        }
-
-        #lesson-search:focus {
-            outline: none;
-        }
-
-
-
 
 
 
@@ -243,16 +213,46 @@
 
 
 
-        #grammar-container,
-        #grammar-area {
+        #about-info-container {
             display: flex;
             flex-flow: column;
             align-items: center;
+        }
+
+        #personal-box-container {
+            margin-top: 28px;
+            display: flex;
+            flex-flow: wrap;
+            justify-content: space-between;
+            width: 80%;
             padding-bottom: 40px;
         }
 
+        .personal-box {
+            width: 48%;
+            background: white;
+            border: 2px solid #282828;
+            border-radius: 16px;
+            box-shadow: 3px 3px 0px #000;
+            padding: 16px;
 
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        p {
+            font-weight: 300;
+            line-height: 28px;
+        }
 
+        .photo-placeholder {
+            width: 180px;
+            height: 180px;
+            border-radius: 180px;
+            border: 2px solid #282828;
+        }
 
 
 
@@ -305,28 +305,20 @@
 
 
 
-
-        .grammar-explanation {
-            width: 80%;
-            background: white;
-            margin-top: 20px;
-            border: 2px solid black;
-            border-radius: 16px;
-            padding: 16px;
-            padding-left: 24px;
-            padding-right: 24px;
-            padding-bottom: 28px;
-            box-shadow: 3px 3px 0px #000;
-        }
-
-        .grammar-explanation > * {
-            margin-top: 12px;
-        }
-
-
         .linguist-explanation {
             display: none;
         }
+
+
+        .info-box {
+            width: 80%;
+            background: white;
+            border-radius: 16px;
+            border: 2px solid #282828;
+            margin-top: 40px;
+            box-shadow: 3px 3px 0px #000;
+            padding: 16px;
+        }
         
         
 
@@ -334,57 +326,11 @@
 
 
 
-
-
-
-        h3,
-        h3 > span {
+        h3 {
             font-size: 24px;
             font-family: 'Patua One', serif;
             font-weight: 100;
         }
-
-        table tbody tr td {
-            padding-right: 16px;
-        }
-
-        .ling-title,
-        .ling-explanation {
-            display: none;
-        }
-
-
-
-        p {
-            line-height: 28px;
-        }
-
-
-
-
-
-        .smallcaps {
-            font-variant: small-caps;
-        }
-
-        .gudjal-row {
-            font-weight: bold;
-        }
-
-        .english-gloss-row,
-        .english-translation-row {
-            font-weight: 300;
-        }
-
-        .english-translation-row {
-            font-style: italic;
-        }
-
-
-
-
-
-
 
 
 
@@ -440,25 +386,57 @@
         <ul>
             <li><a href="/"><img src="/icons/lessons.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Lessons</a></li>
             <li><a href="/dictionary/"><img src="/icons/dictionary.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Dictionary</a></li>
-            <li><a href="/grammar/" id="currently-selected-nav-item"><img src="/icons/grammar.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Grammar</a></li>
-            <li><a href="/about/"><img src="/icons/about.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">About</a></li>
+            <li><a href="/grammar/"><img src="/icons/grammar.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Grammar</a></li>
+            <li><a href="/about/" id="currently-selected-nav-item"><img src="/icons/about.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">About</a></li>
         </ul>
     </nav>
 
-    <div id="grammar-container">
+    <div id="about-info-container">
 
-            
+        <div class="info-box">
+            <h3>What is this website?</h3>
+            <br>
+            <p>
+                Welcome to Birraya! This is a platform to learn and practise the Gudjal language, which was traditionally spoken on Gudjal Country in 
+                modern-day North Queensland. The language went to sleep in the 1970s, but it is currently being revitalised by the Gudjal community. 
+                <br>
+                <br>
+                A lot of information about Gudjal was lost due to European invasion. So the Gudjal on this website is almost certainly a little different to 
+                how Elders once spoke it. But all languages change over time, no matter the context.
+                <br>
+                <br>
+                What's important – and what this website aims to do – is to get more Gudjal people using and talking about their language. As more people join in, 
+                certain words, spellings, and ways of speaking will become more familiar and more widely accepted. This is how languages wake up again. 
+
+            </p>
+        </div>
+
+        <div id="personal-box-container">
+
+            <div class="personal-box" id="william-box">
+                <div class="photo-placeholder"></div>
+                <h3>William Santo</h3>
+                <p>
+                    William Santo is a Gudjal Elder and author. He has been leading Gudjal language revitalisation for three decades.
+                    He is the author and co-author of several books, including My Country in Gudjal Language, Gudjal Book of Birds, 
+                    Gudjal Language Pocket Dictionary, and Yaru! Gudjal Learner's Guide and Dictionary. 
+                    William and Alex are working together to build Birraya.
+                </p>
+            </div>
+
+            <div class="personal-box" id="alex-box">
+                <img src="alex.JPG" class="photo-placeholder" alt="A photo of Alex.">
+                <h3>Alex Anderson</h3>
+                <p>
+                    Alex Anderson is a PhD student at the University of Sydney. He has been working alongside William on Gudjal language revitalisation
+                    since 2020. He is co-author of Yaru! Gudjal Learner's Guide and Dictionary. Together, Alex and William are writing new lessons for Gudjal. 
+                    With William's guidance, Alex is also designing and developing the Birraya platform. 
+                </p>
+            </div>
+
+        </div>
+
         
-            <div id="search-area">
-                
-                    <input id="lesson-search" type="text">
-
-            </div>
-
-            <div id="grammar-area">
-
-
-            </div>
 
     </div>
 
@@ -468,58 +446,6 @@
 
 
 <script>
-
-    let grammarCollection;
-
-    Papa.parse("grammar-section.csv", {
-            download: true,
-            header: true,
-            skipEmptyLines: true,
-            complete: results => {
-                displayGrammarPoints(results.data);
-                grammarCollection = results.data;
-            }
-    })
-
-    const grammarArea = document.querySelector("#grammar-area");
-
-    function prepareSentenceForTable (sentence) {
-
-        const splitSentence = sentence.split(" ");
-        let preparedTableString = "";
-
-        for (const word of splitSentence) {
-            preparedTableString += `<td>${word}</td>`;
-        }
-
-        return preparedTableString;
-
-    }
-
-    function displayGrammarPoints (grammar) {
-
-        grammarArea.innerHTML = grammar 
-            .map (grammarPoint => {
-
-                const gudjalRow = prepareSentenceForTable(grammarPoint.gudjal);
-                const glossRow = prepareSentenceForTable(grammarPoint.gloss);
-                const wordCount = grammarPoint.gudjal.split(" ").length;
-                    
-                return `
-                <div class="grammar-explanation">
-                    <h3><span class="ling-title">${grammarPoint.lingTitle}</span><span class="lay-title">${grammarPoint.layTitle}</span></h3>
-                    <p><span class="ling-explanation">${grammarPoint.lingExplanation}</span><span class="lay-title">${grammarPoint.layExplanation}</span></p>
-                    <table>
-                        <tbody>
-                            <tr class="gudjal-row">${gudjalRow}</tr>
-                            <tr class="gloss-row">${glossRow}</tr>
-                            <tr class="english-translation-row"><td colspan=${wordCount}>${grammarPoint.translation}</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            `})
-            .join("");
-    }
 
 
 </script>
