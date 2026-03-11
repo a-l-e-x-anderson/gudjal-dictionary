@@ -158,6 +158,44 @@
             cursor: pointer;
         }
 
+        #hamburger-menu-logo {
+            display: none;
+            font-size: 36px;
+            font-family: 'Patua One', serif;
+            color: #282828;
+            margin-top: 40px;
+        }
+
+        #hamburger-button,
+        #exit-hamburger-button {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border: 2px solid #282828;
+            border-radius: 60px;
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            box-shadow: 3px 3px 0px #000;
+
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            font-family: 'Noto Sans';
+            font-weight: 100;
+        }
+
+        #exit-hamburger-button {
+            background: #e3e3e3;
+            position: relative;
+            top: 12px;
+            left: 0;
+            font-size: 20px;
+            display: none;
+        }
+
+        
 
 
 
@@ -296,7 +334,7 @@
             font-size: 16px;
         }
 
-        @media (min-width: 1200px) {
+        @media (600px < width < 1200px) {
             nav:hover {
                 width: 280px;
             }
@@ -321,37 +359,7 @@
             }
         }
 
-        @media (max-width: 1200px) {
-
-            nav {
-                width: 80px;
-            }
-
-            nav, 
-            nav ul,
-            nav ul li,
-            nav ul li a {
-                padding: 0;
-            }
-
-            #logo, #b-logo {
-                font-size: 16px;
-            }
-
-            table tr td {
-                padding: 4px;
-            }
-
-            nav ul li a {
-                font-size: 10px;
-                width: 60px;
-                height: 60px;
-                border-radius: 8px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-flow: column;
-            }
+        @media (max-width: 1200px) and (min-width: 600px) {
 
             body {
                 padding: 0px;
@@ -362,21 +370,91 @@
                 width: 80px;
             }
 
-
         }
 
-        @media (max-width: 800px) {
+        @media (min-width: 600px) {
+
+            nav {
+                display: flex !important;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            #hamburger-button {
+                display: flex;
+            }
+
+            h1 {
+                margin-top: 52px;
+            }
+
             #right-bar {
                 display: none;
             }
+
+            body {
+                padding: 0px;
+            }
+
+            nav {
+                width: 100vw;
+                height: 100vh;
+                position: fixed;
+                border: none;
+                overflow-y: auto;
+                display: none;
+            }
+
+            nav > a {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+
+            #b-logo,
+            #logo {
+                display: none;
+            }
+
+            #hamburger-menu-logo {
+                display: block;
+            }
+
+            nav ul li a {
+                height: 60px;
+                margin: 4px;
+                border-radius: 40px;
+                border: 2px solid transparent;
+
+                font-size: 22px;
+
+                font-family: 'Patua One', serif;
+                justify-content: flex-start;
+                padding: 4px;
+                padding-left: 16px;
+                gap: 16px;
+            }
+
+            .lesson-content {
+                padding: 32px;
+            }
+
+            #exit-hamburger-button {
+                display: flex;
+            }
+            
         }
 
     </style>
 </head>
 <body>
 
+    <div id="hamburger-button">≡</div>
+
     <nav>
-        <a href="/" id="logo-container"><span id="b-logo">B</span><span id="logo">irraya.</span></a>
+        <div id="exit-hamburger-button">⨉</div>
+        <a href="/" id="logo-container"><span id="b-logo">B</span><span id="logo">irraya.</span><span id="hamburger-menu-logo">Birraya.</span></a>
         <ul>
             <li><a href="/" id="currently-selected-nav-item"><img src="/icons/lessons.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Lessons</a></li>
             <li><a href="/dictionary/"><img src="/icons/dictionary.svg" alt="Lessons icon" width="24" height="24" class="svg-icons">Dictionary</a></li>
@@ -449,7 +527,7 @@
 
         <button class="button raiserupperabit play-audio" data-audio="audio/toomba-yaru.mp3" id="yaru-explanation">► Listen to Elder Freddie Toomba.</button>
 
-        <p><i>Transcript: "Yeah, you come to a town, you see that fella, you say... you sing out: Yaru! Yaru means: I'm here."</i></p>
+        <p><i>Transcript: "Yeah, you come to a camp, you see that fella, you say... you sing out: Yaru! Yaru means: I'm here."</i></p>
         <p>When you think about it, that's what the word "hello" does, too. You're telling people that you're here and you're ready to start talking.</p>
 
         <h3>Riyala</h3>
@@ -475,9 +553,22 @@
     const audioMap = new Map();
     const playDialogueButton = document.querySelector("#play-dialogue");
 
+    const fullScreenNavMenu = false;
 
+    const exitNavMenuButton = document.querySelector("#exit-hamburger-button");
+    const enterNavMenuButton = document.querySelector("#hamburger-button");
+    const navMenu = document.querySelector("nav");
 
+    function makeMenuAppear () {
+        navMenu.style.display = "flex";
+    }
 
+    function makeMenuDisappear () {
+        navMenu.style.display = "none";
+    }
+
+    exitNavMenuButton.addEventListener("click", makeMenuDisappear);
+    enterNavMenuButton.addEventListener("click", makeMenuAppear);
     
     clickableAudios.forEach(clickable => {
         const file = clickable.dataset.audio;
