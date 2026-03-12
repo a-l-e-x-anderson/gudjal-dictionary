@@ -27,8 +27,8 @@
         }
 
         body {
-            padding-left: 280px;
-            padding-right: 280px;
+            padding: 0px;
+            padding-left: 80px;
         }
 
         #currently-selected-nav-item {
@@ -334,7 +334,12 @@
             font-size: 16px;
         }
 
-        @media (600px < width < 1200px) {
+        @media (min-width: 600px) {
+
+            nav {
+                display: flex;
+            }
+
             nav:hover {
                 width: 280px;
             }
@@ -359,25 +364,6 @@
             }
         }
 
-        @media (max-width: 1200px) and (min-width: 600px) {
-
-            body {
-                padding: 0px;
-                padding-left: 80px;
-            }
-
-            #right-bar {
-                width: 80px;
-            }
-
-        }
-
-        @media (min-width: 600px) {
-
-            nav {
-                display: flex !important;
-            }
-        }
 
         @media (max-width: 600px) {
 
@@ -387,10 +373,6 @@
 
             h1 {
                 margin-top: 52px;
-            }
-
-            #right-bar {
-                display: none;
             }
 
             body {
@@ -559,6 +541,10 @@
     const enterNavMenuButton = document.querySelector("#hamburger-button");
     const navMenu = document.querySelector("nav");
 
+    const bigScreen = window.matchMedia("(max-width: 600px)");
+
+
+
     function makeMenuAppear () {
         navMenu.style.display = "flex";
     }
@@ -569,6 +555,12 @@
 
     exitNavMenuButton.addEventListener("click", makeMenuDisappear);
     enterNavMenuButton.addEventListener("click", makeMenuAppear);
+
+    bigScreen.addEventListener("change", (e) => {
+        if (!e.matches) {
+            navMenu.style.display = "";
+        }
+    })
     
     clickableAudios.forEach(clickable => {
         const file = clickable.dataset.audio;
