@@ -543,14 +543,18 @@
 
     const bigScreen = window.matchMedia("(max-width: 600px)");
 
+    const body = document.querySelector("body");
+
 
 
     function makeMenuAppear () {
         navMenu.style.display = "flex";
+        body.style.overflow = "hidden";
     }
 
     function makeMenuDisappear () {
         navMenu.style.display = "none";
+        body.style.overflow = "auto";
     }
 
     exitNavMenuButton.addEventListener("click", makeMenuDisappear);
@@ -558,7 +562,7 @@
 
     bigScreen.addEventListener("change", (e) => {
         if (!e.matches) {
-            navMenu.style.display = "";
+            navMenu.style.display = "`";
         }
     })
     
