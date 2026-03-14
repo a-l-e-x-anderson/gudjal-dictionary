@@ -141,7 +141,7 @@
             align-items: center;
             height: 52px;
             width: 80%;
-            max-width: 800px;
+            max-width: 600px;
 
         }
 
@@ -172,17 +172,27 @@
             gap: 16px;
         }
 
-        #progress-bar {
+        #progress-bar-outline {
             height: 24px;
             width: 80%;
-            max-width: 800px;
+            max-width: 720px;
             border: 2px solid #282828;
-            background: #83B181;
             border-radius: 16px;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        #progress-bar-filling {
+            width: 0%;
+            height: 100%;
+            background: #A2E29A;
+            border-radius: 24px;
+            transition: 0.2s ease;
+            display: flex;
         }
 
 
-        #mid-section {
+
+        .mid-section {
             height: 100%;
             width: 100%;
             max-width: 800px;
@@ -272,6 +282,58 @@
 
 
 
+        #multiple-choice-exercise {
+            display: flex;
+        }
+
+
+        /* Translation exercises */
+
+        #translation-exercise {
+            display: none;
+        }
+
+        #inner-translation-area {
+            width: 100%;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        #user-text-input {
+            height: 52px;
+            width: 100%;
+            max-width: 360px;
+            border-radius: 52px;
+            font-size: 20px;
+            font-weight: 300;
+            padding-left: 16px;
+            border: 2px solid #282828;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        /* Victory Screen */
+
+        #victory-screen {
+            display: none;
+            flex-flow: column;
+            align-items: center;
+        }
+
+        #congration-cake {
+            width: 50%;
+        }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -304,7 +366,7 @@
                 font-size: 24px;
             }
 
-            #mid-section {
+            .mid-section {
                 flex-flow: column;
                 align-items: center;
                 justify-content: flex-start;
@@ -316,7 +378,7 @@
                 justify-content: flex-start;    
             }
 
-            #mid-section > * {
+            .mid-section > * {
                 width: 100%;
             }
 
@@ -349,26 +411,49 @@
 
             <div id="top-section">
                 <div id="exit-button">⨉</div>
-                <div id="progress-bar"></div>
+                <div id="progress-bar-outline">
+                    <div id="progress-bar-filling">
+                        
+                    </div>
+                </div>
             </div>
 
-            <div id="mid-section">
+            <div class="mid-section" id="multiple-choice-exercise">
 
                 <div id="instructions-box" class="quiz-component">
 
                     <h2 class="user-instructions">Translate:</h2>
-                    <p class="to-be-translated">name</p>
+                    <p class="to-be-translated" id="multiple-choice-to-be-translated">name</p>
 
                 </div>
 
                 <div class="answer-selection-box" class="quiz-component">
 
-                    <div class="possible-answer-button raiserupper" id="answer-one"><div class="box-number">1</div><div class="answer-display">Riyala</div></div>
-                    <div class="possible-answer-button raiserupper" id="answer-two"><div class="box-number">2</div><div class="answer-display">Yaguy</div></div>
-                    <div class="possible-answer-button raiserupper" id="answer-three"><div class="box-number">3</div><div class="answer-display">Ngaya</div></div>
-                    <div class="possible-answer-button raiserupper" id="answer-four"><div class="box-number">4</div><div class="answer-display">Yaru</div></div>
+                    <div class="possible-answer-button raiserupper" id="answer-one"><div class="box-number" id="box-number-one">1</div><div class="answer-display" id="answer-display-one">Riyala</div></div>
+                    <div class="possible-answer-button raiserupper" id="answer-two"><div class="box-number" id="box-number-two">2</div><div class="answer-display" id="answer-display-two">Yaguy</div></div>
+                    <div class="possible-answer-button raiserupper" id="answer-three"><div class="box-number" id="box-number-three">3</div><div class="answer-display" id="answer-display-three">Ngaya</div></div>
+                    <div class="possible-answer-button raiserupper" id="answer-four"><div class="box-number" id="box-number-four">4</div><div class="answer-display" id="answer-display-four">Yaru</div></div>
 
                 </div>
+            </div>
+
+            <div class="mid-section" id="translation-exercise">
+
+                <div id="inner-translation-area">
+
+                    <h2 class="user-instructions">Translate:</h2>
+                    <p class="to-be-translated">name</p>
+                    <input type="text" id="user-text-input">
+
+                </div>
+
+            </div>
+
+            <div class="mid-section" id="victory-screen">
+
+                <h2>Congration! You done it!</h2>
+                <img src="congration.png" alt="An image of a congratulatory cake." id="congration-cake">
+
             </div>
 
         </div>
@@ -391,13 +476,133 @@
 
 <script>
 
+    const midSections = document.querySelectorAll(".mid-section");
+
     const answerOne = document.querySelector("#answer-one");
     const answerTwo = document.querySelector("#answer-two");
     const answerThree = document.querySelector("#answer-three");
     const answerFour = document.querySelector("#answer-four");
 
+    const boxNumberOne = document.querySelector("#box-number-one");
+    const boxNumberTwo = document.querySelector("#box-number-two");
+    const boxNumberThree = document.querySelector("#box-number-three");
+    const boxNumberFour = document.querySelector("#box-number-four");
+
+    const answerDisplayOne = document.querySelector("#answer-display-one");
+    const answerDisplayTwo = document.querySelector("#answer-display-two");
+    const answerDisplayThree = document.querySelector("#answer-display-three");
+    const answerDisplayFour = document.querySelector("#answer-display-four");
+
     const answerButtons = document.querySelectorAll(".possible-answer-button");
     const boxNumbers = document.querySelectorAll(".box-number");
+
+    const bottomBar = document.querySelector("#bottom-bar");
+    const checkButton = document.querySelector("#check-button");
+    const skipButton = document.querySelector("#skip-button");
+
+    const victoryScreen = document.querySelector("#victory-screen");
+
+    const multipleChoiceToBeTranslated = document.querySelector("#multiple-choice-to-be-translated");
+
+    let currentlySelectedAnswer = null;
+    let isAnswerCorrect = false;
+    let hasQuestionBeenAnswered = false;
+
+    let questionType = "";
+
+    const progressBar = document.querySelector("#progress-bar-filling");
+    let progressPercentage = 0;
+
+    let theQuestion;
+    let theAnswer;
+
+    const possibleAnswers = ["ngaya", "yinda", "riyala", "yaguy", "ngani", "yaru", "yinu", "Gurrguru", "Wudhurrayngan"];
+
+    const translations = {
+        "I": "ngaya",
+        "You": "yinda",
+        "Name": "riyala",
+        "Skin": "yaguy",
+        "What": "ngani",
+        "Here": "yaru",
+        "Your": "yinu"
+    }
+
+
+
+    function disappearMidSections () {
+        midSections.forEach(midSection => {
+            midSection.style.display = "none";
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+    function jumbleArray (theArray) {
+        return theArray.sort(() => Math.random() - 0.5);
+    }
+
+    function randomNumber (range) {
+        return Math.floor(Math.random() * range.length);
+    }
+
+    function selectRandom (thing) {
+        return thing[randomNumber(thing)];
+    }
+
+    function selectRandomKey (object) {
+        const listOfKeys = Object.keys(object);
+        return listOfKeys[randomNumber(listOfKeys)];
+    }
+
+    function loadQuestionsAndAnswers () {
+
+        theQuestion = selectRandomKey(translations);
+        theAnswer = translations[theQuestion];
+
+        let answerList = [];
+        answerList.push(theAnswer);
+
+        while (answerList.length < 4) {
+            const newAddition = selectRandom(possibleAnswers);
+
+            if (!answerList.includes(newAddition)) {
+                answerList.push(newAddition);
+            };
+        }
+
+        let preparedAnswerList = jumbleArray(answerList);
+
+        answerDisplayOne.textContent = preparedAnswerList[0];
+        answerDisplayTwo.textContent = preparedAnswerList[1];
+        answerDisplayThree.textContent = preparedAnswerList[2];
+        answerDisplayFour.textContent = preparedAnswerList[3];
+
+        multipleChoiceToBeTranslated.innerText = theQuestion;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Functions for selecting questions and marking them selected.
 
     function turnButtonWhite (button) {
         button.style.background = "white";
@@ -412,7 +617,7 @@
 
     function turnBoxNumberWhite (boxNumber) {
         turnEveryBoxNumberWhite();
-        boxNumber.style.background = "#E2B59A";
+        boxNumber.style.background = "#C28F70";
     }
 
     function turnEveryBoxNumberWhite () {
@@ -421,22 +626,195 @@
         })
     }
 
-    function turnButtonTan (button) {
+    function selectAnswer (button) {
+        currentlySelectedAnswer = button.querySelector(".answer-display").textContent;
         turnEveryButtonWhite();
         button.style.background = "#E2B59A";
     }
+
+    function declareVictory() {
+        console.log("Victory!");
+        disappearMidSections();
+        victoryScreen.style.display = "flex";
+    }
+
+    function checkForVictory () {
+        if (progressPercentage >= 100) {
+            declareVictory();
+        }
+    }
+
+
+
+
+
+
+
+
+
+    function increasePercentageByFive () {
+        progressPercentage += 10;
+    }
+
+    function extendProgressBar () {
+        if (progressPercentage <= 100) {
+            progressBar.style.width = `${progressPercentage}%`;
+        } else {
+            return;
+        }
+    }
+
+    function levelUp () {
+        increasePercentageByFive();
+        extendProgressBar();
+        checkForVictory();
+    }
+
+
+
+
+
+
+
+
+
+
+    // Functions for generating new question and answering questions.
+
+    function newQuestion () {
+        bottomBar.style.background = "white";
+        hasQuestionBeenAnswered = false;
+        turnEveryButtonWhite();
+        turnEveryBoxNumberWhite();
+        checkButton.innerText = "Check";
+        currentlySelectedAnswer = null;
+        let theQuestion;
+        let theAnswer;
+
+        loadQuestionsAndAnswers();
+    }
+
+    function markQuestionAnswered () {
+        hasQuestionBeenAnswered = true;
+        checkButton.innerText = "Next Question";
+    }
+
+    function markAnswerRight () {
+        markQuestionAnswered();
+        bottomBar.style.background = "#A2E29A";
+        isAnswerCorrect = true;
+        levelUp();
+    }
+
+    function markAnswerWrong () {
+        markQuestionAnswered();
+        bottomBar.style.background = "#E29AA2";
+        isAnswerCorrect = false;
+    }
+
+    function checkAnswer () {
+        if (currentlySelectedAnswer === theAnswer) {
+            markAnswerRight();
+        } else {
+            markAnswerWrong();
+        }
+    }
+
+    function checkOrMoveOn () {
+        if (currentlySelectedAnswer === null) {
+            return;
+        } else if (hasQuestionBeenAnswered === false) {
+            checkAnswer();
+        } else {
+            newQuestion();
+        };
+    }
+
+
+
+
+
+    newQuestion();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Event listeners
+
+
+
+
+
+        // Checking answers and going to next question
+
+    checkButton.addEventListener("click", () => {
+        checkOrMoveOn();
+    })
+
+    window.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            checkOrMoveOn();
+        };
+    })
+
+
+
+
+
+        // Selecting answers
+
+    window.addEventListener("keydown", (event) => {
+
+        if (hasQuestionBeenAnswered === true) {
+            return;
+        }
+
+        switch (event.key) {
+            case "1":
+                selectAnswer(answerOne);
+                turnBoxNumberWhite(boxNumberOne);
+                break;
+            case "2":
+                selectAnswer(answerTwo);
+                turnBoxNumberWhite(boxNumberTwo);
+                break;
+            case "3":
+                selectAnswer(answerThree);
+                turnBoxNumberWhite(boxNumberThree);
+                break;
+            case "4":
+                selectAnswer(answerFour);
+                turnBoxNumberWhite(boxNumberFour);
+                break;
+        }
+    })
 
     answerButtons.forEach(button => {
         const innerBoxNumber = button.querySelector(".box-number");
 
         button.addEventListener("click", () => {
 
+            if (hasQuestionBeenAnswered === true) {
+                return;
+            }
+
             turnBoxNumberWhite(innerBoxNumber);
-            turnButtonTan(button);
+            selectAnswer(button);
 
         });
-
-
     })
 
 </script>
