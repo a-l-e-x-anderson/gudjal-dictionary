@@ -367,7 +367,7 @@
         }
 
         #checkbox-container-container {
-            width: 100%;
+            width: 80%;
             margin-top: 24px;
             font-weight: 500;
         }
@@ -628,12 +628,17 @@
             }
 
             #activity-container {
-                height: 90%;
+                height: auto;
             }
 
             #bottom-bar {
-                height: 10%;
+                flex: 1;
                 min-height: 40px;
+                align-items: flex-start;
+            }
+
+            #bottom-button-container {
+                margin-top: 24px;
             }
 
             .button {
@@ -666,8 +671,8 @@
 
             <div class="mid-section" id="practice-setup">
 
-                <h2 class="practice-page-intro">Practice Exercises: Chapter 1</h2>
-                <h3 class="in-this-exercise">In this exercise, we will practise:</h3>
+                <h2 class="practice-page-intro">Practice: Chapter 1</h2>
+                <h3 class="in-this-exercise">In this exercise:</h3>
 
                 <ul>
                     <li class="button ochre">Introductions</li>
@@ -1145,7 +1150,7 @@
 
     window.addEventListener("keydown", (event) => {
 
-        if (hasQuestionBeenAnswered === true) {
+        if (hasQuestionBeenAnswered || settingUpTheLesson || lessonIsOver) {
             return;
         }
 
@@ -1174,7 +1179,7 @@
 
         button.addEventListener("click", () => {
 
-            if (hasQuestionBeenAnswered === true) {
+            if (hasQuestionBeenAnswered || settingUpTheLesson || lessonIsOver) {
                 return;
             }
 
