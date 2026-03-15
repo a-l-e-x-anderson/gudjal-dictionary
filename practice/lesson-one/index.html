@@ -54,7 +54,8 @@
 
         h3 {
             font-size: 24px;
-            margin-top: 32px;
+            text-align: center;
+            margin-bottom: 16px;
         }
 
         
@@ -98,6 +99,45 @@
         #exit-button:hover {
             cursor: pointer;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+        .ochre {
+            background: #B77466;
+        }
+
+        .yellow {
+            background: #FFE1AF;
+        }
+
+        .tan {
+            background: #E2B59A;
+        }
+
+        .brown {
+            background: #957C62;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -279,12 +319,100 @@
 
 
 
+        /* Practice exercises set up */
 
+        .practice-page-intro {
+            font-size: 32px;
+        }
+
+        .in-this-exercise {
+            margin-top: 16px;
+        }
+
+        #practice-setup {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            max-width: 600px;
+        }
+
+        #practice-setup ul {
+            width: 100%;
+            display: flex;
+            flex-flow: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        #practice-setup ul li {
+            list-style-type: none;
+            box-shadow: none;
+            height: 32px;
+        }
+
+        #practice-setup ul li:hover {
+            cursor: default;
+        }
 
 
         #multiple-choice-exercise {
+            display: none;
+        }
+
+        .checkbox-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin: 4px;
+        }
+
+        #checkbox-container-container {
+            width: 100%;
+            margin-top: 24px;
+            font-weight: 500;
+        }
+
+        #start-lesson {
+            width: 180px;
+        }
+
+        .hidden-checkboxes {
+            display: none;
+        }
+
+        .checkbox-on-display {
+            height: 32px;
+            width: 32px;
+            background: white;
+            border: 2px solid #282828;
+            display: inline-block;
+            border-radius: 8px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .checkbox-on-display:hover {
+            cursor: pointer;
+        }
+
+        .tick {
+            font-size: 20px;
             display: flex;
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         /* Translation exercises */
@@ -312,6 +440,26 @@
             border: 2px solid #282828;
             box-shadow: 3px 3px 0px #000;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /* Victory Screen */
 
@@ -358,6 +506,8 @@
         @media (max-width: 800px) {
 
 
+
+
             .user-instructions {
                 font-size: 28px;
             }
@@ -395,6 +545,102 @@
                 margin-left: 16px;
             }
 
+
+
+            /* Lesson setup */
+
+            .practice-page-intro {
+                font-size: 28px;
+            }
+
+            h3 {
+                font-size: 20px;
+            }
+
+            #practice-setup ul {
+                gap: 8px;
+            }
+
+            #practice-setup ul li {
+                font-size: 14px;
+                padding: 16px;
+            }
+
+            .checkbox-container {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                margin: 4px;
+            }
+
+            #checkbox-container-container {
+                width: 100%;
+                margin-top: 24px;
+                font-weight: 500;
+            }
+
+            #start-lesson {
+                margin-top: 16px;
+                height: 36px; 
+            }
+
+            .checkbox-on-display {
+                height: 24px;
+                width: 24px;
+                background: white;
+                border: 2px solid #282828;
+                display: inline-block;
+                border-radius: 8px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .checkbox-on-display span {
+                font-size: 14px;
+            }
+
+            .button {
+                padding: 20px;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+            /* Top, middle and bottom bar proportions */
+
+            #top-section {
+                height: 40px;
+                align-items: flex-end;
+            }
+
+            .mid-section {
+                overflow-y: hidden;
+            }
+
+            #activity-container {
+                height: 90%;
+            }
+
+            #bottom-bar {
+                height: 10%;
+                min-height: 40px;
+            }
+
+            .button {
+                height: 36px;
+                padding: 16px;
+            }
+
         }
 
 
@@ -416,6 +662,41 @@
                         
                     </div>
                 </div>
+            </div>
+
+            <div class="mid-section" id="practice-setup">
+
+                <h2 class="practice-page-intro">Practice Exercises: Chapter 1</h2>
+                <h3 class="in-this-exercise">In this exercise, we will practise:</h3>
+
+                <ul>
+                    <li class="button ochre">Introductions</li>
+                    <li class="button yellow">Skin groups</li>
+                    <li class="button brown">Basic pronouns</li>
+                </ul>
+
+                <div id="checkbox-container-container">
+
+                    <h3 class="question-type-heading">Question types:</h3>
+
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="hidden-checkboxes" id="checkbox-multiple-choice-vocabulary">
+                        <label for="checkbox-multiple-choice-vocabulary">Multiple choice</label><span class="checkbox-on-display"><span class="tick">✓</span></span>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="hidden-checkboxes" id="checkbox-typed-translations">
+                        <label for="checkbox-typed-translations">Typed response</label><span class="checkbox-on-display"><span class="tick">✓</span></span>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="hidden-checkboxes" id="checkbox-audio-recognition">
+                        <label for="checkbox-audio-recognition">Audio recognition</label><span class="checkbox-on-display"><span class="tick">✓</span></span>
+                    </div>
+
+                </div>
+                
+
+                <div class="button raiserupper" id="start-lesson">Start</div>
+
             </div>
 
             <div class="mid-section" id="multiple-choice-exercise">
@@ -504,6 +785,8 @@
 
     const multipleChoiceToBeTranslated = document.querySelector("#multiple-choice-to-be-translated");
 
+    const bottomButtonContainer = document.querySelector("#bottom-button-container");
+
     let currentlySelectedAnswer = null;
     let isAnswerCorrect = false;
     let hasQuestionBeenAnswered = false;
@@ -515,6 +798,88 @@
 
     let theQuestion;
     let theAnswer;
+
+
+
+
+
+
+
+
+
+
+
+    // Setting up the lesson
+
+    const checkboxAudioRecognition = document.querySelector("#checkbox-audio-recognition");
+    const checkboxTypedTranslations = document.querySelector("#checkbox-typed-translations");
+    const checkboxMultipleChoiceVocabulary = document.querySelector("#checkbox-multiple-choice-vocabulary");
+
+    const startLessonButton = document.querySelector("#start-lesson");
+
+    const setUpMenu = document.querySelector("#practice-setup");
+    const multipleChoiceQuestionContainer = document.querySelector("#multiple-choice-exercise");
+
+    let settingUpTheLesson = true;
+    let lessonIsOver = false;
+
+    let putInAudioQuestions = true;
+    let putInTypedQuestions = true;
+    let putInMultipleChoiceQuestions = true;
+
+    const ticks = document.querySelectorAll(".tick");
+    const clickableCheckBoxes = document.querySelectorAll(".checkbox-container");
+
+    clickableCheckBoxes.forEach((checkbox) => {
+
+        const tick = checkbox.querySelector(".tick");
+
+        checkbox.addEventListener("click", () => {
+
+            if (tick.style.display != "none") {
+                tick.style.display = "none";
+
+            } else {
+                tick.style.display = "flex";
+            }
+
+        })
+    })
+
+    
+
+    function checkIfLessonHasStartedOrEnded () {
+        if (settingUpTheLesson === true || lessonIsOver === true) {
+            bottomButtonContainer.style.display = "none";
+        } else {
+            bottomButtonContainer.style.display = "";
+        }
+    }
+
+    startLessonButton.addEventListener("click", () => {
+        settingUpTheLesson = false;
+        setUpMenu.style.display = "none";
+        multipleChoiceQuestionContainer.style.display = "flex";
+        checkIfLessonHasStartedOrEnded();
+    })
+
+    checkIfLessonHasStartedOrEnded();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const possibleAnswers = ["ngaya", "yinda", "riyala", "yaguy", "ngani", "yaru", "yinu", "Gurrguru", "Wudhurrayngan"];
 
@@ -634,6 +999,8 @@
 
     function declareVictory() {
         console.log("Victory!");
+        lessonIsOver = true;
+        checkIfLessonHasStartedOrEnded();
         disappearMidSections();
         victoryScreen.style.display = "flex";
     }
