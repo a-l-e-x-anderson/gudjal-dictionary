@@ -269,9 +269,9 @@
         .to-be-translated {
             font-size: 28px;
             font-weight: 200;
-            height: 60px;
             width: 100%;
             text-align: center;
+            padding-bottom: 16px;
         }
 
         .answer-selection-box {
@@ -1203,7 +1203,7 @@
     function markAnswerWrong () {
         markQuestionAnswered();
         if (questionIsExtended) {
-            hintForUser.textContent = "Hint: " + giveCorrectAnswerToExtendedResponse();
+            hintForUser.textContent = "One way to say it: " + giveCorrectAnswerToExtendedResponse();
         }
         bottomBar.style.background = "#E29AA2";
         isAnswerCorrect = false;
