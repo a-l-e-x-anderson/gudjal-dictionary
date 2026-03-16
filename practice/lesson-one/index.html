@@ -419,6 +419,8 @@
 
         #translation-exercise {
             display: none;
+            width: 100%;
+            height: 100%;
         }
 
         #inner-translation-area {
@@ -436,9 +438,27 @@
             border-radius: 52px;
             font-size: 20px;
             font-weight: 300;
-            padding-left: 16px;
+            padding-left: 24px;
+            padding-right: 24px;
             border: 2px solid #282828;
             box-shadow: 3px 3px 0px #000;
+        }
+
+        #hint-for-user {
+            margin-top: 16px;
+            font-size: 18px;
+
+            height: 52px;
+            padding: 16px;
+            border: 2px solid #282828;
+            box-shadow: 3px 3px 0px #000;
+            border-radius: 52px;
+
+            font-weight: 300;
+
+            display: none;
+            justify-content: center;
+            align-items: center;
         }
 
 
@@ -601,10 +621,6 @@
                 font-size: 14px;
             }
 
-            .button {
-                padding: 20px;
-            }
-
 
 
 
@@ -639,11 +655,6 @@
 
             #bottom-button-container {
                 margin-top: 24px;
-            }
-
-            .button {
-                height: 36px;
-                padding: 16px;
             }
 
         }
@@ -728,8 +739,9 @@
                 <div id="inner-translation-area">
 
                     <h2 class="user-instructions">Translate:</h2>
-                    <p class="to-be-translated">name</p>
+                    <p class="to-be-translated" id="extended-response-to-be-translated">name</p>
                     <input type="text" id="user-text-input">
+                    <p id="hint-for-user" class="yellow"></p>
 
                 </div>
 
@@ -756,6 +768,20 @@
         </div>
 
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -789,8 +815,13 @@
     const victoryScreen = document.querySelector("#victory-screen");
 
     const multipleChoiceToBeTranslated = document.querySelector("#multiple-choice-to-be-translated");
+    const extendedResponseToBeTranslated = document.querySelector("#extended-response-to-be-translated");
 
     const bottomButtonContainer = document.querySelector("#bottom-button-container");
+
+    const userTextInput = document.querySelector("#user-text-input");
+
+    const hintForUser = document.querySelector("#hint-for-user");
 
     let currentlySelectedAnswer = null;
     let isAnswerCorrect = false;
@@ -824,6 +855,7 @@
 
     const setUpMenu = document.querySelector("#practice-setup");
     const multipleChoiceQuestionContainer = document.querySelector("#multiple-choice-exercise");
+    const translationQuestionContainer = document.querySelector("#translation-exercise");
 
     let settingUpTheLesson = true;
     let lessonIsOver = false;
@@ -831,6 +863,10 @@
     let putInAudioQuestions = true;
     let putInTypedQuestions = true;
     let putInMultipleChoiceQuestions = true;
+
+    let questionIsMultipleChoice = false;
+    let questionIsExtended = false;
+    let questionIsAudio = false;
 
     const ticks = document.querySelectorAll(".tick");
     const clickableCheckBoxes = document.querySelectorAll(".checkbox-container");
@@ -843,7 +879,6 @@
 
             if (tick.style.display != "none") {
                 tick.style.display = "none";
-
             } else {
                 tick.style.display = "flex";
             }
@@ -851,10 +886,14 @@
         })
     })
 
+    function startLesson () {
+        return
+    } /* Fix this obviously */
+
     
 
     function checkIfLessonHasStartedOrEnded () {
-        if (settingUpTheLesson === true || lessonIsOver === true) {
+        if (settingUpTheLesson || lessonIsOver) {
             bottomButtonContainer.style.display = "none";
         } else {
             bottomButtonContainer.style.display = "";
@@ -863,8 +902,11 @@
 
     startLessonButton.addEventListener("click", () => {
         settingUpTheLesson = false;
+
         setUpMenu.style.display = "none";
-        multipleChoiceQuestionContainer.style.display = "flex";
+
+        newQuestion();
+
         checkIfLessonHasStartedOrEnded();
     })
 
@@ -895,7 +937,17 @@
         "Skin": "yaguy",
         "What": "ngani",
         "Here": "yaru",
-        "Your": "yinu"
+        "Your": "yinu",
+    }
+
+    const extendedResponses = {
+        "I am William.": ["ngaya william", "william ngaya"],
+        "What is your name?": ["ngani yinu riyala", "yinu riyala ngani", "ngani riyala yinu", "riyala yinu ngani"],
+        "Who are you?": ["yinda ngani", "ngani yinda"],
+        "What is your skin?": ["ngani yinu yaguy", "yinu yaguy ngani", "ngani yaguy yinu", "yaguy yinu ngani"],
+        "My name is Keesha.": ["keesha ngaygu riyala", "ngaygu riyala keesha", "keesha riyala ngaygu", "riyala ngaygu keesha"],
+        "My skin is Gurrguru.": ["gurrguru ngaygu yaguy", "ngaygu yaguy gurrguru", "gurrguru yaguy ngaygu", "yaguy ngaygu gurrguru"],
+        "Is your skin Wudhurrayngan?": ["wudhurrayngan yinu yaguy", "yinu yaguy wudhurrayngan", "wudhurrayngan yaguy yinu", "yaguy yinu wudhurrayngan"]
     }
 
 
@@ -907,7 +959,32 @@
     }
 
 
-
+    function giveCorrectAnswerToExtendedResponse () {
+        hintForUser.style.display = "flex";
+        switch (theQuestion) {
+            case "I am William.":
+                return "Ngaya William.";
+                break;
+            case "My name is Keesha.":
+                return "Ngaygu riyala Keesha.";
+                break;
+            case "What is your name?":
+                return "Ngani yinu riyala?";
+                break;
+            case "Who are you?":
+                return "Ngani yinda?";
+                break;
+            case "What is your skin?":
+                return "Ngani yinu yaguy?";
+                break;
+            case "My skin is Gurrguru.":
+                return "Ngaygu yaguy Gurrguru.";
+                break;
+            case "Is your skin Wudhurrayngan?":
+                return "Yinu yaguy Wudhurrayngan?";
+                break;
+        }
+    }
 
 
 
@@ -959,7 +1036,15 @@
         multipleChoiceToBeTranslated.innerText = theQuestion;
     }
 
+    function loadExtendedResponseExercise () {
 
+            theQuestion = selectRandomKey(extendedResponses);
+            theAnswer = extendedResponses[theQuestion];
+
+            console.log(theAnswer);
+
+            extendedResponseToBeTranslated.innerText = theQuestion;
+        }
 
 
 
@@ -1003,7 +1088,6 @@
     }
 
     function declareVictory() {
-        console.log("Victory!");
         lessonIsOver = true;
         checkIfLessonHasStartedOrEnded();
         disappearMidSections();
@@ -1025,7 +1109,7 @@
 
 
     function increasePercentageByFive () {
-        progressPercentage += 10;
+        progressPercentage += 5;
     }
 
     function extendProgressBar () {
@@ -1045,7 +1129,33 @@
 
 
 
+    function chooseQuestionType () {
 
+        if (hasQuestionBeenAnswered || settingUpTheLesson || lessonIsOver) {
+            return;
+        }
+
+        let randomNum = Math.floor(Math.random() * 2) + 1;
+
+        questionIsMultipleChoice = false;
+        questionIsExtended = false;
+
+        multipleChoiceQuestionContainer.style.display = "";
+        translationQuestionContainer.style.display = "";
+
+        switch (randomNum) {
+            case 1:
+                questionIsMultipleChoice = true;
+                multipleChoiceQuestionContainer.style.display = "flex";
+                break;
+            case 2:
+                hintForUser.style.display = "";
+                questionIsExtended = true;
+                translationQuestionContainer.style.display = "flex";
+                userTextInput.focus();
+                break;
+        }
+    }
 
 
 
@@ -1054,16 +1164,28 @@
     // Functions for generating new question and answering questions.
 
     function newQuestion () {
+
         bottomBar.style.background = "white";
-        hasQuestionBeenAnswered = false;
         turnEveryButtonWhite();
         turnEveryBoxNumberWhite();
-        checkButton.innerText = "Check";
-        currentlySelectedAnswer = null;
-        let theQuestion;
-        let theAnswer;
 
-        loadQuestionsAndAnswers();
+        hasQuestionBeenAnswered = false;
+        currentlySelectedAnswer = null;
+        userTextInput.value = "";
+        hintForUser.textContent = "";
+
+        checkButton.innerText = "Check";
+        theQuestion = undefined;
+        theAnswer = undefined;
+
+        chooseQuestionType();
+
+        if (questionIsMultipleChoice) {
+            loadQuestionsAndAnswers();
+        } else if (questionIsExtended) {
+            loadExtendedResponseExercise();
+        }
+
     }
 
     function markQuestionAnswered () {
@@ -1080,20 +1202,37 @@
 
     function markAnswerWrong () {
         markQuestionAnswered();
+        if (questionIsExtended) {
+            hintForUser.textContent = "Hint: " + giveCorrectAnswerToExtendedResponse();
+        }
         bottomBar.style.background = "#E29AA2";
         isAnswerCorrect = false;
     }
 
     function checkAnswer () {
-        if (currentlySelectedAnswer === theAnswer) {
-            markAnswerRight();
-        } else {
-            markAnswerWrong();
+
+        if (questionIsMultipleChoice) {
+            if (currentlySelectedAnswer === theAnswer) {
+                markAnswerRight();
+            } else {
+                markAnswerWrong();
+            }
         }
+
+        if (questionIsExtended) {
+            if (theAnswer.includes(userTextInput.value.toLowerCase().replace(/[^\w\s]|_/g, ""))) {
+                markAnswerRight();
+            } else {
+                markAnswerWrong();
+            }
+        }
+
     }
 
     function checkOrMoveOn () {
-        if (currentlySelectedAnswer === null) {
+        if (questionIsMultipleChoice && currentlySelectedAnswer === null) {
+            return;
+        } else if (questionIsExtended && userTextInput.value === "") {
             return;
         } else if (hasQuestionBeenAnswered === false) {
             checkAnswer();
@@ -1187,6 +1326,10 @@
             selectAnswer(button);
 
         });
+    })
+
+    skipButton.addEventListener("click", () => {
+        newQuestion();
     })
 
 </script>
