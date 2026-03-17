@@ -827,19 +827,121 @@
     let isAnswerCorrect = false;
     let hasQuestionBeenAnswered = false;
 
-
     const progressBar = document.querySelector("#progress-bar-filling");
     let progressPercentage = 0;
 
     let theQuestion;
     let theAnswer;
 
+    const possibleAnswers = ["ngaya", "yinda", "riyala", "yaguy", "ngani", "yaru", "yinu", "Gurrguru", "Wudhurrayngan"];
 
-    // hello
+    class Question {
+        constructor (type, prompt, answer) {
+            this.type = type;
+            this.prompt = prompt;
+            this.answer = answer;
+            this.answeredCorrectly = null;
+        }
+    }
+
+    const quizPool = [
+        new Question("multiple-choice", "I", "ngaya"),
+        new Question("multiple-choice", "You", "yinda"),
+        new Question("multiple-choice", "Name", "riyala"),
+        new Question("multiple-choice", "Skin", "yaguy"),
+        new Question("multiple-choice", "What", "ngani"),
+        new Question("multiple-choice", "Here", "yaru"),
+        new Question("multiple-choice", "Your", "yinu"),
+
+        new Question("extended", "I am William.", ["ngaya william", "william ngaya"]),
+        new Question("extended", "What is your name?", ["ngani yinu riyala", "yinu riyala ngani", "ngani riyala yinu", "riyala yinu ngani"]),
+        new Question("extended", "Who are you?", ["yinda ngani", "ngani yinda"]),
+        new Question("extended", "What is your skin?", ["ngani yinu yaguy", "yinu yaguy ngani", "ngani yaguy yinu", "yaguy yinu ngani"]),
+        new Question("extended", "My name is Keesha.", ["keesha ngaygu riyala", "ngaygu riyala keesha", "keesha riyala ngaygu", "riyala ngaygu keesha"]),
+        new Question("extended", "My skin is Gurrguru.", ["gurrguru ngaygu yaguy", "ngaygu yaguy gurrguru", "gurrguru yaguy ngaygu", "yaguy ngaygu gurrguru"]),
+        new Question("extended", "Is your skin Wudhurrayngan?", ["wudhurrayngan yinu yaguy", "yinu yaguy wudhurrayngan", "wudhurrayngan yaguy yinu", "yaguy yinu wudhurrayngan"])
+    ]
+
+    let questionNumberThatUserIsUpTo = 0;
+
+    let questionsToBeDisplayed = [];
+    let jumbledQuizPool = quizPool;
+
+    questionsToBeDisplayed = jumbleArray(jumbledQuizPool);
+
+    function getQuestion () {
+
+        let questionToBeGiven = questionsToBeDisplayed[questionNumberThatUserIsUpTo];
+        questionNumberThatUserIsUpTo++;
+
+        if (questionNumberThatUserIsUpTo >= questionsToBeDisplayed.length) {
+            questionsToBeDisplayed = jumbleArray(jumbledQuizPool);
+            questionNumberThatUserIsUpTo = 0;
+        }
+
+        return questionToBeGiven;
+
+    }
 
 
 
 
+
+
+
+    let currentQuestionObject;
+    let reviewQueue = [];
+    let listOfQuestionsThatHaveBeenAnswered = [];
+
+
+    function displayQuestion(qObj) {
+
+        currentQuestionObject = qObj;
+        theQuestion = qObj.prompt;
+        theAnswer = qObj.answer;
+
+        disappearMidSections();
+        markAllQuestionTypesFalse();
+
+        if (qObj.type === "multiple-choice") {
+
+            questionIsMultipleChoice = true;
+            questionIsExtended = false;
+            multipleChoiceQuestionContainer.style.display = "flex";
+            multipleChoiceToBeTranslated.innerText = qObj.prompt;
+
+            let answerList = [];
+            answerList.push(theAnswer);
+
+            while (answerList.length < 4) {
+                const newAddition = selectRandom(possibleAnswers);
+
+                if (!answerList.includes(newAddition)) {
+                    answerList.push(newAddition);
+                };
+            }
+
+            let preparedAnswerList = jumbleArray(answerList);
+
+            answerDisplayOne.textContent = preparedAnswerList[0];
+            answerDisplayTwo.textContent = preparedAnswerList[1];
+            answerDisplayThree.textContent = preparedAnswerList[2];
+            answerDisplayFour.textContent = preparedAnswerList[3];
+
+        } else if (qObj.type === "extended") {
+
+            questionIsMultipleChoice = false;
+            questionIsExtended = true;
+            translationQuestionContainer.style.display = "flex";
+            extendedResponseToBeTranslated.innerText = qObj.prompt;
+            userTextInput.focus();
+
+        } else {
+
+            console.log("Something has gone horribly wrong.");
+
+        }
+    }
 
 
 
@@ -870,21 +972,6 @@
     const ticks = document.querySelectorAll(".tick");
     const clickableCheckBoxes = document.querySelectorAll(".checkbox-container");
 
-    clickableCheckBoxes.forEach((checkbox) => {
-
-        const tick = checkbox.querySelector(".tick");
-
-        checkbox.addEventListener("click", () => {
-
-            if (tick.style.display != "none") {
-                tick.style.display = "none";
-            } else {
-                tick.style.display = "flex";
-            }
-
-        })
-    })
-
     function checkIfLessonHasStartedOrEnded () {
         if (settingUpTheLesson || lessonIsOver) {
             bottomButtonContainer.style.display = "none";
@@ -899,7 +986,6 @@
         setUpMenu.style.display = "none";
 
         newQuestion();
-
         checkIfLessonHasStartedOrEnded();
     })
 
@@ -921,27 +1007,11 @@
 
 
 
-    const possibleAnswers = ["ngaya", "yinda", "riyala", "yaguy", "ngani", "yaru", "yinu", "Gurrguru", "Wudhurrayngan"];
+    
 
-    const translations = {
-        "I": "ngaya",
-        "You": "yinda",
-        "Name": "riyala",
-        "Skin": "yaguy",
-        "What": "ngani",
-        "Here": "yaru",
-        "Your": "yinu",
-    }
+    
 
-    const extendedResponses = {
-        "I am William.": ["ngaya william", "william ngaya"],
-        "What is your name?": ["ngani yinu riyala", "yinu riyala ngani", "ngani riyala yinu", "riyala yinu ngani"],
-        "Who are you?": ["yinda ngani", "ngani yinda"],
-        "What is your skin?": ["ngani yinu yaguy", "yinu yaguy ngani", "ngani yaguy yinu", "yaguy yinu ngani"],
-        "My name is Keesha.": ["keesha ngaygu riyala", "ngaygu riyala keesha", "keesha riyala ngaygu", "riyala ngaygu keesha"],
-        "My skin is Gurrguru.": ["gurrguru ngaygu yaguy", "ngaygu yaguy gurrguru", "gurrguru yaguy ngaygu", "yaguy ngaygu gurrguru"],
-        "Is your skin Wudhurrayngan?": ["wudhurrayngan yinu yaguy", "yinu yaguy wudhurrayngan", "wudhurrayngan yaguy yinu", "yaguy yinu wudhurrayngan"]
-    }
+    
 
 
 
@@ -958,39 +1028,7 @@
 
 
 
-    function disappearMidSections () {
-        midSections.forEach(midSection => {
-            midSection.style.display = "none";
-        })
-    }
 
-
-    function giveCorrectAnswerToExtendedResponse () {
-        hintForUser.style.display = "flex";
-        switch (theQuestion) {
-            case "I am William.":
-                return "Ngaya William.";
-                break;
-            case "My name is Keesha.":
-                return "Ngaygu riyala Keesha.";
-                break;
-            case "What is your name?":
-                return "Ngani yinu riyala?";
-                break;
-            case "Who are you?":
-                return "Ngani yinda?";
-                break;
-            case "What is your skin?":
-                return "Ngani yinu yaguy?";
-                break;
-            case "My skin is Gurrguru.":
-                return "Ngaygu yaguy Gurrguru.";
-                break;
-            case "Is your skin Wudhurrayngan?":
-                return "Yinu yaguy Wudhurrayngan?";
-                break;
-        }
-    }
 
 
 
@@ -1016,41 +1054,7 @@
         return listOfKeys[randomNumber(listOfKeys)];
     }
 
-    function loadQuestionsAndAnswers () {
-
-        theQuestion = selectRandomKey(translations);
-        theAnswer = translations[theQuestion];
-
-        let answerList = [];
-        answerList.push(theAnswer);
-
-        while (answerList.length < 4) {
-            const newAddition = selectRandom(possibleAnswers);
-
-            if (!answerList.includes(newAddition)) {
-                answerList.push(newAddition);
-            };
-        }
-
-        let preparedAnswerList = jumbleArray(answerList);
-
-        answerDisplayOne.textContent = preparedAnswerList[0];
-        answerDisplayTwo.textContent = preparedAnswerList[1];
-        answerDisplayThree.textContent = preparedAnswerList[2];
-        answerDisplayFour.textContent = preparedAnswerList[3];
-
-        multipleChoiceToBeTranslated.innerText = theQuestion;
-    }
-
-    function loadExtendedResponseExercise () {
-
-            theQuestion = selectRandomKey(extendedResponses);
-            theAnswer = extendedResponses[theQuestion];
-
-            console.log(theAnswer);
-
-            extendedResponseToBeTranslated.innerText = theQuestion;
-        }
+    
 
 
 
@@ -1063,7 +1067,27 @@
 
 
 
-    // Functions for selecting questions and marking them selected.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Functions for selecting questions and marking them selected. And some page styling.
 
     function turnButtonWhite (button) {
         button.style.background = "white";
@@ -1093,17 +1117,10 @@
         button.style.background = "#E2B59A";
     }
 
-    function declareVictory() {
-        lessonIsOver = true;
-        checkIfLessonHasStartedOrEnded();
-        disappearMidSections();
-        victoryScreen.style.display = "flex";
-    }
-
-    function checkForVictory () {
-        if (progressPercentage >= 100) {
-            declareVictory();
-        }
+    function disappearMidSections () {
+        midSections.forEach(midSection => {
+            midSection.style.display = "none";
+        })
     }
 
 
@@ -1113,9 +1130,29 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Progress bar and levelling up
 
     function increasePercentageByFive () {
-        progressPercentage += 5;
+        progressPercentage += 10;
     }
 
     function extendProgressBar () {
@@ -1132,34 +1169,17 @@
         checkForVictory();
     }
 
+    function declareVictory() {
+        lessonIsOver = true;
+        checkIfLessonHasStartedOrEnded();
+        disappearMidSections();
+        victoryScreen.style.display = "flex";
+        console.log(listOfQuestionsThatHaveBeenAnswered);
+    }
 
-
-
-    function chooseQuestionType () {
-
-        if (hasQuestionBeenAnswered || settingUpTheLesson || lessonIsOver) {
-            return;
-        }
-
-        let randomNum = Math.floor(Math.random() * 2) + 1;
-
-        questionIsMultipleChoice = false;
-        questionIsExtended = false;
-
-        multipleChoiceQuestionContainer.style.display = "";
-        translationQuestionContainer.style.display = "";
-
-        switch (randomNum) {
-            case 1:
-                questionIsMultipleChoice = true;
-                multipleChoiceQuestionContainer.style.display = "flex";
-                break;
-            case 2:
-                hintForUser.style.display = "";
-                questionIsExtended = true;
-                translationQuestionContainer.style.display = "flex";
-                userTextInput.focus();
-                break;
+    function checkForVictory () {
+        if (progressPercentage >= 100) {
+            declareVictory();
         }
     }
 
@@ -1167,31 +1187,59 @@
 
 
 
-    // Functions for generating new question and answering questions.
 
-    function newQuestion () {
 
-        bottomBar.style.background = "white";
-        turnEveryButtonWhite();
-        turnEveryBoxNumberWhite();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function markAllQuestionTypesFalse () {
+        questionIsMultipleChoice = false;
+        questionIsExtended = false;
+        questionIsAudio = false;
+    }
+
+    function wipeEverythingClean () {
 
         hasQuestionBeenAnswered = false;
         currentlySelectedAnswer = null;
         userTextInput.value = "";
+
         hintForUser.textContent = "";
+        hintForUser.style.display = "";
 
         checkButton.innerText = "Check";
+
         theQuestion = undefined;
         theAnswer = undefined;
 
-        chooseQuestionType();
+        bottomBar.style.background = "white";
+        turnEveryButtonWhite();
+        turnEveryBoxNumberWhite();
+    }
 
-        if (questionIsMultipleChoice) {
-            loadQuestionsAndAnswers();
-        } else if (questionIsExtended) {
-            loadExtendedResponseExercise();
-        }
+    // Functions for generating new question and answering questions.
 
+    function newQuestion () {
+        wipeEverythingClean();
+        displayQuestion(getQuestion());
     }
 
     function markQuestionAnswered () {
@@ -1201,18 +1249,39 @@
 
     function markAnswerRight () {
         markQuestionAnswered();
+        currentQuestionObject.answeredCorrectly = true;
+        listOfQuestionsThatHaveBeenAnswered.push(currentQuestionObject);
+
+
         bottomBar.style.background = "#A2E29A";
         isAnswerCorrect = true;
         levelUp();
     }
 
     function markAnswerWrong () {
+
         markQuestionAnswered();
+        currentQuestionObject.answeredCorrectly = false;
+        listOfQuestionsThatHaveBeenAnswered.push(currentQuestionObject);
+
         if (questionIsExtended) {
-            hintForUser.textContent = "One way to say it: " + giveCorrectAnswerToExtendedResponse();
+            provideCorrectAnswer();
         }
+
         bottomBar.style.background = "#E29AA2";
         isAnswerCorrect = false;
+    }
+
+    function provideCorrectAnswer () {
+        let capitalisedAnswer = theAnswer[0].charAt(0).toUpperCase() + theAnswer[0].slice(1);
+        let questionMarkOrFullStop = "."
+
+        if (theQuestion.includes("?")) {
+            questionMarkOrFullStop = "?"
+        }
+
+        hintForUser.style.display = "flex";
+        hintForUser.textContent = "One correct answer: " + capitalisedAnswer + questionMarkOrFullStop;
     }
 
     function checkAnswer () {
@@ -1236,22 +1305,99 @@
     }
 
     function checkOrMoveOn () {
+
         if (questionIsMultipleChoice && currentlySelectedAnswer === null) {
             return;
-        } else if (questionIsExtended && userTextInput.value === "") {
+        }
+        
+        if (questionIsExtended && userTextInput.value === "") {
             return;
-        } else if (hasQuestionBeenAnswered === false) {
+        } 
+        
+        if (hasQuestionBeenAnswered === false) {
             checkAnswer();
         } else {
             newQuestion();
         };
+
     }
 
 
 
 
 
-    newQuestion();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1282,6 +1428,11 @@
     })
 
     window.addEventListener("keydown", (event) => {
+
+        if (settingUpTheLesson || lessonIsOver) {
+            return;
+        }
+
         if (event.key === "Enter") {
             checkOrMoveOn();
         };
@@ -1336,6 +1487,27 @@
 
     skipButton.addEventListener("click", () => {
         newQuestion();
+    })
+
+
+
+
+
+        // Making ticks clickable.
+
+    clickableCheckBoxes.forEach((checkbox) => {
+
+        const tick = checkbox.querySelector(".tick");
+
+        checkbox.addEventListener("click", () => {
+
+            if (tick.style.display != "none") {
+                tick.style.display = "none";
+            } else {
+                tick.style.display = "flex";
+            }
+
+        })
     })
 
 </script>
