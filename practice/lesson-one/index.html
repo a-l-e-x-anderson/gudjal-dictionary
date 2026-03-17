@@ -330,7 +330,7 @@
         }
 
         #practice-setup {
-            display: flex;
+            display: flex; 
             flex-flow: column;
             align-items: center;
             max-width: 600px;
@@ -493,6 +493,70 @@
             width: 50%;
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* Audio exercise screen */
+
+        #audio-exercise {
+            display: none;
+        }
+
+        #audio-question-play-button {
+            height: 60px;
+            width: 60px;
+            font-size: 32px;
+
+            
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #audio-question-play-button img {
+            height: 24px;
+            width: 24px;
+        }
+
+        #audio-instructions-container {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+            max-width: 520px;
+        }
+
+        #audio-text-input {
+            height: 52px;
+            width: 100%;
+            max-width: 360px;
+            border-radius: 52px;
+            font-size: 20px;
+            font-weight: 300;
+            padding-left: 24px;
+            padding-right: 24px;
+            border: 2px solid #282828;
+            box-shadow: 3px 3px 0px #000;
+            margin-top: 32px;
+        }
+
+        #audio-instructions {
+            width: auto;
+            display: flex;
+            align-items: center;
+        }
 
 
 
@@ -719,7 +783,7 @@
 
                 <div id="instructions-box" class="quiz-component">
 
-                    <h2 class="user-instructions">Translate:</h2>
+                    <h2 class="user-instructions">Match the word:</h2>
                     <p class="to-be-translated" id="multiple-choice-to-be-translated">name</p>
 
                 </div>
@@ -741,6 +805,22 @@
                     <h2 class="user-instructions">Translate:</h2>
                     <p class="to-be-translated" id="extended-response-to-be-translated">name</p>
                     <input type="text" id="user-text-input">
+                    <p id="hint-for-user" class="yellow"></p>
+
+                </div>
+
+            </div>
+
+            <div class="mid-section" id="audio-exercise">
+
+                <div id="inner-translation-area">
+
+                    <div id="audio-instructions-container">
+                        <div class="button tan raiserupper" id="audio-question-play-button"><img src="audio.svg"></div>
+                        <h2 class="user-instructions" id="audio-instructions">Write it in Gudjal:</h2>
+                    </div>
+                    
+                    <input type="text" id="audio-text-input">
                     <p id="hint-for-user" class="yellow"></p>
 
                 </div>
@@ -823,6 +903,15 @@
 
     const hintForUser = document.querySelector("#hint-for-user");
 
+    const yaruSound = new Audio("audio/yaru1.m4a");
+    const nganiSound = new Audio("audio/ngani.m4a");
+    const ngayaSound = new Audio("audio/ngaya.m4a");
+    const ngayguSound = new Audio("audio/ngaygu.m4a");
+    const riyalaSound = new Audio("audio/riyala.m4a");
+    const yaguySound = new Audio("audio/yaguy.m4a");
+    const yindaSound = new Audio("audio/yinda.m4a");
+    const yinuSound = new Audio("audio/yinu.m4a");
+
     let currentlySelectedAnswer = null;
     let isAnswerCorrect = false;
     let hasQuestionBeenAnswered = false;
@@ -859,7 +948,16 @@
         new Question("extended", "What is your skin?", ["ngani yinu yaguy", "yinu yaguy ngani", "ngani yaguy yinu", "yaguy yinu ngani"]),
         new Question("extended", "My name is Keesha.", ["keesha ngaygu riyala", "ngaygu riyala keesha", "keesha riyala ngaygu", "riyala ngaygu keesha"]),
         new Question("extended", "My skin is Gurrguru.", ["gurrguru ngaygu yaguy", "ngaygu yaguy gurrguru", "gurrguru yaguy ngaygu", "yaguy ngaygu gurrguru"]),
-        new Question("extended", "Is your skin Wudhurrayngan?", ["wudhurrayngan yinu yaguy", "yinu yaguy wudhurrayngan", "wudhurrayngan yaguy yinu", "yaguy yinu wudhurrayngan"])
+        new Question("extended", "Is your skin Wudhurrayngan?", ["wudhurrayngan yinu yaguy", "yinu yaguy wudhurrayngan", "wudhurrayngan yaguy yinu", "yaguy yinu wudhurrayngan"]),
+
+        
+        new Question("audio", ngayaSound, "ngaya"),
+        new Question("audio", yindaSound, "yinda"),
+        new Question("audio", riyalaSound, "riyala"),
+        new Question("audio", yaguySound, "yaguy"),
+        new Question("audio", nganiSound, "ngani"),
+        new Question("audio", yaruSound, "yaru"),
+        new Question("audio", yinuSound, "yinu")
     ]
 
     let questionNumberThatUserIsUpTo = 0;
@@ -906,7 +1004,6 @@
         if (qObj.type === "multiple-choice") {
 
             questionIsMultipleChoice = true;
-            questionIsExtended = false;
             multipleChoiceQuestionContainer.style.display = "flex";
             multipleChoiceToBeTranslated.innerText = qObj.prompt;
 
@@ -930,11 +1027,18 @@
 
         } else if (qObj.type === "extended") {
 
-            questionIsMultipleChoice = false;
             questionIsExtended = true;
             translationQuestionContainer.style.display = "flex";
             extendedResponseToBeTranslated.innerText = qObj.prompt;
             userTextInput.focus();
+
+        } else if (qObj.type === "audio") {
+
+            questionIsAudio = true;
+            audioQuestionContainer.style.display = "flex";
+            loadAudio(qObj.prompt, audioQuestionPlayButton);
+            audioTextInput.focus();
+            qObj.prompt.play();
 
         } else {
 
@@ -943,8 +1047,21 @@
         }
     }
 
+    let currentAudioFunctionality = null;
 
+    function loadAudio (audioFile, buttonThatPlaysAudio) {
 
+        if (currentAudioFunctionality) {
+            buttonThatPlaysAudio.removeEventListener("click", currentAudioFunctionality);
+        }
+
+        currentAudioFunctionality = function () {
+            audioFile.currentTime = 0;
+            audioFile.play();
+        }
+
+        buttonThatPlaysAudio.addEventListener("click", currentAudioFunctionality);
+    }
 
     // Setting up the lesson
 
@@ -957,6 +1074,10 @@
     const setUpMenu = document.querySelector("#practice-setup");
     const multipleChoiceQuestionContainer = document.querySelector("#multiple-choice-exercise");
     const translationQuestionContainer = document.querySelector("#translation-exercise");
+    const audioQuestionContainer = document.querySelector("#audio-exercise");
+
+    const audioQuestionPlayButton = document.querySelector("#audio-question-play-button");
+    const audioTextInput = document.querySelector("#audio-text-input");
 
     let settingUpTheLesson = true;
     let lessonIsOver = false;
@@ -979,15 +1100,6 @@
             bottomButtonContainer.style.display = "";
         }
     }
-
-    startLessonButton.addEventListener("click", () => {
-        settingUpTheLesson = false;
-
-        setUpMenu.style.display = "none";
-
-        newQuestion();
-        checkIfLessonHasStartedOrEnded();
-    })
 
     checkIfLessonHasStartedOrEnded();
 
@@ -1221,10 +1333,11 @@
         hasQuestionBeenAnswered = false;
         currentlySelectedAnswer = null;
         userTextInput.value = "";
+        audioTextInput.value = "";
 
         hintForUser.textContent = "";
         hintForUser.style.display = "";
-
+        
         checkButton.innerText = "Check";
 
         theQuestion = undefined;
@@ -1233,6 +1346,7 @@
         bottomBar.style.background = "white";
         turnEveryButtonWhite();
         turnEveryBoxNumberWhite();
+
     }
 
     // Functions for generating new question and answering questions.
@@ -1296,6 +1410,14 @@
 
         if (questionIsExtended) {
             if (theAnswer.includes(userTextInput.value.toLowerCase().replace(/[^\w\s]|_/g, ""))) {
+                markAnswerRight();
+            } else {
+                markAnswerWrong();
+            }
+        }
+
+        if (questionIsAudio) {
+            if (theAnswer === audioTextInput.value.toLowerCase().replace(/[^\w\s]|_/g, "")) {
                 markAnswerRight();
             } else {
                 markAnswerWrong();
@@ -1508,6 +1630,17 @@
             }
 
         })
+    })
+
+        // Starting lesson button
+
+    startLessonButton.addEventListener("click", () => {
+        settingUpTheLesson = false;
+
+        setUpMenu.style.display = "none";
+
+        newQuestion();
+        checkIfLessonHasStartedOrEnded();
     })
 
 </script>
