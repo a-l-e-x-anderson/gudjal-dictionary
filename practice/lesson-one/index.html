@@ -415,6 +415,7 @@
 
 
 
+
         /* Translation exercises */
 
         #translation-exercise {
@@ -759,17 +760,20 @@
 
                     <h3 class="question-type-heading">Question types:</h3>
 
-                    <div class="checkbox-container">
-                        <input type="checkbox" class="hidden-checkboxes" id="checkbox-multiple-choice-vocabulary">
-                        <label for="checkbox-multiple-choice-vocabulary">Multiple choice</label><span class="checkbox-on-display"><span class="tick">✓</span></span>
+                    <div class="checkbox-container" id="multiple-choice-checkbox-container">
+
+                        <span>Multiple choice</span><span class="checkbox-on-display"><span class="tick">✓</span></span>
+                        
                     </div>
-                    <div class="checkbox-container">
-                        <input type="checkbox" class="hidden-checkboxes" id="checkbox-typed-translations">
-                        <label for="checkbox-typed-translations">Typed response</label><span class="checkbox-on-display"><span class="tick">✓</span></span>
+                    <div class="checkbox-container" id="extended-checkbox-container">
+                        
+                        <span>Typed response</span><span class="checkbox-on-display"><span class="tick">✓</span></span>
+
                     </div>
-                    <div class="checkbox-container">
-                        <input type="checkbox" class="hidden-checkboxes" id="checkbox-audio-recognition">
-                        <label for="checkbox-audio-recognition">Audio recognition</label><span class="checkbox-on-display"><span class="tick">✓</span></span>
+                    <div class="checkbox-container" id="audio-checkbox-container">
+                        
+                        <span>Audio recognition</span><span class="checkbox-on-display"><span class="tick">✓</span></span>
+
                     </div>
 
                 </div>
@@ -922,6 +926,10 @@
     let theQuestion;
     let theAnswer;
 
+
+    const ticks = document.querySelectorAll(".tick");
+    const clickableCheckBoxes = document.querySelectorAll(".checkbox-container");
+
     const possibleAnswers = ["ngaya", "yinda", "riyala", "yaguy", "ngani", "yaru", "yinu", "Gurrguru", "Wudhurrayngan"];
 
     class Question {
@@ -933,24 +941,29 @@
         }
     }
 
-    const quizPool = [
+    let quizPool = []
+
+    const multipleChoiceQuestionPool = [
         new Question("multiple-choice", "I", "ngaya"),
         new Question("multiple-choice", "You", "yinda"),
         new Question("multiple-choice", "Name", "riyala"),
         new Question("multiple-choice", "Skin", "yaguy"),
         new Question("multiple-choice", "What", "ngani"),
         new Question("multiple-choice", "Here", "yaru"),
-        new Question("multiple-choice", "Your", "yinu"),
+        new Question("multiple-choice", "Your", "yinu")
+    ]
 
+    const extendedQuestionPool = [
         new Question("extended", "I am William.", ["ngaya william", "william ngaya"]),
         new Question("extended", "What is your name?", ["ngani yinu riyala", "yinu riyala ngani", "ngani riyala yinu", "riyala yinu ngani"]),
         new Question("extended", "Who are you?", ["yinda ngani", "ngani yinda"]),
         new Question("extended", "What is your skin?", ["ngani yinu yaguy", "yinu yaguy ngani", "ngani yaguy yinu", "yaguy yinu ngani"]),
         new Question("extended", "My name is Keesha.", ["keesha ngaygu riyala", "ngaygu riyala keesha", "keesha riyala ngaygu", "riyala ngaygu keesha"]),
         new Question("extended", "My skin is Gurrguru.", ["gurrguru ngaygu yaguy", "ngaygu yaguy gurrguru", "gurrguru yaguy ngaygu", "yaguy ngaygu gurrguru"]),
-        new Question("extended", "Is your skin Wudhurrayngan?", ["wudhurrayngan yinu yaguy", "yinu yaguy wudhurrayngan", "wudhurrayngan yaguy yinu", "yaguy yinu wudhurrayngan"]),
+        new Question("extended", "Is your skin Wudhurrayngan?", ["wudhurrayngan yinu yaguy", "yinu yaguy wudhurrayngan", "wudhurrayngan yaguy yinu", "yaguy yinu wudhurrayngan"])
+    ]
 
-        
+    const audioQuestionPool = [
         new Question("audio", ngayaSound, "ngaya"),
         new Question("audio", yindaSound, "yinda"),
         new Question("audio", riyalaSound, "riyala"),
@@ -965,7 +978,7 @@
     let questionsToBeDisplayed = [];
     let jumbledQuizPool = quizPool;
 
-    questionsToBeDisplayed = jumbleArray(jumbledQuizPool);
+    
 
     function getQuestion () {
 
@@ -986,6 +999,171 @@
 
 
 
+    
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+
+
+
+
+
+    
+
+    // Setting up question selection
+
+    let putInAudioQuestions = true;
+    let putInTypedQuestions = true;
+    let putInMultipleChoiceQuestions = true;
+
+    const multipleChoiceCheckboxContainer = document.querySelector("#multiple-choice-checkbox-container");
+    const extendedCheckboxContainer = document.querySelector("#extended-checkbox-container");
+    const audioCheckboxContainer = document.querySelector("#audio-checkbox-container");
+
+    multipleChoiceCheckboxContainer.addEventListener("click", () => {
+
+            const tick = multipleChoiceCheckboxContainer.querySelector(".tick");
+
+            if (tick.style.display === "") {
+                tick.style.display = "none";
+                putInMultipleChoiceQuestions = false;
+            } else {
+                tick.style.display = "";
+                putInMultipleChoiceQuestions = true;
+            }
+
+    })
+
+    extendedCheckboxContainer.addEventListener("click", () => {
+
+            const tick = extendedCheckboxContainer.querySelector(".tick");
+
+            if (tick.style.display === "") {
+                tick.style.display = "none";
+                putInTypedQuestions = false;
+            } else {
+                tick.style.display = "";
+                putInTypedQuestions = true;
+            }
+
+    })
+
+    audioCheckboxContainer.addEventListener("click", () => {
+
+            const tick = audioCheckboxContainer.querySelector(".tick");
+
+            if (tick.style.display === "") {
+                tick.style.display = "none";
+                putInAudioQuestions = false;
+            } else {
+                tick.style.display = "";
+                putInAudioQuestions = true;
+            }
+
+    })
+
+    function buildQuestionPool () {
+
+        if (putInAudioQuestions) {
+            quizPool.push(...audioQuestionPool);
+        }
+
+        if (putInMultipleChoiceQuestions) {
+            quizPool.push(...multipleChoiceQuestionPool);
+        }
+
+        if (putInTypedQuestions) {
+            quizPool.push(...extendedQuestionPool);
+        }
+    }
+
+
+    
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+
+
+
+
+
+    
+
+
+
+    function createQuestionPool () {
+
+        if (putInAudioQuestions) {
+            quizPool.push(...audioQuestionPool);
+        };
+
+        if (putInMultipleChoiceQuestions) {
+            quizPool.push(...multipleChoiceQuestionPool);
+        };
+
+        if (putInTypedQuestions) {
+            quizPool.push(...extendedQuestionPool);
+        };
+    }
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+
+
+
+
+
+    
 
     let currentQuestionObject;
     let reviewQueue = [];
@@ -1082,16 +1260,12 @@
     let settingUpTheLesson = true;
     let lessonIsOver = false;
 
-    let putInAudioQuestions = true;
-    let putInTypedQuestions = true;
-    let putInMultipleChoiceQuestions = true;
+    
 
     let questionIsMultipleChoice = false;
     let questionIsExtended = false;
     let questionIsAudio = false;
 
-    const ticks = document.querySelectorAll(".tick");
-    const clickableCheckBoxes = document.querySelectorAll(".checkbox-container");
 
     function checkIfLessonHasStartedOrEnded () {
         if (settingUpTheLesson || lessonIsOver) {
@@ -1535,8 +1709,6 @@
 
 
 
-
-
     // Event listeners
 
 
@@ -1610,31 +1782,25 @@
     skipButton.addEventListener("click", () => {
         newQuestion();
     })
+    
 
 
 
-
-
-        // Making ticks clickable.
-
-    clickableCheckBoxes.forEach((checkbox) => {
-
-        const tick = checkbox.querySelector(".tick");
-
-        checkbox.addEventListener("click", () => {
-
-            if (tick.style.display != "none") {
-                tick.style.display = "none";
-            } else {
-                tick.style.display = "flex";
-            }
-
-        })
-    })
 
         // Starting lesson button
 
+    
+
     startLessonButton.addEventListener("click", () => {
+
+        if (!putInAudioQuestions && !putInMultipleChoiceQuestions && !putInTypedQuestions) {
+            return;
+        }
+
+        buildQuestionPool();
+
+        questionsToBeDisplayed = jumbleArray(jumbledQuizPool);
+
         settingUpTheLesson = false;
 
         setUpMenu.style.display = "none";
