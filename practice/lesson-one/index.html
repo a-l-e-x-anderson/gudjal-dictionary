@@ -425,7 +425,7 @@
             height: 100%;
         }
 
-        #inner-translation-area {
+        .inner-translation-area {
             width: 100%;
             display: flex;
             flex-flow: column;
@@ -847,7 +847,7 @@
 
             <div class="mid-section" id="translation-exercise">
 
-                <div id="inner-translation-area">
+                <div class="inner-translation-area">
 
                     <h2 class="user-instructions">Translate:</h2>
                     <p class="to-be-translated" id="extended-response-to-be-translated">name</p>
@@ -860,7 +860,7 @@
 
             <div class="mid-section" id="audio-exercise">
 
-                <div id="inner-translation-area">
+                <div class="inner-translation-area">
 
                     <div id="audio-instructions-container">
                         <div class="button tan raiserupper" id="audio-question-play-button"><img src="audio.svg"></div>
@@ -1414,7 +1414,14 @@
 
 
     function jumbleArray (theArray) {
-        return theArray.sort(() => Math.random() - 0.5);
+        let newArray = [...theArray];
+
+        for (let i = newArray.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+
+        return newArray;
     }
 
     function randomNumber (range) {
@@ -1670,16 +1677,17 @@
 
     function returnUserAnswer () {
 
-        if (currentQuestionObject.type === "multiple-choice") {
-            return currentlySelectedAnswer;
-        } else if (currentQuestionObject.type === "extended") {
-            return userTextInput.value;
-        } else if (currentQuestionObject.type === "audio") {
-            return audioTextInput.value;
-        } else {
-            console.log("Something has gone horribly wrong.")
+        switch (currentQuestionObject.type) {
+            case "multiple-choice":
+                return currentlySelectedAnswer;
+                break;
+            case "extended":
+                return userTextInput.value;
+                break;
+            case "audio":
+                return audioTextInput.value;
+                break;
         }
-        
     } 
 
 
