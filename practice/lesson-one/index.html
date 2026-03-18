@@ -330,7 +330,7 @@
         }
 
         #practice-setup {
-            display: flex; 
+            display: flex;
             flex-flow: column;
             align-items: center;
             max-width: 600px;
@@ -492,6 +492,21 @@
 
         #congration-cake {
             width: 50%;
+        }
+
+        #victory-screen-button-container {
+            display: flex;
+            flex-flow: column;
+            width: 100%;
+            max-width: 400px;
+            align-items: center;
+            gap: 16px;
+        }
+
+        #practise-again-button {
+            height: 72px;
+            font-size: 24px;
+            padding: 24px;
         }
 
 
@@ -835,6 +850,7 @@
 
                 <h2>Congration! You done it!</h2>
                 <img src="congration.png" alt="An image of a congratulatory cake." id="congration-cake">
+                <div id="victory-screen-button-container"><div class="button raiserupper ochre" id="practise-again-button">Practise again</div><div class="button raiserupper">Return to lesson</div></div>
 
             </div>
 
@@ -926,6 +942,8 @@
     let theQuestion;
     let theAnswer;
 
+    const practiseAgainButton = document.querySelector("#practise-again-button");
+
 
     const ticks = document.querySelectorAll(".tick");
     const clickableCheckBoxes = document.querySelectorAll(".checkbox-container");
@@ -938,6 +956,7 @@
             this.prompt = prompt;
             this.answer = answer;
             this.answeredCorrectly = null;
+            this.userAnswer = null;
         }
     }
 
@@ -1160,7 +1179,26 @@
 
 
 
+    function resetPractice () {
 
+        disappearMidSections();
+        setUpMenu.style.display = "flex";
+        progressPercentage = 0;
+        progressBar.style.width = `${progressPercentage}%`;
+
+        putInAudioQuestions = true;
+        putInMultipleChoiceQuestions = true;
+        putInTypedQuestions = true;
+        quizPool.length = 0;
+
+        ticks.forEach(tick => {
+            tick.style.display = "";
+        })
+
+        settingUpTheLesson = true;
+        lessonIsOver = false;
+        checkIfLessonHasStartedOrEnded();
+    }
 
 
     
@@ -1242,6 +1280,12 @@
     }
 
     // Setting up the lesson
+
+    // Resetting ticks and enabled questions
+
+    
+
+    
 
     const checkboxAudioRecognition = document.querySelector("#checkbox-audio-recognition");
     const checkboxTypedTranslations = document.querySelector("#checkbox-typed-translations");
@@ -1438,7 +1482,7 @@
     // Progress bar and levelling up
 
     function increasePercentageByFive () {
-        progressPercentage += 10;
+        progressPercentage += 50;
     }
 
     function extendProgressBar () {
@@ -1530,16 +1574,33 @@
         displayQuestion(getQuestion());
     }
 
+
+    function returnUserAnswer () {
+
+        if (currentQuestionObject.type === "multiple-choice") {
+            return currentlySelectedAnswer;
+        } else if (currentQuestionObject.type === "extended") {
+            return userTextInput.value;
+        } else if (currentQuestionObject.type === "audio") {
+            return audioTextInput.value;
+        } else {
+            console.log("Something has gone horribly wrong.")
+        }
+        
+    } 
+
+
+
     function markQuestionAnswered () {
         hasQuestionBeenAnswered = true;
         checkButton.innerText = "Next Question";
+        currentQuestionObject.userAnswer = returnUserAnswer();
     }
 
     function markAnswerRight () {
         markQuestionAnswered();
         currentQuestionObject.answeredCorrectly = true;
         listOfQuestionsThatHaveBeenAnswered.push(currentQuestionObject);
-
 
         bottomBar.style.background = "#A2E29A";
         isAnswerCorrect = true;
@@ -1808,6 +1869,8 @@
         newQuestion();
         checkIfLessonHasStartedOrEnded();
     })
+
+    practiseAgainButton.addEventListener("click", resetPractice);
 
 </script>
 </body>
