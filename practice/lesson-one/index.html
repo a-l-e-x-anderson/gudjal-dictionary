@@ -42,6 +42,7 @@
 
         a {
             text-decoration: none;
+            color: black;
         }
 
         h1 {
@@ -473,6 +474,32 @@
 
 
 
+        /* Review screen */
+
+        #review-screen {
+            display: none;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #review-message {
+            font-size: 32px;
+        }
+
+        #review-button {
+            height: 72px;
+            padding: 24px;
+            font-size: 24px;
+            width: 200px;
+            margin-top: 24px;
+        }
+
+
+
+
+
+
 
 
 
@@ -773,21 +800,21 @@
 
                 <div id="checkbox-container-container">
 
-                    <h3 class="question-type-heading">Question types:</h3>
+                    <h3 class="question-type-heading">Include:</h3>
 
                     <div class="checkbox-container" id="multiple-choice-checkbox-container">
 
-                        <span>Multiple choice</span><span class="checkbox-on-display"><span class="tick">✓</span></span>
+                        <span>Vocabulary questions</span><span class="checkbox-on-display"><span class="tick">✓</span></span>
                         
                     </div>
                     <div class="checkbox-container" id="extended-checkbox-container">
                         
-                        <span>Typed response</span><span class="checkbox-on-display"><span class="tick">✓</span></span>
+                        <span>Grammar questions</span><span class="checkbox-on-display"><span class="tick">✓</span></span>
 
                     </div>
                     <div class="checkbox-container" id="audio-checkbox-container">
                         
-                        <span>Audio recognition</span><span class="checkbox-on-display"><span class="tick">✓</span></span>
+                        <span>Audio questions</span><span class="checkbox-on-display"><span class="tick">✓</span></span>
 
                     </div>
 
@@ -846,11 +873,27 @@
 
             </div>
 
+            <div class="mid-section" id="review-screen">
+
+                <h2 id="review-message">Wumay! Good! Now let's go over a few tricky questions.</h2>
+
+                <div class="button ochre raiserupper" id="review-button">Review</div>
+                
+
+            </div>
+
             <div class="mid-section" id="victory-screen">
 
-                <h2>Congration! You done it!</h2>
+                <h2>Dharibara! Well done!</h2>
                 <img src="congration.png" alt="An image of a congratulatory cake." id="congration-cake">
-                <div id="victory-screen-button-container"><div class="button raiserupper ochre" id="practise-again-button">Practise again</div><div class="button raiserupper">Return to lesson</div></div>
+                <div id="victory-screen-button-container">
+                    
+                    <div class="button raiserupper ochre" id="practise-again-button">Practise again</div>
+
+                    <a href="/lessons/chapter-one/" class="button raiserupper">Back to lesson</a>
+                        
+            
+                </div>
 
             </div>
 
@@ -913,6 +956,9 @@
     const skipButton = document.querySelector("#skip-button");
 
     const victoryScreen = document.querySelector("#victory-screen");
+    const reviewScreen = document.querySelector("#review-screen");
+
+    const reviewButton = document.querySelector("#review-button");
 
     const multipleChoiceToBeTranslated = document.querySelector("#multiple-choice-to-be-translated");
     const extendedResponseToBeTranslated = document.querySelector("#extended-response-to-be-translated");
@@ -942,6 +988,8 @@
     let theQuestion;
     let theAnswer;
 
+    let reviewMode = false;
+
     const practiseAgainButton = document.querySelector("#practise-again-button");
 
 
@@ -964,12 +1012,12 @@
 
     const multipleChoiceQuestionPool = [
         new Question("multiple-choice", "I", "ngaya"),
-        new Question("multiple-choice", "You", "yinda"),
-        new Question("multiple-choice", "Name", "riyala"),
-        new Question("multiple-choice", "Skin", "yaguy"),
-        new Question("multiple-choice", "What", "ngani"),
-        new Question("multiple-choice", "Here", "yaru"),
-        new Question("multiple-choice", "Your", "yinu")
+        new Question("multiple-choice", "you", "yinda"),
+        new Question("multiple-choice", "name", "riyala"),
+        new Question("multiple-choice", "skin", "yaguy"),
+        new Question("multiple-choice", "what", "ngani"),
+        new Question("multiple-choice", "here", "yaru"),
+        new Question("multiple-choice", "your", "yinu")
     ]
 
     const extendedQuestionPool = [
@@ -995,7 +1043,8 @@
     let questionNumberThatUserIsUpTo = 0;
 
     let questionsToBeDisplayed = [];
-    let jumbledQuizPool = quizPool;
+
+    
 
     
 
@@ -1005,10 +1054,23 @@
         questionNumberThatUserIsUpTo++;
 
         if (questionNumberThatUserIsUpTo >= questionsToBeDisplayed.length) {
-            questionsToBeDisplayed = jumbleArray(jumbledQuizPool);
+
+            if (!reviewMode) {
+                questionsToBeDisplayed = jumbleArray(jumbledQuizPool);
+            } else if (reviewMode) {
+
+                if (reviewQueue.length === 0) {
+                    return;
+                }
+
+                questionsToBeDisplayed = jumbleArray([...reviewQueue]);
+            } else {
+                console.log("Something has gone horribly wrong with the getQuestion function.")
+            }
+        
             questionNumberThatUserIsUpTo = 0;
         }
-
+        
         return questionToBeGiven;
 
     }
@@ -1136,24 +1198,6 @@
 
 
 
-    function createQuestionPool () {
-
-        if (putInAudioQuestions) {
-            quizPool.push(...audioQuestionPool);
-        };
-
-        if (putInMultipleChoiceQuestions) {
-            quizPool.push(...multipleChoiceQuestionPool);
-        };
-
-        if (putInTypedQuestions) {
-            quizPool.push(...extendedQuestionPool);
-        };
-    }
-    
-
-
-
 
 
 
@@ -1197,6 +1241,7 @@
 
         settingUpTheLesson = true;
         lessonIsOver = false;
+        bottomBar.style.background = "white";
         checkIfLessonHasStartedOrEnded();
     }
 
@@ -1481,9 +1526,6 @@
 
     // Progress bar and levelling up
 
-    function increasePercentageByFive () {
-        progressPercentage += 50;
-    }
 
     function extendProgressBar () {
         if (progressPercentage <= 100) {
@@ -1493,23 +1535,38 @@
         }
     }
 
-    function levelUp () {
-        increasePercentageByFive();
+    function levelUp (howManyPoints) {
+        progressPercentage += howManyPoints;
         extendProgressBar();
         checkForVictory();
     }
 
     function declareVictory() {
         lessonIsOver = true;
+        reviewMode = false;
         checkIfLessonHasStartedOrEnded();
         disappearMidSections();
         victoryScreen.style.display = "flex";
         console.log(listOfQuestionsThatHaveBeenAnswered);
     }
 
+    function goToReview() {
+        if (reviewMode) {
+            return;
+        }
+        disappearMidSections();
+        reviewScreen.style.display = "flex";
+    }
+
     function checkForVictory () {
+        
         if (progressPercentage >= 100) {
-            declareVictory();
+
+            if (reviewQueue.length === 0) {
+                declareVictory();
+            } else {
+                goToReview();
+            }
         }
     }
 
@@ -1524,7 +1581,21 @@
 
 
 
+    function startReview () {
 
+        reviewMode = true;
+        questionNumberThatUserIsUpTo = 0;
+
+        questionsToBeDisplayed.length = 0;
+        questionsToBeDisplayed = reviewQueue.slice(0, 2);
+
+        settingUpTheLesson = false;
+        lessonIsOver = false;
+        checkIfLessonHasStartedOrEnded();
+
+    
+        newQuestion();
+    }
 
 
 
@@ -1598,13 +1669,30 @@
     }
 
     function markAnswerRight () {
-        markQuestionAnswered();
-        currentQuestionObject.answeredCorrectly = true;
-        listOfQuestionsThatHaveBeenAnswered.push(currentQuestionObject);
 
+        markQuestionAnswered();
         bottomBar.style.background = "#A2E29A";
         isAnswerCorrect = true;
-        levelUp();
+
+        if (reviewMode) {
+            
+            let index = reviewQueue.indexOf(currentQuestionObject);
+            if (index !== -1) {
+                reviewQueue.splice(index, 1);
+            }
+
+            if (reviewQueue.length === 0) {
+                declareVictory();
+            }
+
+        } else {
+
+            currentQuestionObject.answeredCorrectly = true;
+            listOfQuestionsThatHaveBeenAnswered.push(currentQuestionObject);
+            levelUp(50);
+
+        }
+
     }
 
     function markAnswerWrong () {
@@ -1619,6 +1707,11 @@
 
         bottomBar.style.background = "#E29AA2";
         isAnswerCorrect = false;
+
+        if (!reviewMode) {
+            reviewQueue.push(currentQuestionObject);
+        }
+        
     }
 
     function provideCorrectAnswer () {
@@ -1764,7 +1857,8 @@
 
 
 
-
+    let jumbledQuizPool = quizPool;
+    let jumbledReviewQueue = reviewQueue;
 
 
 
@@ -1871,6 +1965,8 @@
     })
 
     practiseAgainButton.addEventListener("click", resetPractice);
+
+    reviewButton.addEventListener("click", startReview);
 
 </script>
 </body>
