@@ -1360,6 +1360,7 @@
 
     function resetPractice () {
 
+        listOfQuestionsThatHaveBeenAnswered.length = 0;
         disappearMidSections();
         setUpMenu.style.display = "flex";
         progressPercentage = 0;
@@ -1844,7 +1845,7 @@
 
             currentQuestionObject.answeredCorrectly = true;
             listOfQuestionsThatHaveBeenAnswered.push(currentQuestionObject);
-            levelUp(20);
+            levelUp(10);
 
         }
 
