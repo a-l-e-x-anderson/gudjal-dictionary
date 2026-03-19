@@ -128,7 +128,9 @@
             background: #957C62;
         }
 
-
+        .bold {
+            font-weight: bold;
+        }
 
 
 
@@ -230,8 +232,6 @@
             transition: 0.2s ease;
             display: flex;
         }
-
-
 
         .mid-section {
             height: 100%;
@@ -537,6 +537,64 @@
             padding: 24px;
         }
 
+        .scorecard {
+            width: 100%;
+            height: 200px;
+            background: white;
+            border: 2px solid #282828;
+            border-radius: 16px;
+
+            overflow-y: scroll;
+        }
+
+        .scorecard table {
+            width: 100%;
+        }
+
+        .scorecard thead {
+            position: sticky;
+            top: 0;
+            z-index: 3;
+        }
+
+        .scorecard thead td {
+            width: 33%;
+            height: 40px;
+            font-weight: bold;
+            color: black;
+            text-align: center;
+            background: #FFF4D1;
+        }
+
+        .first-td {
+            border-top-left-radius: 13px;
+        }
+
+        .last-td {
+            border-top-right-radius: 13px;
+        }
+
+        .correct-answer,
+        .missed-answer {
+            background: #A2E29A;
+            width: 100%;
+            height: 100%;
+            display: block;
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .missed-answer {
+            background: white;
+        }
+
+        tbody td {
+            padding: 4px;
+        }
+
+        .no-padding {
+            padding: 0;
+        }
 
 
 
@@ -767,6 +825,8 @@
 
         }
 
+        
+
 
     </style>
 </head>
@@ -886,14 +946,21 @@
             <div class="mid-section" id="victory-screen">
 
                 <h2>Dharibara! Well done!</h2>
-                <img src="congration.png" alt="An image of a congratulatory cake." id="congration-cake">
-                <div id="victory-screen-button-container">
-                    
-                    <div class="button raiserupper ochre" id="practise-again-button">Practise again</div>
 
+                <div class="scorecard">
+                    <table>
+                        <thead>
+                            <tr><td class="first-td">Question</td><td>Answer</td><td class="last-td"></td></tr>
+                        </thead>
+                        <tbody id="scorecard-tbody"></tbody>
+                    </table>
+                </div>
+                
+                <div id="victory-screen-button-container">
+
+                    <div class="button raiserupper ochre" id="practise-again-button">Practise again</div>
                     <a href="/lessons/chapter-one/" class="button raiserupper">Back to lesson</a>
                         
-            
                 </div>
 
             </div>
@@ -994,6 +1061,8 @@
 
     const practiseAgainButton = document.querySelector("#practise-again-button");
 
+    const scorecardTableBody = document.querySelector("#scorecard-tbody");
+
 
     const ticks = document.querySelectorAll(".tick");
     const clickableCheckBoxes = document.querySelectorAll(".checkbox-container");
@@ -1083,7 +1152,66 @@
         return questionToBeGiven;
     }
 
+    function showScorecard () {
+        
 
+        scorecardTableBody.innerHTML = listOfQuestionsThatHaveBeenAnswered
+            .map(question => {
+
+                let questionType = "";
+                let scorecardQuestion = "";
+                let scorecardAnswer = ""
+                let correctOrMissed = "";
+                let questionMarkOrFullStop = ".";
+
+                if (question.answeredCorrectly === true) {
+                    correctOrMissed = "Correct!"
+                } else {
+                    correctOrMissed = "Missed."
+                }
+
+                if (question.type === "audio") {
+                    scorecardQuestion = question.answer;
+                } else {
+                    scorecardQuestion = question.prompt
+                }
+
+                if (question.type === "extended") {
+
+                    if (question.type.includes("?")) {
+                        questionMarkOrFullStop = "?"
+                    }
+                    scorecardAnswer = question.answer[0];
+                } else {
+                    scorecardAnswer = question.answer;
+                }
+
+                fixedUpScorecardQuestion = scorecardQuestion.charAt(0).toUpperCase() + scorecardQuestion.slice(1);
+                fixedUpScorecardAnswer = scorecardAnswer.charAt(0).toUpperCase() + scorecardAnswer.slice(1) + questionMarkOrFullStop;
+
+                switch (question.type) {
+                    case "multiple-choice":
+                        questionType = "Match: ";
+                        break;
+                    case "extended":
+                        questionType = "Translate: ";
+                        break;
+                    case "audio":
+                        questionType = "Listen: ";
+                        break;
+                }
+
+                if (question.answeredCorrectly === true) {
+                    return `<tr><td><span class="bold">${questionType}</span>${fixedUpScorecardQuestion}</td><td>${fixedUpScorecardAnswer}</td><td class="no-padding"><span class="correct-answer">${correctOrMissed}</span></td></tr>`
+                } else {
+                    return `<tr><td><span class="bold">${questionType}</span>${fixedUpScorecardQuestion}</td><td>${fixedUpScorecardAnswer}</td><td class="no-padding"><span class="missed-answer">${correctOrMissed}</span></td></tr>`
+                }
+                
+                
+            })
+            .join("");
+
+    }
 
 
 
@@ -1556,6 +1684,7 @@
         disappearMidSections();
         victoryScreen.style.display = "flex";
         console.log(listOfQuestionsThatHaveBeenAnswered);
+        showScorecard();
     }
 
     let reviewScreenShowing = false;
@@ -1715,7 +1844,7 @@
 
             currentQuestionObject.answeredCorrectly = true;
             listOfQuestionsThatHaveBeenAnswered.push(currentQuestionObject);
-            levelUp(10);
+            levelUp(20);
 
         }
 
@@ -1725,7 +1854,6 @@
 
         markQuestionAnswered();
         currentQuestionObject.answeredCorrectly = false;
-        listOfQuestionsThatHaveBeenAnswered.push(currentQuestionObject);
 
         if (questionIsExtended || questionIsAudio) {
             provideCorrectAnswer();
@@ -1735,6 +1863,7 @@
         isAnswerCorrect = false;
 
         if (!reviewMode) {
+            listOfQuestionsThatHaveBeenAnswered.push(currentQuestionObject);
             reviewQueue.push(currentQuestionObject);
         }
         
@@ -1986,6 +2115,9 @@
     })
 
     skipButton.addEventListener("click", () => {
+        markQuestionAnswered();
+        currentQuestionObject.answeredCorrectly = false;
+        reviewQueue.push(currentQuestionObject);
         newQuestion();
     })
     
