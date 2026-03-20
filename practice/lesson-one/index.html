@@ -1129,7 +1129,7 @@
 
         if (questionNumberThatUserIsUpTo >= questionsToBeDisplayed.length) {
 
-            questionsToBeDisplayed = jumbleArray(jumbledQuizPool);
+            questionsToBeDisplayed = jumbleArray(questionsToBeDisplayed);
             questionNumberThatUserIsUpTo = 0;
         }
         
@@ -1158,7 +1158,7 @@
     function showScorecard () {
         
 
-        scorecardTableBody.innerHTML = listOfQuestionsThatHaveBeenAnswered
+        scorecardTableBody.innerHTML = scorecardToBeShown
             .map(question => {
 
                 let questionType = "";
@@ -1181,7 +1181,7 @@
 
                 if (question.type === "extended") {
 
-                    if (question.type.includes("?")) {
+                    if (question.prompt.includes("?")) {
                         questionMarkOrFullStop = "?"
                     }
                     scorecardAnswer = question.answer[0];
@@ -1363,7 +1363,10 @@
 
     function resetPractice () {
 
-        listOfQuestionsThatHaveBeenAnswered.length = 0;
+        scorecardToBeShown = [];
+        listOfQuestionsThatHaveBeenAnswered = [];
+        quizPool = [];
+        reviewQueue = [];
         disappearMidSections();
         setUpMenu.style.display = "flex";
         progressPercentage = 0;
@@ -1390,6 +1393,7 @@
     let currentQuestionObject;
     let reviewQueue = [];
     let listOfQuestionsThatHaveBeenAnswered = [];
+    let scorecardToBeShown = [];
 
 
     function displayQuestion(qObj) {
@@ -1715,6 +1719,12 @@
         bottomBar.style.background = "white";
         lessonIsOver = true;
         reviewMode = false;
+
+        if (scorecardToBeShown.length === 0) {
+            scorecardToBeShown = listOfQuestionsThatHaveBeenAnswered.map(q => ({...q}));
+        }
+
+
         checkIfLessonHasStartedOrEnded();
         disappearMidSections();
         victoryScreen.style.display = "flex";
@@ -1728,6 +1738,8 @@
         if (reviewMode) {
             return;
         }
+
+        scorecardToBeShown = listOfQuestionsThatHaveBeenAnswered.map(q => ({...q}));
 
         reviewScreenShowing = true;
         checkIfLessonHasStartedOrEnded();
@@ -1809,8 +1821,8 @@
         userTextInput.value = "";
         audioTextInput.value = "";
 
-        hintForUser.textContent = "";
-        hintForUser.style.display = "";
+        hintForUser.textContent = "none";
+        hintForUser.style.display = "none";
         audioHint.textContent = "";
         audioHint.style.display = "";
         
@@ -1882,13 +1894,17 @@
 
             currentQuestionObject.answeredCorrectly = true;
             listOfQuestionsThatHaveBeenAnswered.push(currentQuestionObject);
-            levelUp(10);
+            levelUp(20);
 
         }
 
     }
 
     function markAnswerWrong () {
+
+        if (hasQuestionBeenAnswered && !reviewMode) {
+            return;
+        }
 
         markQuestionAnswered();
         currentQuestionObject.answeredCorrectly = false;
@@ -1902,7 +1918,11 @@
 
         if (!reviewMode) {
             listOfQuestionsThatHaveBeenAnswered.push(currentQuestionObject);
-            reviewQueue.push(currentQuestionObject);
+
+            if (!reviewQueue.includes(currentQuestionObject)) {
+                reviewQueue.push(currentQuestionObject);
+            }
+
         }
         
     }
@@ -2153,9 +2173,10 @@
     })
 
     skipButton.addEventListener("click", () => {
-        markQuestionAnswered();
-        currentQuestionObject.answeredCorrectly = false;
-        reviewQueue.push(currentQuestionObject);
+        if (hasQuestionBeenAnswered || settingUpTheLesson || lessonIsOver) {
+            return;
+        }
+        markAnswerWrong();
         newQuestion();
     })
     
@@ -2175,7 +2196,7 @@
 
         buildQuestionPool();
 
-        questionsToBeDisplayed = jumbleArray(jumbledQuizPool);
+        questionsToBeDisplayed = jumbleArray(quizPool);
 
         settingUpTheLesson = false;
 
