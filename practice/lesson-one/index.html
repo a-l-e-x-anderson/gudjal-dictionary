@@ -1015,6 +1015,8 @@
     const answerDisplayThree = document.querySelector("#answer-display-three");
     const answerDisplayFour = document.querySelector("#answer-display-four");
 
+    const listOfAnswerDisplays = document.querySelectorAll(".answer-display");
+
     const answerButtons = document.querySelectorAll(".possible-answer-button");
     const boxNumbers = document.querySelectorAll(".box-number");
 
@@ -1109,6 +1111,8 @@
         new Question("audio", yaruSound, "yaru"),
         new Question("audio", yinuSound, "yinu")
     ]
+
+    const listOfAudioFiles = audioQuestionPool.map(question => question.prompt);
 
     let questionNumberThatUserIsUpTo = 0;
 
@@ -1622,10 +1626,27 @@
         })
     }
 
+    function findAndPlayAudio () {
+
+        audioQuestionPool.forEach(questionObj => {
+            if (questionObj.answer === currentlySelectedAnswer) {
+                listOfAudioFiles.forEach(audioFile => {
+                    audioFile.pause();
+                    audioFile.currentTime = 0;
+                })
+                questionObj.prompt.play();
+            }
+        })
+        
+    }
+
     function selectAnswer (button) {
         currentlySelectedAnswer = button.querySelector(".answer-display").textContent;
         turnEveryButtonWhite();
         button.style.background = "#E2B59A";
+
+        findAndPlayAudio();
+
     }
 
     function disappearMidSections () {
@@ -1634,7 +1655,20 @@
         })
     }
 
+    function turnRightAnswerGreen () {
 
+        answerButtons.forEach(answerButton => {
+
+            let innerAnswerDisplay = answerButton.querySelector(".answer-display");
+            let answerButtonNumber = answerButton.querySelector(".box-number");
+
+            if (innerAnswerDisplay.textContent === theAnswer) {
+                answerButton.style.background = "#A2E29A";
+                answerButtonNumber.style.background = "#7dc274";
+            }
+        })
+
+    }
 
 
 
@@ -1678,6 +1712,7 @@
     }
 
     function declareVictory() {
+        bottomBar.style.background = "white";
         lessonIsOver = true;
         reviewMode = false;
         checkIfLessonHasStartedOrEnded();
@@ -1825,6 +1860,9 @@
         hasQuestionBeenAnswered = true;
         checkButton.innerText = "Next Question";
         currentQuestionObject.userAnswer = returnUserAnswer();
+        if (questionIsMultipleChoice) {
+            turnRightAnswerGreen();
+        }
     }
 
     function markAnswerRight () {
