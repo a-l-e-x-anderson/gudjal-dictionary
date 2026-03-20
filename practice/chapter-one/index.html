@@ -1985,7 +1985,7 @@
         }
 
         if (questionIsExtended) {
-            if (theAnswer.includes(userTextInput.value.toLowerCase().replace(/[^\w\s]|_/g, ""))) {
+            if (theAnswer.includes(userTextInput.value.toLowerCase().trim().replace(/[^\w\s]|_/g, ""))) {
                 markAnswerRight();
             } else {
                 markAnswerWrong();
@@ -1993,7 +1993,7 @@
         }
 
         if (questionIsAudio) {
-            if (theAnswer === audioTextInput.value.toLowerCase().replace(/[^\w\s]|_/g, "")) {
+            if (theAnswer === audioTextInput.value.toLowerCase().trim().replace(/[^\w\s]|_/g, "")) {
                 markAnswerRight();
             } else {
                 markAnswerWrong();
