@@ -1047,6 +1047,9 @@
     const yindaSound = new Audio("audio/yinda.m4a");
     const yinuSound = new Audio("audio/yinu.m4a");
 
+    const wudhurraynganSound = new Audio("audio/wudhurrayngan.m4a");
+    const gurrguruSound = new Audio("audio/gurrguru.m4a");
+
     let currentlySelectedAnswer = null;
     let isAnswerCorrect = false;
     let hasQuestionBeenAnswered = false;
@@ -1067,7 +1070,7 @@
     const ticks = document.querySelectorAll(".tick");
     const clickableCheckBoxes = document.querySelectorAll(".checkbox-container");
 
-    const possibleAnswers = ["ngaya", "yinda", "riyala", "yaguy", "ngani", "yaru", "yinu", "Gurrguru", "Wudhurrayngan"];
+    const possibleAnswers = ["ngaya", "yinda", "riyala", "yaguy", "ngani", "yaru", "yinu", "gurrguru", "wudhurrayngan"];
 
     class Question {
         constructor (type, prompt, answer) {
@@ -1111,7 +1114,12 @@
         new Question("audio", yinuSound, "yinu")
     ]
 
-    const listOfAudioFiles = audioQuestionPool.map(question => question.prompt);
+    const audioForMultipleChoice = [
+        new Question("multiple-choice-audio", wudhurraynganSound, "wudhurrayngan"),
+        new Question("multiple-choice-audio", gurrguruSound, "gurrguru")
+    ]
+
+    const listOfAudioFiles = [...audioQuestionPool, ...audioForMultipleChoice].map(question => question.prompt);
 
     let questionNumberThatUserIsUpTo = 0;
 
@@ -1632,6 +1640,16 @@
     function findAndPlayAudio () {
 
         audioQuestionPool.forEach(questionObj => {
+            if (questionObj.answer === currentlySelectedAnswer) {
+                listOfAudioFiles.forEach(audioFile => {
+                    audioFile.pause();
+                    audioFile.currentTime = 0;
+                })
+                questionObj.prompt.play();
+            }
+        })
+
+        audioForMultipleChoice.forEach(questionObj => {
             if (questionObj.answer === currentlySelectedAnswer) {
                 listOfAudioFiles.forEach(audioFile => {
                     audioFile.pause();
