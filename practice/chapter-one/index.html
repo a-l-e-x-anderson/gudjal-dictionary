@@ -1263,12 +1263,12 @@
 
             const tick = multipleChoiceCheckboxContainer.querySelector(".tick");
 
-            if (tick.style.display === "") {
-                tick.style.display = "none";
-                putInMultipleChoiceQuestions = false;
-            } else {
+            if (tick.style.display === "none") {
                 tick.style.display = "";
                 putInMultipleChoiceQuestions = true;
+            } else {
+                tick.style.display = "none";
+                putInMultipleChoiceQuestions = false;
             }
 
     })
@@ -1302,6 +1302,8 @@
     })
 
     function buildQuestionPool () {
+
+        quizPool = [];
 
         if (putInAudioQuestions) {
             quizPool.push(...audioQuestionPool);
@@ -1372,7 +1374,6 @@
 
         scorecardToBeShown = [];
         listOfQuestionsThatHaveBeenAnswered = [];
-        quizPool = [];
         reviewQueue = [];
         disappearMidSections();
         setUpMenu.style.display = "flex";
@@ -2212,6 +2213,10 @@
         }
 
         buildQuestionPool();
+
+        if (quizPool.length === 0) {
+            return;
+        }
 
         questionsToBeDisplayed = jumbleArray(quizPool);
 
