@@ -1372,26 +1372,44 @@
 
     function resetPractice () {
 
-        scorecardToBeShown = [];
-        listOfQuestionsThatHaveBeenAnswered = [];
-        reviewQueue = [];
-        disappearMidSections();
-        setUpMenu.style.display = "flex";
+        currentlySelectedAnswer = null;
+        isAnswerCorrect = false;
+        hasQuestionBeenAnswered = false;
         progressPercentage = 0;
         progressBar.style.width = `${progressPercentage}%`;
 
+        theQuestion = null;
+        theAnswer = null;
+
+        reviewMode = false;
+        quizPool = []
+        questionNumberThatUserIsUpTo = 0;
+
+        questionsToBeDisplayed = [];
+
+        reviewQuestionList = [];
         putInAudioQuestions = true;
-        putInMultipleChoiceQuestions = true;
         putInTypedQuestions = true;
-        quizPool.length = 0;
+        putInMultipleChoiceQuestions = true;
+
+        currentQuestionObject;
+        reviewQueue = [];
+        listOfQuestionsThatHaveBeenAnswered = [];
+        scorecardToBeShown = [];
+        settingUpTheLesson = true;
+        lessonIsOver = false;
+        questionIsMultipleChoice = false;
+        questionIsExtended = false;
+        questionIsAudio = false;
+
+        disappearMidSections();
+        setUpMenu.style.display = "flex";
+        bottomBar.style.background = "white";
 
         ticks.forEach(tick => {
             tick.style.display = "";
         })
 
-        settingUpTheLesson = true;
-        lessonIsOver = false;
-        bottomBar.style.background = "white";
         checkIfLessonHasStartedOrEnded();
     }
 
@@ -2104,10 +2122,6 @@
 
 
 
-
-
-    let jumbledQuizPool = quizPool;
-    let jumbledReviewQueue = reviewQueue;
 
 
 

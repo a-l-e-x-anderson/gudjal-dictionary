@@ -167,13 +167,6 @@
 
 
 
-        #refresh-button {
-            width: 44px;
-            height: 44px;
-            background: #e3e3e3;
-        }
-
-
         .raiserupper {
             transition: 0.4s ease;
         }
@@ -197,9 +190,22 @@
 
 
 
+        .expandable-paragraph-container {
+            width: 100%;
+            text-align: left;
+            background: white;
+            border: 2px solid #282828;
+            border-radius: 16px;
+            padding: 16px;
+        }
 
+        .expandable-paragraphs {
+            justify-content: center;
+        }
 
-
+        .expandable-paragraphs:hover {
+            cursor: pointer;
+        }
 
 
 
@@ -217,29 +223,24 @@
             display: flex;
             flex-flow: column;
             align-items: center;
-        }
-
-        #personal-box-container {
-            margin-top: 28px;
-            display: flex;
-            flex-flow: wrap;
-            justify-content: space-between;
-            width: 80%;
-            padding-bottom: 40px;
+            padding: 32px;
+            gap: 16px;
         }
 
         .personal-box {
             width: 48%;
-            background: white;
-            border: 2px solid #282828;
-            border-radius: 16px;
-            box-shadow: 3px 3px 0px #000;
             padding: 16px;
 
             display: flex;
             flex-flow: column;
             align-items: center;
             gap: 16px;
+        }
+        
+        .personal-box-row {
+            width: 100%;
+            display: flex;
+            margin-top: 32px;
         }
         
         p {
@@ -302,31 +303,14 @@
 
 
 
-
-
-
-        .linguist-explanation {
-            display: none;
-        }
-
-
-        .info-box {
-            width: 80%;
-            background: white;
-            border-radius: 16px;
-            border: 2px solid #282828;
-            margin-top: 40px;
-            box-shadow: 3px 3px 0px #000;
-            padding: 16px;
-        }
-        
         
 
 
 
 
 
-        h3 {
+        h3,
+        .expandable-paragraphs {
             font-size: 24px;
             font-family: 'Patua One', serif;
             font-weight: 100;
@@ -393,50 +377,79 @@
 
     <div id="about-info-container">
 
-        <div class="info-box">
-            <h3>What is this website?</h3>
-            <br>
-            <p><strong class="tan">
-                This site is under construction. Everything that is on the site right now is a proof of concept.
-            </strong></p>
-            <br>
-            <p>
-                Welcome to Birraya! This is a platform to learn and practise the Gudjal language, which was traditionally spoken on Gudjal Country in 
-                modern-day North Queensland. The language went to sleep in the 1970s, but it is currently being revitalised by the Gudjal community. 
-                <br>
-                <br>
-                A lot of information about Gudjal was lost due to European invasion. So the Gudjal on this website is almost certainly a little different to 
-                how Elders once spoke it. But all languages change over time, no matter the context.
-                <br>
-                <br>
-                What's important – and what this website aims to do – is to get more Gudjal people using and talking about their language. As more people join in, 
-                certain words, spellings, and ways of speaking will become more familiar and more widely accepted. This is how languages wake up again. 
+        <div class="expandable-paragraph-container">
 
-            </p>
+            <details>
+
+                <summary class="expandable-paragraphs">What is this website?</summary>
+                <br>
+                <p><strong class="tan">
+                    This site is under construction. Everything that is on the site right now is a proof of concept.
+                </strong></p>
+                <br>
+                <p>
+                    Welcome to Birraya! This is a platform to learn and practise the Gudjal language, which was traditionally spoken on Gudjal Country in 
+                    modern-day North Queensland. The language went to sleep in the 1970s, but it is currently being revitalised by the Gudjal community. 
+                    <br>
+                    <br>
+                    A lot of information about Gudjal was lost due to European invasion. So the Gudjal on this website is almost certainly a little different to 
+                    how Elders once spoke it. But all languages change over time, no matter the context.
+                    <br>
+                    <br>
+                    What's important – and what this website aims to do – is to get more Gudjal people using and talking about their language. As more people join in, 
+                    certain words, spellings, and ways of speaking will become more familiar and more widely accepted. This is how languages wake up again. 
+
+                </p>
+
+            </details>
+
         </div>
 
-        <div id="personal-box-container">
+        <div class="expandable-paragraph-container">
 
-            <div class="personal-box" id="william-box">
-                <div class="photo-placeholder"></div>
-                <h3>William Santo</h3>
-                <p>
-                    William Santo is a Gudjal Elder and author. He has been leading Gudjal language revitalisation for three decades.
-                    He is the author and co-author of several books, including My Country in Gudjal Language, Gudjal Book of Birds, 
-                    Gudjal Language Pocket Dictionary, and Yaru! Gudjal Learner's Guide and Dictionary. 
-                    William and Alex are working together to build Birraya.
-                </p>
-            </div>
+            <details>
 
-            <div class="personal-box" id="alex-box">
-                <img src="alex.JPG" class="photo-placeholder" alt="A photo of Alex.">
-                <h3>Alex Anderson</h3>
+                <summary class="expandable-paragraphs">How did this website come to be?</summary>
+                <br>
                 <p>
-                    Alex Anderson is a PhD student at the University of Sydney. He has been working alongside William on Gudjal language revitalisation
-                    since 2020. He is co-author of Yaru! Gudjal Learner's Guide and Dictionary. Together, Alex and William are writing new lessons for Gudjal. 
-                    With William's guidance, Alex is also designing and developing the Birraya platform. 
+                    (Placeholder)
                 </p>
-            </div>
+
+            </details>
+
+        </div>
+
+        <div class="expandable-paragraph-container">
+
+            <details>
+
+                <summary class="expandable-paragraphs">Who made this site?</summary>
+
+                <div class="personal-box-row">
+
+                    <div class="personal-box" id="william-box">
+                        <div class="photo-placeholder"></div>
+                        <h3>William Santo</h3>
+                        <p>
+                            William Santo is a Gudjal Elder and author. He has worked in front-line community services for his entire life, and has been leading Gudjal language revitalisation for over three decades.
+                            He is the author and co-author of several books, including My Country in Gudjal Language, Gudjal Book of Birds, 
+                            Gudjal Language Pocket Dictionary, and Yaru! Gudjal Learner's Guide and Dictionary. Together, Alex and William are writing new lessons for Gudjal.
+                        </p>
+                    </div>
+
+                    <div class="personal-box" id="alex-box">
+                        <img src="alex.JPG" class="photo-placeholder" alt="A photo of Alex.">
+                        <h3>Alex Anderson</h3>
+                        <p>
+                            Alex Anderson is a PhD student at the University of Sydney. His research looks at digital tools for language learning. He has been working alongside William on Gudjal language revitalisation
+                            since 2020. He is a co-author of Yaru! Gudjal Learner's Guide and Dictionary. Together, Alex and William are writing new lessons for Gudjal. 
+                            With William's guidance, Alex is also designing and developing the Birraya platform. 
+                        </p>
+                    </div>
+
+                    </div>
+
+            </details>
 
         </div>
 
