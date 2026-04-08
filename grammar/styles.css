@@ -197,6 +197,7 @@ display: none;
 
 .pronoun-table tbody tr td:first-child {
     font-weight: bold;
+    width: 50%;
 }
 .pronoun-table tbody tr td {
     padding-top: 4px;
@@ -294,13 +295,6 @@ p {
 
 
 
-#yaru-explanation {
-margin-top: 24px;
-}
-
-#yaru-explanation:hover {
-font-weight: 500;
-}
 
 .raiserupper {
 transition: 0.4s ease;
