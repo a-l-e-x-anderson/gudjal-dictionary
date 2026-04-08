@@ -121,6 +121,7 @@
 
 
 
+
         #right-bar {
             width: 280px;
             height: 100vh;      
@@ -193,6 +194,30 @@
 
 
 
+        .ochre, .nouns {
+            background: #B77466;
+        }
+
+        .yellow, .verbs {
+            background: #FFE1AF;
+        }
+
+        .tan {
+            background: #E2B59A;
+        }
+
+        .brown {
+            background: #957C62;
+        }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -243,16 +268,54 @@
 
 
 
-        #grammar-container,
-        #grammar-area {
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-            padding-bottom: 40px;
+        #grammar-container {
+            padding: 16px;
         }
 
 
+        #grammar-area {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            padding-top: 40px;
+        }
 
+        .grammar-square {
+            height: 200px;
+            border-radius: 16px;
+            background: white;
+            border: 2px solid #282828;
+            padding: 16px;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 3px 3px 0px #000;
+            color: black;
+            text-decoration: none;
+        }
+
+        .grammar-square h3,
+        .grammar-square p {
+            width: 100%;
+            text-align: center;
+        }
+
+        .grammar-square p {
+            margin-top: 16px;
+        }
+
+        .grammar-label {
+            height: 36px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border: 2px solid #282828;
+            border-radius: 36px;
+            width:fit-content;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
 
 
@@ -355,9 +418,6 @@
 
 
 
-        p {
-            line-height: 28px;
-        }
 
 
 
@@ -457,7 +517,41 @@
 
             <div id="grammar-area">
 
-
+                <a class="grammar-square raiserupper" href="/grammar/ablative/">
+                    <h3>The Ablative</h3>
+                    <div class="grammar-label nouns">Nouns</div>
+                    <p><i>Talking about where something is <strong>from</strong>.</i></p>
+                </a>
+                <a class="grammar-square raiserupper" href="/grammar/dative/">
+                    <h3>The Dative</h3>
+                    <div class="grammar-label nouns">Nouns</div>
+                    <p><i>Talking about what something is going <strong>to or for</strong>.</i></p>
+                </a>
+                <a class="grammar-square raiserupper" href="/grammar/locative/">
+                    <h3>The Locative</h3>
+                    <div class="grammar-label nouns">Nouns</div>
+                    <p><i>Talking about <strong>where</strong> something is located.</i></p>
+                </a>
+                <a class="grammar-square raiserupper" href="/grammar/present/">
+                    <h3>The Present</h3>
+                    <div class="grammar-label verbs">Verbs</div>
+                    <p><i>Talking about something happening <strong>right now</strong>.</i></p>
+                </a>
+                <a class="grammar-square raiserupper" href="/grammar/past/">
+                    <h3>The Past</h3>
+                    <div class="grammar-label verbs">Verbs</div>
+                    <p><i>Talking about something that happened <strong>a while ago</strong>.</i></p>
+                </a>
+                <a class="grammar-square raiserupper" href="/grammar/imperative/">
+                    <h3>The Imperative</h3>
+                    <div class="grammar-label verbs">Verbs</div>
+                    <p><i>Talking about how to <strong>give orders</strong>.</i></p>
+                </a>
+                <a class="grammar-square raiserupper" href="/grammar/copula/">
+                    <h3>The Copula</h3>
+                    <div class="grammar-label verbs">Verbs</div>
+                    <p><i>Talking about how one thing <strong>is</strong> another thing.</i></p>
+                </a>
             </div>
 
     </div>
@@ -468,6 +562,8 @@
 
 
 <script>
+
+    /* 
 
     let grammarCollection;
 
@@ -520,6 +616,8 @@
             `})
             .join("");
     }
+
+    */
 
 
 </script>
